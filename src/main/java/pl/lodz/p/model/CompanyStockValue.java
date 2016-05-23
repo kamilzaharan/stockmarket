@@ -22,40 +22,40 @@ public class CompanyStockValue {
     private long id;
 
     @Column(name = "LAST_PRICE")
-    private String lastPrice;
+    private double lastPrice;
 
     @Column(name = "CXHANGE")
-    private String change;
+    private double change;
 
     @Column(name = "CXHANGE_PERCENT")
-    private String changePercent;
+    private double changePercent;
 
     @Column(name = "TIMESTAMP")
     private String timestamp;
 
     @Column(name = "MS_DATE")
-    private String msDate;
+    private double msDate;
 
     @Column(name = "MARKET_CAP")
-    private String marketCap;
+    private double marketCap;
 
     @Column(name = "VOLUME")
     private int Volume;
 
     @Column(name = "CXHANGE_YTD")
-    private String changeYTD;
+    private double changeYTD;
 
     @Column(name = "CXHANGE_PERCENT_YTD")
-    private String changePercentYTD;
+    private double changePercentYTD;
 
     @Column(name = "HIGH")
-    private String high;
+    private double high;
 
     @Column(name = "LOW")
-    private String low;
+    private double low;
 
     @Column(name = "OPEN")
-    private String open;
+    private double open;
 
     @ManyToOne
     @JoinColumn(name = "REF_COMPANY_ID", referencedColumnName = "ID")
@@ -69,27 +69,27 @@ public class CompanyStockValue {
         this.id = id;
     }
 
-    public String getLastPrice() {
+    public double getLastPrice() {
         return lastPrice;
     }
 
-    public void setLastPrice(String lastPrice) {
+    public void setLastPrice(double lastPrice) {
         this.lastPrice = lastPrice;
     }
 
-    public String getChange() {
+    public double getChange() {
         return change;
     }
 
-    public void setChange(String change) {
+    public void setChange(double change) {
         this.change = change;
     }
 
-    public String getChangePercent() {
+    public double getChangePercent() {
         return changePercent;
     }
 
-    public void setChangePercent(String changePercent) {
+    public void setChangePercent(double changePercent) {
         this.changePercent = changePercent;
     }
 
@@ -101,19 +101,19 @@ public class CompanyStockValue {
         this.timestamp = timestamp;
     }
 
-    public String getMsDate() {
+    public double getMsDate() {
         return msDate;
     }
 
-    public void setMsDate(String msDate) {
+    public void setMsDate(double msDate) {
         this.msDate = msDate;
     }
 
-    public String getMarketCap() {
+    public double getMarketCap() {
         return marketCap;
     }
 
-    public void setMarketCap(String marketCap) {
+    public void setMarketCap(double marketCap) {
         this.marketCap = marketCap;
     }
 
@@ -125,43 +125,43 @@ public class CompanyStockValue {
         Volume = volume;
     }
 
-    public String getChangeYTD() {
+    public double getChangeYTD() {
         return changeYTD;
     }
 
-    public void setChangeYTD(String changeYTD) {
+    public void setChangeYTD(double changeYTD) {
         this.changeYTD = changeYTD;
     }
 
-    public String getChangePercentYTD() {
+    public double getChangePercentYTD() {
         return changePercentYTD;
     }
 
-    public void setChangePercentYTD(String changePercentYTD) {
+    public void setChangePercentYTD(double changePercentYTD) {
         this.changePercentYTD = changePercentYTD;
     }
 
-    public String getHigh() {
+    public double getHigh() {
         return high;
     }
 
-    public void setHigh(String high) {
+    public void setHigh(double high) {
         this.high = high;
     }
 
-    public String getLow() {
+    public double getLow() {
         return low;
     }
 
-    public void setLow(String low) {
+    public void setLow(double low) {
         this.low = low;
     }
 
-    public String getOpen() {
+    public double getOpen() {
         return open;
     }
 
-    public void setOpen(String open) {
+    public void setOpen(double open) {
         this.open = open;
     }
 
@@ -171,5 +171,25 @@ public class CompanyStockValue {
 
     public void setCompanyId(Company companyId) {
         this.companyId = companyId;
+    }
+
+    @Override
+    public String toString() {
+        return "CompanyStockValue{" +
+                "id=" + id +
+                ", lastPrice=" + lastPrice +
+                ", change=" + change +
+                ", changePercent=" + changePercent +
+                ", timestamp='" + timestamp + '\'' +
+                ", msDate=" + msDate +
+                ", marketCap=" + marketCap +
+                ", Volume=" + Volume +
+                ", changeYTD=" + changeYTD +
+                ", changePercentYTD=" + changePercentYTD +
+                ", high=" + high +
+                ", low=" + low +
+                ", open=" + open +
+                ", companyId=" + companyId +
+                '}';
     }
 }

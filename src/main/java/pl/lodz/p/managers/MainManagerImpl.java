@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import pl.lodz.p.dao.CompanyDAO;
 import pl.lodz.p.dao.CompanyStockValueDAO;
+import pl.lodz.p.dto.CreateCompanyDTO;
 import pl.lodz.p.dto.QuoteResponseDTO;
 import pl.lodz.p.model.Company;
 import pl.lodz.p.model.CompanyStockValue;
@@ -27,25 +28,25 @@ public class MainManagerImpl implements MainManager{
     @Autowired
     private CompanyStockValueDAO companyStockValueDAO;
 
-    public void createCompany(String symbol, String fullName){
+    public void createCompany(CreateCompanyDTO quote){
         Company company = new Company();
-        company.setSymbol(symbol);
-        company.setFullName(fullName);
+        company.setSymbol(quote.getSymbol());
+        company.setFullName(quote.getFullName());
         companyDAO.save(company);
         log.info("Stworzono obiekt Company w bazie danych");
     }
 
     public void createCompanyStockValue(QuoteResponseDTO quote){
         CompanyStockValue companyStockValue = new CompanyStockValue();
-        companyStockValue.setChange(String.valueOf(quote.getChange()));
-        companyStockValue.setChangePercent(String.valueOf(quote.getChangePercent()));
-        companyStockValue.setChangePercentYTD(String.valueOf(quote.getChangePercentYTD()));
-        companyStockValue.setHigh(String.valueOf(quote.getHigh()));
-        companyStockValue.setLastPrice(String.valueOf(quote.getLastPrice()));
-        companyStockValue.setLow(String.valueOf(quote.getLow()));
-        companyStockValue.setMarketCap(String.valueOf(quote.getMarketCap()));
-        companyStockValue.setMsDate(String.valueOf(quote.getMsDate()));
-        companyStockValue.setOpen(String.valueOf(quote.getOpen()));
+        companyStockValue.setChange(quote.getChange());
+        companyStockValue.setChangePercent(quote.getChangePercent());
+        companyStockValue.setChangePercentYTD(quote.getChangePercentYTD());
+        companyStockValue.setHigh(quote.getHigh());
+        companyStockValue.setLastPrice(quote.getLastPrice());
+        companyStockValue.setLow(quote.getLow());
+        companyStockValue.setMarketCap(quote.getMarketCap());
+        companyStockValue.setMsDate(quote.getMsDate());
+        companyStockValue.setOpen(quote.getOpen());
         companyStockValue.setTimestamp(quote.getTimestamp());
         companyStockValue.setVolume(quote.getVolume());
         Company company = companyDAO.findBySymbol(quote.getSymbol());
@@ -57,5 +58,10 @@ public class MainManagerImpl implements MainManager{
     @Override
     public List<Company> getAllCompanies() {
         return companyDAO.findAll();
+    }
+
+    @Override
+    public List<CompanyStockValue> getAllStockValues() {
+        return  companyStockValueDAO.findAll();
     }
 }
