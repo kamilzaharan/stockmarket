@@ -2,14 +2,18 @@ package pl.lodz.p.controllers;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import pl.lodz.p.dao.CompanyStockValueDAO;
 import pl.lodz.p.dto.CreateCompanyDTO;
 import pl.lodz.p.managers.MainManager;
+import pl.lodz.p.model.Company;
 import pl.lodz.p.model.CompanyStockValue;
 
 import java.util.ArrayList;
@@ -28,13 +32,14 @@ public class AngularController {
     private MainManager mainManager;
 
 
-    @RequestMapping(value = "/showResultsFromDB", method = RequestMethod.GET, consumes = "application/json")
-    public void showResultsFromDB() {
-        log.info("Jestem w showResultsFromDB");
+    @RequestMapping(value = "/getAllCompanies", method = RequestMethod.GET, produces = "application/json")
+    public @ResponseBody List<Company> showResultsFromDB() {
+        return mainManager.getAllCompanies();  //TODO blad z opakowaniem listy w obiekt jsonowy
     }
 
-    @RequestMapping(value = "/createCompany", method = RequestMethod.POST, consumes = "application/json")
-    public void createCompany(@RequestBody CreateCompanyDTO createCompanyDTO) {  //TODO change to object
+    @RequestMapping(value = "/addCompany", method = RequestMethod.POST, consumes = "application/json")
+    @ResponseBody
+    public void createCompany(@RequestBody CreateCompanyDTO createCompanyDTO) {
         log.info("Jestem w createCompany");
         mainManager.createCompany(createCompanyDTO);
     }

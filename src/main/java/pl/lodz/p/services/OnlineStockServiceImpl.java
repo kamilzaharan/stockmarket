@@ -26,7 +26,7 @@ public class OnlineStockServiceImpl implements OnlineStockService {
     @Autowired
     MainManager mainManager;
 
-    @Scheduled(fixedRateString = "20000")
+    @Scheduled(fixedRateString = "60000")
     public void onlineCheck() {
         List<Company> companyList = mainManager.getAllCompanies();
         log.info(companyList.size());
