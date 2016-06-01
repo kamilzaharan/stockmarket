@@ -14,5 +14,12 @@ cont.controller('exampleCtrl', ['$scope', 'companyFactory',
                                                  alert("nie dostalem zwrotu 200, ale o dziwo dzialam");
                                              }
                                          });
+                                 };
+                                 
+                                 $scope.showShit = function () {
+                                     showComapnies.create().$promise
+                                         .then(function (response) {
+                                             
+                                         })
                                  }
                              }]);
