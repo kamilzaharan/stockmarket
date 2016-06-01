@@ -5,10 +5,10 @@ var myApp = angular.module('myApp', ['services', 'controllers', 'ngRoute'])
 
     .config(['$routeProvider', '$locationProvider',
              function ($routeProvider, $locationProvider) {
-                 $routeProvider.when('/', {
-                     controller: 'exampleCtrl',
-                     templateUrl: 'example/example.html'
-                 }).when('/wyniki', {
+                 $routeProvider.when('/users', {
+                    templateUrl: '/views/users.html',
+                    controller: 'usersController'
+                }).when('/wyniki', {
                          controller: 'mainCtrl',
                          templateUrl: 'wyniki.html'
                  }).otherwise({

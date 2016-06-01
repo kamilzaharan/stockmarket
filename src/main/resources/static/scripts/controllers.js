@@ -16,3 +16,7 @@ cont.controller('exampleCtrl', ['$scope', 'companyFactory',
                                          });
                                  }
                              }]);
+
+cont.controller('usersController', function($scope) {
+    $scope.headingTitle = "Roles List";
+});
