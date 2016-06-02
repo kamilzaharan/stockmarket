@@ -2,7 +2,10 @@ package pl.lodz.p.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import org.springframework.data.jpa.repository.Query;
 import pl.lodz.p.model.Company;
+
+import java.util.List;
 
 /**
  * Created by kamil on 5/22/16.
@@ -11,4 +14,8 @@ public interface CompanyDAO extends JpaRepository<Company,Long> {
 
     Company findBySymbol(String symbol);
 
+    String FIND_ID_NAME_SYMBOL = "SELECT id, full_name, symbol FROM stockmarket.company";
+
+    @Query(value = FIND_ID_NAME_SYMBOL,nativeQuery = true)
+    List<Object[]> findCompanyIdNameSymbolQuery();
 }

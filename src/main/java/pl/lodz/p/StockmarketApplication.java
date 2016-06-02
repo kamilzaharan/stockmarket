@@ -24,8 +24,6 @@ import javax.xml.parsers.ParserConfigurationException;
 @SpringBootApplication
 public class StockmarketApplication {
 
-
-
 	public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
 		SpringApplication.run(StockmarketApplication.class, args);
 	}

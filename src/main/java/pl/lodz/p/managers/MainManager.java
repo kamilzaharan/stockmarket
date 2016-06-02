@@ -6,6 +6,7 @@ import pl.lodz.p.dto.CreateCompanyDTO;
 import pl.lodz.p.dto.QuoteResponseDTO;
 import pl.lodz.p.model.Company;
 import pl.lodz.p.model.CompanyStockValue;
+import pl.lodz.p.model.Currency;
 
 import java.io.IOException;
 import java.util.List;
@@ -18,7 +19,10 @@ import javax.xml.parsers.ParserConfigurationException;
 public interface MainManager {
     void createCompany(CreateCompanyDTO quote);
     List<Company> getAllCompanies();
+    List<Currency> getAllCurrencies();
     List<CompanyStockValue> getAllStockValues();
+    List<Object[]> findCompanyIdNameSymbol();
+    List<Object[]> findCurrencyIdCodeName();
     void createCompanyStockValue(QuoteResponseDTO quote);
-    void getExchangeRate() throws IOException, ParserConfigurationException, SAXException;
+    void getExchangeRate();
 }
