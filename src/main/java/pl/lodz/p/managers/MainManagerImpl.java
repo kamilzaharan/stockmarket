@@ -134,6 +134,12 @@ public class MainManagerImpl implements MainManager {
     }
 
     @Override
+    public List<Object[]> findExchangeRate() {
+        return currencyDAO.findExchangeRateQuery();
+    }
+
+
+    @Override
     public List<Currency> getAllCurrencies() {
         return currencyDAO.findAll();
     }

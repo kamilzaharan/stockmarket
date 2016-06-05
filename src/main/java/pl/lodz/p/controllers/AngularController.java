@@ -64,6 +64,23 @@ public class AngularController {
 
     }
 
+    @RequestMapping(value = "/getExchangeRate", method = RequestMethod.GET, produces = "application/json")
+    public @ResponseBody String showExchangeRate() {
+
+        ArrayList<Currency> allCurrencies = new ArrayList<Currency>();
+        for( Object[] obj : mainManager.findExchangeRate() ){
+            Currency c = new Currency();
+            c.setCurrencyName((String) obj[1]);
+            c.setCurrencyCode((String) obj[2]);
+
+            allCurrencies.add(c);
+        }
+
+        String json = new Gson().toJson(allCurrencies);
+        return json;
+
+    }
+
     @RequestMapping(value = "/addCompany", method = RequestMethod.POST, consumes = "application/json")
     @ResponseBody
     public void createCompany(@RequestBody CreateCompanyDTO createCompanyDTO) {

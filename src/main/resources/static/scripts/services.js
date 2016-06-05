@@ -22,3 +22,15 @@ services.factory('companies', function () {
         
     }
 });
+
+services.factory('showCurrencies', function ($resource) {
+    return $resource('http://localhost:8080/getAllCurrencies', {}, {
+        create: {method: 'GET', isArray: true}
+    })
+});
+
+services.factory('showExchangeRate', function ($resource) {
+    return $resource('http://localhost:8080/getExchangeRate', {}, {
+        create: {method: 'GET', isArray: true}
+    })
+});

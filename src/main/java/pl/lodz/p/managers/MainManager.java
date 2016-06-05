@@ -23,6 +23,7 @@ public interface MainManager {
     List<CompanyStockValue> getAllStockValues();
     List<Object[]> findCompanyIdNameSymbol();
     List<Object[]> findCurrencyIdCodeName();
+    List<Object[]> findExchangeRate();
     void createCompanyStockValue(QuoteResponseDTO quote);
     void getExchangeRate();
 }

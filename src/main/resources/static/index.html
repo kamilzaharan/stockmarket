@@ -3,9 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Stock Market</title>
-    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">-->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 </head>
 <body>
+
+<div ng-controller="currenciesController">
+
+    <button class="btn btn-default" ng-click="currenciesFun()" type="submit"><a href="/currencies">Show currencies!</a></button>
+
+    <br><br>
+
+</div>
+
     <div ng-view></div>
 
     <script src="libraries/jquery.min.js"></script>
