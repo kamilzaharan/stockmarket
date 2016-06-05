@@ -1,6 +1,7 @@
 package pl.lodz.p.controllers;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,13 +32,15 @@ public class AngularController {
 
 
     @RequestMapping(value = "/getAllCompanies", method = RequestMethod.GET, produces = "application/json")
-    public @ResponseBody String showResultsGosiaFromDB(){
+    public
+    @ResponseBody
+    String showResultsGosiaFromDB() {
 
         ArrayList<Company> allCompanies = new ArrayList<Company>();
-        for( Object[] obj : mainManager.findCompanyIdNameSymbol() ){
+        for (Object[] obj : mainManager.findCompanyIdNameSymbol()) {
             Company c = new Company();
 
-            c.setId( ((BigInteger) obj[0]).longValue());
+            c.setId(((BigInteger) obj[0]).longValue());
             c.setFullName((String) obj[1]);
             c.setSymbol((String) obj[2]);
             allCompanies.add(c);
@@ -48,12 +51,14 @@ public class AngularController {
     }
 
     @RequestMapping(value = "/getAllCurrencies", method = RequestMethod.GET, produces = "application/json")
-    public @ResponseBody String showCurrenciesFromDB() {
+    public
+    @ResponseBody
+    String showCurrenciesFromDB() {
 
         ArrayList<Currency> allCurrencies = new ArrayList<Currency>();
-        for( Object[] obj : mainManager.findCurrencyIdCodeName() ){
+        for (Object[] obj : mainManager.findCurrencyIdCodeName()) {
             Currency c = new Currency();
-            c.setId( ((BigInteger) obj[0]).longValue());
+            c.setId(((BigInteger) obj[0]).longValue());
             c.setCurrencyCode((String) obj[1]);
             c.setCurrencyName((String) obj[2]);
             allCurrencies.add(c);
@@ -65,18 +70,35 @@ public class AngularController {
     }
 
     @RequestMapping(value = "/getExchangeRate", method = RequestMethod.GET, produces = "application/json")
-    public @ResponseBody String showExchangeRate() {
+    public
+    @ResponseBody
+    String showExchangeRate() {
 
-        ArrayList<Currency> allCurrencies = new ArrayList<Currency>();
-        for( Object[] obj : mainManager.findExchangeRate() ){
-            Currency c = new Currency();
-            c.setCurrencyName((String) obj[1]);
-            c.setCurrencyCode((String) obj[2]);
+        ArrayList<JsonObject> allData = new ArrayList<JsonObject>();
 
-            allCurrencies.add(c);
+        for (Object[] obj : mainManager.findExchangeRate()) {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("code", (String) obj[0]);
+            jsonObject.addProperty("name", (String) obj[1]);
+            jsonObject.addProperty("value", (String) obj[2]);
+            allData.add(jsonObject);
         }
 
-        String json = new Gson().toJson(allCurrencies);
+        String json = new Gson().toJson(allData);
+        return json;
+
+    }
+
+
+    @RequestMapping(value = "/getExchangeRateDate", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    String getExchangeRateDate() {
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("date", mainManager.getCurrentExchangeRateDate());
+
+        String json = new Gson().toJson(jsonObject);
         return json;
 
     }

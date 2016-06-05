@@ -2,12 +2,8 @@
 
     <div ng-controller="currenciesController">
 
-
-        <!--<button class="btn btn-default" ng-click="currenciesFun()" type="submit">show currencies</button>-->
-
         <div class="container">
-            <br><br>
-            <h3>Available currencies:</h3>
+            <h3>Aktualne kursy walut na dzień: {{date.date}}</h3>
             <br>
             <table class="table table-bordered">
                 <thead>
@@ -19,9 +15,9 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="result in exchangeRate">
-                    <td>{{currencies[$index].currencyCode}}</td>
-                    <td>{{result.currencyName}}</td>
-                    <td>{{result.currencyCode}}</td>
+                    <td>{{result.code}}</td>
+                    <td>{{result.name}}</td>
+                    <td>{{result.value}}</td>
                 </tr>
                 </tbody>
             </table>

@@ -34,6 +34,8 @@ import java.util.List;
 @Service
 public class MainManagerImpl implements MainManager {
 
+    private String currentExchangeRateDate;
+
     private Logger log = Logger.getLogger(MainManagerImpl.class);
 
     @Autowired
@@ -47,6 +49,7 @@ public class MainManagerImpl implements MainManager {
 
     @Autowired
     private CompanyStockValueDAO companyStockValueDAO;
+
 
     public void createCompany(CreateCompanyDTO quote) {
         Company company = new Company();
@@ -84,6 +87,13 @@ public class MainManagerImpl implements MainManager {
             DocumentBuilder db = dbf.newDocumentBuilder();
 
             Document document = db.parse(file.openStream());
+
+            NodeList data = document.getElementsByTagName("data_publikacji");
+            Element element = (Element) data.item(0);
+//            System.out.print(element.getTextContent());
+
+            currentExchangeRateDate=element.getTextContent();
+
             NodeList nList = document.getElementsByTagName("pozycja");
 
             for (int temp = 0; temp < nList.getLength(); temp++) {
@@ -116,7 +126,10 @@ public class MainManagerImpl implements MainManager {
         }
     }
 
-
+    @Override
+    public String getCurrentExchangeRateDate(){
+        return currentExchangeRateDate;
+    }
 
     @Override
     public List<Company> getAllCompanies() {

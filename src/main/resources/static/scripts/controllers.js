@@ -24,8 +24,8 @@ cont.controller('exampleCtrl', ['$scope', 'companyFactory',
                                  }
                              }]);
 
-cont.controller('currenciesController', ['$scope', 'showCurrencies', 'showExchangeRate',
-                             function ($scope, showCurrencies, showExchangeRate) {
+cont.controller('currenciesController', ['$scope', 'showCurrencies', 'showExchangeRate', 'getDate',
+                             function ($scope, showCurrencies, showExchangeRate, getDate) {
 
                              //to znajdzie currency name, code i ID
 
@@ -37,8 +37,6 @@ cont.controller('currenciesController', ['$scope', 'showCurrencies', 'showExchan
                                  }
                                  $scope.currenciesFun();
 
-
-
                              //to znajdzie currency name i value
                                  $scope.exchangeRate = function () {
                                       showExchangeRate.create().$promise
@@ -48,6 +46,14 @@ cont.controller('currenciesController', ['$scope', 'showCurrencies', 'showExchan
                                   }
                                   $scope.exchangeRate();
 
+                               //to zwraca date
+                                   $scope.getDate = function () {
+                                        getDate.create().$promise
+                                            .then(function (response) {
+                                             $scope.date=response;
+                                            })
+                                    }
+                                    $scope.getDate();
 
 
                              }]);

@@ -17,6 +17,7 @@ import javax.xml.parsers.ParserConfigurationException;
  * Created by kamil on 5/22/16.
  */
 public interface MainManager {
+    String getCurrentExchangeRateDate();
     void createCompany(CreateCompanyDTO quote);
     List<Company> getAllCompanies();
     List<Currency> getAllCurrencies();
