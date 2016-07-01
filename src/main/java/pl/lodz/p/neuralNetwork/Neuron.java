@@ -24,16 +24,14 @@ public class Neuron implements Cloneable{
 		isBias = neuronConfiguration.isBias;
 		momentum = neuronConfiguration.momentum;
 
-		this.weights = new double[inputs.length];
-		this.prevoiusWeights = new double[inputs.length];
 
 		initBias();
-		drawWeights();
 	}
 	
 	public Object clone() throws CloneNotSupportedException {
 		return super.clone();
 	}
+	
 
 	public void setInputs(double[] inputs) {
 		this.inputs = inputs;
@@ -47,12 +45,22 @@ public class Neuron implements Cloneable{
 		}
 	}
 
-	private void drawWeights() {
+	public void drawWeights(int inputsAmount) {
+		this.weights = new double[inputsAmount];
+		this.prevoiusWeights = new double[inputsAmount];
+		
 		Random random = new Random();
 
-		for (int i = 0; i < inputs.length; i++) {
+		for (int i = 0; i < weights.length; i++) {
 			weights[i] = random.nextDouble() - 0.5;
 			prevoiusWeights[i] = random.nextDouble() - 0.5;
+		}
+	}
+	
+	public void setLinearWeights() {
+		for (int i = 0; i < weights.length; i++) {
+			weights[i] = 1;
+			prevoiusWeights[i] = weights[i];
 		}
 	}
 	

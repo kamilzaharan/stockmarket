@@ -39,7 +39,7 @@ public class NeuralNetwork {
 	            for (int i = 0; i < inputs.length; i++) {
 
 	                singleCompute(inputs[i]);
-	                error = error + outputLayer.getErr(outputs[i]);
+	                error = error + outputLayer.getError(outputs[i]);
 	                backPropagation(outputs[i]);
 	            }           
 	        
@@ -66,7 +66,7 @@ public class NeuralNetwork {
 	            }
 	            for (int i = 0; i < inputs.length; i++) {
 	                singleCompute(inputs[i]);
-	                error = error + outputLayer.getErr(outputs[i]);
+	                error = error + outputLayer.getError(outputs[i]);
 	                backPropagation(outputs[i]);
 
 	            }
@@ -103,9 +103,9 @@ public class NeuralNetwork {
 	        }
 	        // set new weights
 	        for (Layer hidedLayer1 : hidedLayers) {
-	            hidedLayer1.calculateWeights();
+	            hidedLayer1.calcWeights();
 	        }
-	        outputLayer.calculateWeights();
+	        outputLayer.calcWeights();
 
 	    }
 
@@ -117,19 +117,19 @@ public class NeuralNetwork {
 
 	    public void singleCompute(double[] input) {
 
-	        inputLayer.setInput(input);
-	        inputLayer.calculateLinearOutputs();
-	        inputLayer.sendOutputsTo(hidedLayers[0]);
+	        inputLayer.setInputs(input);
+	        inputLayer.calcLinearOutputs();
+	        inputLayer.sendOutputs(hidedLayers[0]);
 
 	        for (int i = 0; i < hidedLayers.length - 1; i++) {
-	            hidedLayers[i].calculateOutputs();
-	            hidedLayers[i].sendOutputsTo(hidedLayers[i + 1]);
+	            hidedLayers[i].calcOutputs();
+	            hidedLayers[i].sendOutputs(hidedLayers[i + 1]);
 	        }
 
-	        hidedLayers[hidedLayers.length - 1].calculateOutputs();
-	        hidedLayers[hidedLayers.length - 1].sendOutputsTo(outputLayer);
+	        hidedLayers[hidedLayers.length - 1].calcOutputs();
+	        hidedLayers[hidedLayers.length - 1].sendOutputs(outputLayer);
 
-	        outputLayer.calculateOutputs();
+	        outputLayer.calcOutputs();
 	    }
 	   
 	   
