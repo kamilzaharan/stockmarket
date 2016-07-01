@@ -4,11 +4,13 @@ public class NeuralNetworkConfiguration {
 	int howManyInputNeurons;
 	int[] hiddenLayersAmount;
 	int howManyOutputNeurons;
+	boolean randomPattern;
 
-	public NeuralNetworkConfiguration(int howManyInputNeurons,int[] hiddenLayersAmount,int howManyOutputNeurons){
+	public NeuralNetworkConfiguration(int howManyInputNeurons,int[] hiddenLayersAmount,int howManyOutputNeurons, boolean randomPattern){
 		this.howManyInputNeurons=howManyInputNeurons;
 		this.hiddenLayersAmount=hiddenLayersAmount;
-		this.howManyOutputNeurons= howManyInputNeurons;
+		this.howManyOutputNeurons= howManyOutputNeurons;
+		this.randomPattern= randomPattern;
 	}
 
 	public int getHowManyInputNeurons() {

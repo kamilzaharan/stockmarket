@@ -2,7 +2,7 @@ package pl.lodz.p.neuralNetwork;
 
 import java.util.Random;
 
-public class Neuron {
+public class Neuron implements Cloneable{
 
 	private static double alpha;
 	private static double beta;
@@ -18,20 +18,27 @@ public class Neuron {
 	
 	private double error = 0;
 
-	Neuron(NeuronConfiguration neuronConfiguration, double[] inputs) {
+	Neuron(NeuronConfiguration neuronConfiguration) {
 		alpha = neuronConfiguration.alpha;
 		beta = neuronConfiguration.beta;
 		isBias = neuronConfiguration.isBias;
 		momentum = neuronConfiguration.momentum;
 
-		this.inputs = inputs;
 		this.weights = new double[inputs.length];
 		this.prevoiusWeights = new double[inputs.length];
 
 		initBias();
 		drawWeights();
 	}
+	
+	public Object clone() throws CloneNotSupportedException {
+		return super.clone();
+	}
 
+	public void setInputs(double[] inputs) {
+		this.inputs = inputs;
+	}
+	
 	private void initBias() {
 		Random random = new Random();
 
