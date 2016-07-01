@@ -17,7 +17,7 @@ public class Neuron {
 	private double[] prevoiusWeights;
 
 	Neuron(NeuronConfiguration neuronConfiguration, double[] inputs) {
-		alpha = neuronConfiguration.alpha;
+		alpha = neuronConfiguration.alfa;
 		beta = neuronConfiguration.beta;
 		isBias = neuronConfiguration.isBias;
 		momentum = neuronConfiguration.momentum;
