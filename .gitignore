@@ -9,3 +9,6 @@ buildNumber.properties
 .mvn/timing.properties
 .idea/
 bower_components/
+.classpath
+.project
+.settings/

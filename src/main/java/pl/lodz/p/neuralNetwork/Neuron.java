@@ -15,9 +15,11 @@ public class Neuron {
 
 	private double[] weights;
 	private double[] prevoiusWeights;
+	
+	private double error = 0;
 
 	Neuron(NeuronConfiguration neuronConfiguration, double[] inputs) {
-		alpha = neuronConfiguration.alfa;
+		alpha = neuronConfiguration.alpha;
 		beta = neuronConfiguration.beta;
 		isBias = neuronConfiguration.isBias;
 		momentum = neuronConfiguration.momentum;
@@ -47,4 +49,63 @@ public class Neuron {
 		}
 	}
 	
+	private double total() {
+		double total = 0;
+
+		for (int i = 0; i < inputs.length; i++) {
+			total += inputs[i] * weights[i];
+		}
+
+		total += bias;
+
+		return total;
+	}
+	
+	public void setErrorOnOutputLayer(double out) {
+		error = MathFunc.dsigmoid(output, 1) * (out - output);
+	}
+
+	public void setErrorOnHiddenLayer(double sum) {
+		error = MathFunc.dsigmoid(output, beta) * sum;
+	}
+	
+	public void setLinearError(double out) {
+		error = out - output;
+	}
+
+	public void calcNewWeights() {
+		double weight;
+		
+		for (int i = 0; i < weights.length; i++) {
+			weight = weights[i];
+			weights[i] = weights[i] + alpha * error * inputs[i] + momentum * (weights[i] - prevoiusWeights[i]);
+			prevoiusWeights[i] = weight;
+		}
+	}
+	
+	public void calcOutput() {
+		double total = total();
+		output = MathFunc.sigmoid(total, beta);
+	}
+	
+	public void calcLinearOutput() {
+		
+		output = total();
+	}
+	
+	public double getError() {
+		
+		return error;
+	}
+	
+	public double getOutput() {
+		
+		return output;
+	}
+	
+	public double getWeight(int index) {
+		
+		return weights[index];
+	}
+
 }
