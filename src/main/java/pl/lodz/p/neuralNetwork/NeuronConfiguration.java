@@ -1,20 +1,19 @@
 package pl.lodz.p.neuralNetwork;
 
-
 public class NeuronConfiguration {
-	
+
 	double alpha;
 	double beta;
 	double momentum;
 	boolean isBias;
 
-	public NeuronConfiguration(double alpha, double beta, double momentum, boolean isBias){
-		this.alpha=alpha;
-		this.beta=beta;
-		this.momentum=momentum;
-		this.isBias=isBias;
+	public NeuronConfiguration(double alpha, double beta, double momentum, boolean isBias) {
+		this.alpha = alpha;
+		this.beta = beta;
+		this.momentum = momentum;
+		this.isBias = isBias;
 	}
-	
+
 	public double getAlpha() {
 		return alpha;
 	}
