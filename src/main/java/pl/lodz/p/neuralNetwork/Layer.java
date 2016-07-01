@@ -99,6 +99,13 @@ public class Layer {
 
 		return total / neurons.length;
 	}
+	
+	public void setLinnearError(int i, double d) {
+        neurons[i].setLinearError(d);
+    }
+	   public double getSingleOutput(int whichNeuron) {
+	        return neurons[whichNeuron].getOutput();
+	    }
 
 	public int getneuronsAmount() {
 

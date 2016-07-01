@@ -15,4 +15,5 @@ public interface MainManager {
     List<Company> getAllCompanies();
     List<CompanyStockValue> getAllStockValues();
     void createCompanyStockValue(QuoteResponseDTO quote);
+    
 }

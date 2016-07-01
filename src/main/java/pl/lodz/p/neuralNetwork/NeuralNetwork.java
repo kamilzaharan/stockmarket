@@ -8,12 +8,14 @@ public class NeuralNetwork {
 	    protected Layer inputLayer;
 	    protected Layer[] hidedLayers;
 	    protected Layer outputLayer;
+	    double epsilon;
 	
 	
 	   public NeuralNetwork (NeuralNetworkConfiguration networkConfiguration, NeuronConfiguration neuronConfiguration){
 		   	
-		   this.randomPattern= networkConfiguration.randomPattern;
+		   this.randomPattern= networkConfiguration.isRandomPattern();
 		   
+		    this.epsilon= networkConfiguration.getEpsilon();
 		   	int[] howManyNeuronInHiddenLayersTable= networkConfiguration.hiddenLayersAmount;
 		   	int howManyNeuronsInOutputLayer= networkConfiguration.howManyOutputNeurons;
 		   	int howManyNeuronsInInputLayer=networkConfiguration.howManyInputNeurons;
@@ -51,7 +53,7 @@ public class NeuralNetwork {
 	    }
 	    
 	    
-	    public int learn(double epsilon, double[][] inputs, double[][] outputs, List<Point> err) {
+	    public int learn(double networkConf, double[][] inputs, double[][] outputs, List<Point> err) {
 	        double error = 0;
 	        double[] errorCheck = new double[5];
 
@@ -95,8 +97,10 @@ public class NeuralNetwork {
 	    }
 
 	    public void backPropagation(double[] expectedResults) {
-	        outputLayer.setErrorToOutputLayer(expectedResults);
-	        // send error to another layer 
+	        //send error to output layer
+	 
+	        outputLayer.setLinnearError(0, expectedResults[0]);
+	        // send error to another layer
 	        outputLayer.sendErrors(hidedLayers[hidedLayers.length - 1]);
 	        for (int i = hidedLayers.length - 1; i > 0; i--) {
 	            hidedLayers[i].sendErrors(hidedLayers[i - 1]);
@@ -106,7 +110,6 @@ public class NeuralNetwork {
 	            hidedLayer1.calcWeights();
 	        }
 	        outputLayer.calcWeights();
-
 	    }
 
 	    public void compute(double[][] inputs) {
@@ -116,22 +119,26 @@ public class NeuralNetwork {
 	    }
 
 	    public void singleCompute(double[] input) {
-
-	        inputLayer.setInputs(input);
+	    	 
+	         inputLayer.setInputs(input);
 	        inputLayer.calcLinearOutputs();
 	        inputLayer.sendOutputs(hidedLayers[0]);
-
+	 
 	        for (int i = 0; i < hidedLayers.length - 1; i++) {
-	            hidedLayers[i].calcOutputs();
+	            hidedLayers[i].calcLinearOutputs();
 	            hidedLayers[i].sendOutputs(hidedLayers[i + 1]);
 	        }
-
+	 
 	        hidedLayers[hidedLayers.length - 1].calcOutputs();
 	        hidedLayers[hidedLayers.length - 1].sendOutputs(outputLayer);
-
-	        outputLayer.calcOutputs();
+	 
+	        outputLayer.calcLinearOutputs();
 	    }
-	   
+	    
+	    public double returnSingleOutput() {
+	        return outputLayer.getSingleOutput(0);
+	    }
+
 	   
 	   
 	

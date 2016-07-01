@@ -5,12 +5,16 @@ public class NeuralNetworkConfiguration {
 	int[] hiddenLayersAmount;
 	int howManyOutputNeurons;
 	boolean randomPattern;
+	double epsilon;
 
-	public NeuralNetworkConfiguration(int howManyInputNeurons,int[] hiddenLayersAmount,int howManyOutputNeurons, boolean randomPattern){
+
+
+	public NeuralNetworkConfiguration(int howManyInputNeurons,int[] hiddenLayersAmount,int howManyOutputNeurons, boolean randomPattern, double epsilon){
 		this.howManyInputNeurons=howManyInputNeurons;
 		this.hiddenLayersAmount=hiddenLayersAmount;
 		this.howManyOutputNeurons= howManyOutputNeurons;
 		this.randomPattern= randomPattern;
+		this.epsilon=epsilon;
 	}
 
 	public int getHowManyInputNeurons() {
@@ -30,5 +34,21 @@ public class NeuralNetworkConfiguration {
 	}
 	public void setHowManyOutputNeurons(int howManyOutputNeurons) {
 		this.howManyOutputNeurons = howManyOutputNeurons;
+	}
+	
+	public boolean isRandomPattern() {
+		return randomPattern;
+	}
+
+	public void setRandomPattern(boolean randomPattern) {
+		this.randomPattern = randomPattern;
+	}
+
+	public double getEpsilon() {
+		return epsilon;
+	}
+
+	public void setEpsilon(double epsilon) {
+		this.epsilon = epsilon;
 	}
 }
