@@ -13,9 +13,12 @@ var myApp = angular.module('myApp', ['services', 'controllers', 'ngRoute'])
                  }).when('/prognozy', {
                 //     controller: 'prognozyCtrl',
                      templateUrl: '../prognozy/prognozy.html'
+                 }).when('/currencies', {
+                         controller: 'currenciesController',
+                         templateUrl: 'views/currencies.html'
                  }).otherwise({
-                                  redirectTo: '/'
-                              });
+              redirectTo: '/'
+          });
 
                  $locationProvider.html5Mode({enabled: true, requireBase: false});
              }]);

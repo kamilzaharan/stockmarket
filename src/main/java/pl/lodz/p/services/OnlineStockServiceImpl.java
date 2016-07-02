@@ -6,12 +6,16 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.xml.sax.SAXException;
 
 import pl.lodz.p.dto.QuoteResponseDTO;
 import pl.lodz.p.managers.MainManager;
 import pl.lodz.p.model.Company;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 
 /**
@@ -27,7 +31,8 @@ public class OnlineStockServiceImpl implements OnlineStockService {
     MainManager mainManager;
 
     @Scheduled(fixedRateString = "60000")
-    public void onlineCheck() {
+    public void onlineCheck() throws ParserConfigurationException, SAXException, IOException {
+        mainManager.getExchangeRate();
         List<Company> companyList = mainManager.getAllCompanies();
         log.info(companyList.size());
         RestTemplate restTemplate = new RestTemplate();
@@ -38,6 +43,12 @@ public class OnlineStockServiceImpl implements OnlineStockService {
             log.info(quote.toString());
             mainManager.createCompanyStockValue(quote);
         }
+    }
+
+    public void importCurrenciesName(){
+        RestTemplate restTemplate = new RestTemplate();
+
+
     }
 
     @Override

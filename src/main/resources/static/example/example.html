@@ -1,5 +1,341 @@
-<div class="container">
-    <input id="companySymbol" type="text" ng-model="company.Symbol" name="companySymbol" placeholder="symbol"/>
-    <input id="companyName" type="text" ng-model="company.Name" name="companyName" placeholder="name"/>
-    <button class="btn btn-default" ng-click="addCompany()" type="submit">Dodaj firmę</button>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>User profile!</title>
+
+    <meta name="description" content="UserProfile">
+    <meta name="author" content="StackMarket">
+
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <!--<nav class="navbar navbar-default" role="navigation">-->
+                <!--<div class="navbar-header">-->
+
+                    <!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">-->
+                        <!--<span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>-->
+                    <!--</button> <a class="navbar-brand" href="#">Strona główna</a>-->
+                <!--</div>-->
+
+                <!--<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">-->
+                    <!--<ul class="nav navbar-nav">-->
+                        <!--<li >-->
+                            <!--<a href="#">Wykresy akcji</a>-->
+                        <!--</li>-->
+                        <!--<li class="dropdown">-->
+                            <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">Akcje<strong class="caret"></strong></a>-->
+                            <!--<ul class="dropdown-menu">-->
+                                <!--<li>-->
+                                    <!--<a href="#">Dodaj akcjed do śledzonych</a>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                    <!--<a href="#">Usuń akcje</a>-->
+                                <!--</li>-->
+                                <!--<li class="divider">-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                    <!--<a href="#">bla bla</a>-->
+                                <!--</li>-->
+                            <!--</ul>-->
+                        <!--</li>-->
+
+
+                    <!--</ul>-->
+
+                    <!--<form class="navbar-form navbar-left" role="search">-->
+                        <!--<div class="form-group">-->
+                            <!--<input class="form-control" type="text">-->
+                        <!--</div>-->
+                        <!--<button type="submit" class="btn btn-default">-->
+                            <!--wyszukaj akcje-->
+                        <!--</button>-->
+                    <!--</form>-->
+                    <!--<ul class="nav navbar-nav navbar-right">-->
+                        <!--<li >-->
+                            <!--<a href="/currencies">Aktualne kursy walut </a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#">Inbox <span class="badge" >42</span></a>-->
+                        <!--</li>-->
+
+                    <!--</ul>-->
+                <!--</div>-->
+
+            <!--</nav>-->
+            <div class="row">
+                <div class="col-md-3">
+                    <img alt="Bootstrap Image Preview" src="http://badgemonkey.com/images/pokerface.jpg">
+                    <address>
+                        <strong>Piotr Skrocki</strong><abbr title="email"> <br></abbr> ppskrocki@gmail.com</br>
+                    </address>
+                </div>
+                <div class="col-md-9">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>
+                                #
+                            </th>
+                            <th>
+                                Nazwa spółki
+                            </th>
+                            <th>
+                                Kurs otwarcia
+                            </th>
+                            <th>
+                                Kurs max.
+                            </th>
+                            <th>
+                                Kurs min.
+                            </th>
+                            <th>
+                                Kurs aktualny
+                            </th>
+                            <th>
+                                Zmiana procentowa
+                            </th>
+                            <th>
+                                Obrot
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                Nokia
+                            </td>
+                            <td>
+                                1.78
+                            </td>
+                            <td>
+                                1.94
+                            </td>
+                            <td>
+                                1.34
+                            </td>
+                            <td>
+                                0.50%
+                            </td>
+                            <td>
+                                1.43
+                            </td>
+                            <td>
+                                92.506
+                            </td>
+
+                        </tr>
+                        <tr class="active">
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                Nokia
+                            </td>
+                            <td>
+                                1.78
+                            </td>
+                            <td>
+                                1.94
+                            </td>
+                            <td>
+                                1.34
+                            </td>
+                            <td>
+                                0.50%
+                            </td>
+                            <td>
+                                1.43
+                            </td>
+                            <td>
+                                92.506
+                            </td>
+                        </tr>
+                        <tr class="success">
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                Nokia
+                            </td>
+                            <td>
+                                1.78
+                            </td>
+                            <td>
+                                1.94
+                            </td>
+                            <td>
+                                1.34
+                            </td>
+                            <td>
+                                0.50%
+                            </td>
+                            <td>
+                                1.43
+                            </td>
+                            <td>
+                                92.506
+                            </td>
+                        </tr>
+                        <tr class="warning">
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                Nokia
+                            </td>
+                            <td>
+                                1.78
+                            </td>
+                            <td>
+                                1.94
+                            </td>
+                            <td>
+                                1.34
+                            </td>
+                            <td>
+                                0.50%
+                            </td>
+                            <td>
+                                1.43
+                            </td>
+                            <td>
+                                92.506
+                            </td>
+                        </tr>
+                        <tr class="danger">
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                Nokia
+                            </td>
+                            <td>
+                                1.78
+                            </td>
+                            <td>
+                                1.94
+                            </td>
+                            <td>
+                                1.34
+                            </td>
+                            <td>
+                                0.50%
+                            </td>
+                            <td>
+                                1.43
+                            </td>
+                            <td>
+                                92.506
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <h3>  <span class="label  label-success">Śledzone akcje: </span></h3>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    <th>
+                        Nazwa spółki
+                    </th>
+                    <th>
+                        Wzrost/Spadek akcji
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        1
+                    </td>
+                    <td>
+                        Microsoft
+                    </td>
+                    <td>
+                        -10%
+                    </td>
+                    <td>
+                        OK
+                    </td>
+                </tr>
+                <tr class="active">
+                    <td>
+                        1
+                    </td>
+                    <td>
+                        Microsoft
+                    </td>
+                    <td>
+                        -10%
+                    </td>
+                    <td>
+                        OK
+                    </td>
+                </tr>
+                <tr class="success">
+                    <td>
+                        1
+                    </td>
+                    <td>
+                        Microsoft
+                    </td>
+                    <td>
+                        -10%
+                    </td>
+                    <td>
+                        OK
+                    </td>
+                </tr>
+                <tr class="warning">
+                    <td>
+                        1
+                    </td>
+                    <td>
+                        Microsoft
+                    </td>
+                    <td>
+                        -10%
+                    </td>
+                    <td>
+                        OK
+                    </td>
+                </tr>
+                <tr class="danger">
+                    <td>
+                        1
+                    </td>
+                    <td>
+                        Microsoft
+                    </td>
+                    <td>
+                        -10%
+                    </td>
+                    <td>
+                        OK
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
+</body>
+</html>
