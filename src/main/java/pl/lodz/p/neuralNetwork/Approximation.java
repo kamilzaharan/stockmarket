@@ -34,7 +34,7 @@ public class Approximation {
 
          
         
-        NeuronConfiguration neuronConf=new NeuronConfiguration(0.6, 1, 0.2, true);
+        NeuronConfiguration neuronConf=new NeuronConfiguration(0.2, 1, 0.2, true);
         int[] howManyHiddenNeurons = {15};
         
         NeuralNetworkConfiguration networkConf=new NeuralNetworkConfiguration(1, howManyHiddenNeurons, 1, true, 0.7);
@@ -43,8 +43,8 @@ public class Approximation {
 
         List<Point> approximationResults = new ArrayList<>();
 
-        for (int i = 1; i <= 20; i++) {
-
+        //for (int i = 1; i <= 20; i++) {
+int i=10;
             NeuralNetwork approximationNetwork = new NeuralNetwork(networkConf, neuronConf);
             
             //dla treningowych 1,2 i obie
@@ -67,7 +67,7 @@ public class Approximation {
             Utils.savePoints("approximation" + i, approximationResults);
 
             approximationResults.clear();
-        }
+       // }
     }
 
 }
