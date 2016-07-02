@@ -1,0 +1,35 @@
+<div id="prognozy">
+    <p>Na tej stronie powinno pobierać się dane do sieci neuronowej.</p>
+
+
+    <form action="/graph">
+        Momentum:<br>
+        <input type="number" name="momentum" step="any" value="1">
+        <br><br>
+        Alpha:<br>
+        <input type="number" name="alpha" step="any" value="0.2">
+        <br><br>
+        <input type="checkbox" name="isBias" value="bias" checked>Bias<br>
+        <br>
+        Beta:<br>
+        <input type="number" name="beta" step="any" value="1">
+        <br><br>
+        Ilość wejść:<br>
+        <input type="number" name="howManyInputNeurons" step="any" value="1">
+        <br><br>
+        Ilość warstw ukrytych: tutaj trzeba pozmieniać jeszcze, żeby można było podać ile neuronów w każdej warstwie<br>
+        <input type="number" name="hiddenLayersAmount" step="any" value="1">
+        <br><br>
+        Ilość wyjść:<br>
+        <input type="number" name="howManyOutputNeurons" step="any" value="1">
+        <br><br>
+        <input type="checkbox" name="randomPattern" value="randomPattern" checked>Mieszanie wzorców<br>
+        <br>
+        Epsilon:<br>
+        <input type="number" name="epsilon" step="any" value="1">
+        <br><br>
+        <button type="submit" class="btn btn-default">
+            Prognozuj
+        </button>
+    </form>
+</div>

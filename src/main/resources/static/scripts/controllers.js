@@ -57,3 +57,37 @@ cont.controller('currenciesController', ['$scope', 'showCurrencies', 'showExchan
 
 
                              }]);
+
+cont.controller('networkConfigurationCtrl', ['$scope', 'showCurrencies', 'showExchangeRate', 'getDate',
+    function ($scope, showCurrencies, showExchangeRate, getDate) {
+
+        //to znajdzie currency name, code i ID
+
+        $scope.currenciesFun = function () {
+            showCurrencies.create().$promise
+                .then(function (response) {
+                    $scope.currencies=response;
+                })
+        }
+        $scope.currenciesFun();
+
+        //to znajdzie currency name i value
+        $scope.exchangeRate = function () {
+            showExchangeRate.create().$promise
+                .then(function (response) {
+                    $scope.exchangeRate=response;
+                })
+        }
+        $scope.exchangeRate();
+
+        //to zwraca date
+        $scope.getDate = function () {
+            getDate.create().$promise
+                .then(function (response) {
+                    $scope.date=response;
+                })
+        }
+        $scope.getDate();
+
+
+    }]);

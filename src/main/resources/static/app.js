@@ -10,9 +10,12 @@ var myApp = angular.module('myApp', ['services', 'controllers', 'ngRoute'])
                  }).when('/wyniki', {
                          controller: 'mainCtrl',
                          templateUrl: 'wyniki.html'
-                 }).when('/prognozy', {
-                //     controller: 'prognozyCtrl',
-                     templateUrl: '../prognozy/prognozy.html'
+                 }).when('/networkConfiguration', {
+                     // controller: 'networkConfigurationCtrl',
+                     templateUrl: 'views/networkConfiguration.html'
+                 }).when('/graph', {
+                   //  controller: 'graphCtrl',
+                     templateUrl: 'views/graph.html'
                  }).when('/currencies', {
                          controller: 'currenciesController',
                          templateUrl: 'views/currencies.html'
