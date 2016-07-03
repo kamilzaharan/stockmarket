@@ -31,14 +31,44 @@ public class Approximation {
         double[][] testOutputs = Utils.getColumnArrayFromArray(1, approximationTest);
 
         double alpha = 0.2, beta = 1, momentum = 0.2;
-        if (alpha < 0 || alpha >= 1) throw new ConfigurationException("Wrong alpha");
-        if (beta < 0 || beta > 1) throw new ConfigurationException("Wrong beta");
-        if (momentum < 0 || momentum >= 1) throw new ConfigurationException("Wrong momentum");
+
+        if (alpha < 0 || alpha >= 1) {
+            throw new ConfigurationException("Wrong alpha");
+        }
+        if (beta < 0 || beta > 1) {
+            throw new ConfigurationException("Wrong beta");
+        }
+        if (momentum < 0 || momentum >= 1) {
+            throw new ConfigurationException("Wrong momentum");}
 
         NeuronConfiguration neuronConf = new NeuronConfiguration(alpha, beta, momentum, true);
 
         int[] howManyHiddenNeurons = {15};
-        NeuralNetworkConfiguration networkConf = new NeuralNetworkConfiguration(1, howManyHiddenNeurons, 1, true, 0.7);
+
+        if (howManyHiddenNeurons.length < 1) {
+            throw new ConfigurationException("Wrong number of hidden layers");
+        }
+        for (int i = 0; i < howManyHiddenNeurons.length; i++) {
+            if (howManyHiddenNeurons[i] < 1) {
+                throw new ConfigurationException("Wrong number of neurons on hidden layer. Layer: " + i + ", Neurons: " + howManyHiddenNeurons[i]);
+            }
+        }
+
+        int inputNeurons = 1, outputNeurons = 1;
+        double epsilon = 0.7;
+
+        if (inputNeurons <= 0 || inputNeurons >= 10) {
+            throw new ConfigurationException("Wrong number of input neurons");
+        }
+        if (outputNeurons <= 0 || outputNeurons >= 10) {
+            throw new ConfigurationException("Wrong number of output neurons");
+        }
+        if (epsilon < 0 || epsilon > 1) {
+            throw new ConfigurationException("Wrong epsilon");
+        }
+
+
+        NeuralNetworkConfiguration networkConf = new NeuralNetworkConfiguration(inputNeurons, howManyHiddenNeurons, outputNeurons, true, epsilon);
  
         int howManyEpoch = 10000;
 
