@@ -14,15 +14,15 @@ public class Neuron implements Cloneable{
 	private double output;
 
 	private double[] weights;
-	private double[] prevoiusWeights;
+	private double[] previousWeights;
 	
 	private double error = 0;
 
 	Neuron(NeuronConfiguration neuronConfiguration) {
-		alpha = neuronConfiguration.alpha;
-		beta = neuronConfiguration.beta;
-		isBias = neuronConfiguration.isBias;
-		momentum = neuronConfiguration.momentum;
+		alpha = neuronConfiguration.getAlpha();
+		beta = neuronConfiguration.getBeta();
+		isBias = neuronConfiguration.isBias();
+		momentum = neuronConfiguration.getMomentum();
 
 
 		initBias();
@@ -47,20 +47,20 @@ public class Neuron implements Cloneable{
 
 	public void drawWeights(int inputsAmount) {
 		this.weights = new double[inputsAmount];
-		this.prevoiusWeights = new double[inputsAmount];
+		this.previousWeights = new double[inputsAmount];
 		
 		Random random = new Random();
 
 		for (int i = 0; i < weights.length; i++) {
 			weights[i] = random.nextDouble() - 0.5;
-			prevoiusWeights[i] = random.nextDouble() - 0.5;
+			previousWeights[i] = random.nextDouble() - 0.5;
 		}
 	}
 	
 	public void setLinearWeights() {
 		for (int i = 0; i < weights.length; i++) {
 			weights[i] = 1;
-			prevoiusWeights[i] = weights[i];
+			previousWeights[i] = weights[i];
 		}
 	}
 	
@@ -93,8 +93,8 @@ public class Neuron implements Cloneable{
 		
 		for (int i = 0; i < weights.length; i++) {
 			weight = weights[i];
-			weights[i] = weights[i] + alpha * error * inputs[i] + momentum * (weights[i] - prevoiusWeights[i]);
-			prevoiusWeights[i] = weight;
+			weights[i] = weights[i] + alpha * error * inputs[i] + momentum * (weights[i] - previousWeights[i]);
+			previousWeights[i] = weight;
 		}
 	}
 	
