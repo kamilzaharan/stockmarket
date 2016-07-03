@@ -9,7 +9,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 public class Approximation {
 
-    public List<Point> doApproximation() {
+    public List<Point> doApproximation() throws ConfigurationException {
 
         double[][] approximationTrain1 = Utils.getArraysFromFile("approximation_train_1.txt");
         double[][] approxiamtionTrain2 = Utils.getArraysFromFile("approximation_train_2.txt");
@@ -17,8 +17,6 @@ public class Approximation {
 
         approximationTest = Utils.arraySort(approximationTest);
         Utils.saveArraysToFile("approximation_test_sorted.txt", approximationTest);
-
-        List<Point> errPoints = new ArrayList();
 
         double[][] inputs1 = Utils.getColumnArrayFromArray(0, approximationTrain1);
         double[][] outputs1 = Utils.getColumnArrayFromArray(1, approximationTrain1);
@@ -32,19 +30,24 @@ public class Approximation {
         double[][] testInputs = Utils.getColumnArrayFromArray(0, approximationTest);
         double[][] testOutputs = Utils.getColumnArrayFromArray(1, approximationTest);
 
-         
-        
-        NeuronConfiguration neuronConf=new NeuronConfiguration(0.2, 1, 0.2, true);
+        double alpha = 0.2, beta = 1, momentum = 0.2;
+        if (alpha < 0 || alpha >= 1) throw new ConfigurationException("Wrong alpha");
+        if (beta < 0 || beta > 1) throw new ConfigurationException("Wrong beta");
+        if (momentum < 0 || momentum >= 1) throw new ConfigurationException("Wrong momentum");
+
+        NeuronConfiguration neuronConf = new NeuronConfiguration(alpha, beta, momentum, true);
+
         int[] howManyHiddenNeurons = {15};
-        
-        NeuralNetworkConfiguration networkConf=new NeuralNetworkConfiguration(1, howManyHiddenNeurons, 1, true, 0.7);
+        NeuralNetworkConfiguration networkConf = new NeuralNetworkConfiguration(1, howManyHiddenNeurons, 1, true, 0.7);
  
         int howManyEpoch = 10000;
 
         List<Point> approximationResults = new ArrayList<>();
 
         //for (int i = 1; i <= 20; i++) {
-int i=10;
+        List<Point> errPoints = new ArrayList();
+
+        int i=10;
             NeuralNetwork approximationNetwork = new NeuralNetwork(networkConf, neuronConf);
             
             //dla treningowych 1,2 i obie

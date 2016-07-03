@@ -15,6 +15,7 @@ import pl.lodz.p.managers.MainManager;
 import pl.lodz.p.model.Company;
 import pl.lodz.p.model.Currency;
 import pl.lodz.p.neuralNetwork.Approximation;
+import pl.lodz.p.neuralNetwork.ConfigurationException;
 import pl.lodz.p.neuralNetwork.Point;
 
 import java.math.BigInteger;
@@ -118,7 +119,12 @@ public class AngularController {
     @ResponseBody
     String showApproximation() {
         Approximation aprox = new Approximation();
-        List<Point> approxResult = aprox.doApproximation();
+        List<Point> approxResult = null;
+        try {
+            approxResult = aprox.doApproximation();
+        } catch (ConfigurationException e) {
+            e.printStackTrace();
+        }
 
         String json = new Gson().toJson(approxResult);
         return json;
