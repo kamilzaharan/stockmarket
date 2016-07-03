@@ -6,11 +6,23 @@ public class Neuron implements Cloneable{
 
 	private static double alpha;
 	private static double beta;
+	public static double getBeta() {
+		return beta;
+	}
+
+	public static void setBeta(double beta) {
+		Neuron.beta = beta;
+	}
+
 	private static boolean isBias;
 	private static double momentum;
 	private static double bias;
 
 	private double[] inputs;
+	public double[] getInputs() {
+		return inputs;
+	}
+
 	private double output;
 
 	private double[] weights;
@@ -18,11 +30,15 @@ public class Neuron implements Cloneable{
 	
 	private double error = 0;
 
+	public void setError(double error) {
+		this.error = error;
+	}
+
 	Neuron(NeuronConfiguration neuronConfiguration) {
-		alpha = neuronConfiguration.alpha;
-		beta = neuronConfiguration.beta;
-		isBias = neuronConfiguration.isBias;
-		momentum = neuronConfiguration.momentum;
+		alpha = neuronConfiguration.getAlpha();
+		beta = neuronConfiguration.getBeta();
+		isBias = neuronConfiguration.isBias();
+		momentum = neuronConfiguration.getMomentum();
 
 
 		initBias();
@@ -98,6 +114,22 @@ public class Neuron implements Cloneable{
 		}
 	}
 	
+	public static double getAlpha() {
+		return alpha;
+	}
+
+	public static void setAlpha(double alpha) {
+		Neuron.alpha = alpha;
+	}
+
+	public double getPrevoiusWeights(int index) {
+		return prevoiusWeights[index];
+	}
+
+	public void setPrevoiusWeights(double[] prevoiusWeights) {
+		this.prevoiusWeights = prevoiusWeights;
+	}
+
 	public void calcOutput() {
 		double total = total();
 		output = MathFunc.sigmoid(total, beta);
