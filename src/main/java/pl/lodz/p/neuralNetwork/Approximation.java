@@ -9,7 +9,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 public class Approximation {
 
-    public void doApproximation() {
+    public List<Point> doApproximation() {
 
         double[][] approximationTrain1 = Utils.getArraysFromFile("approximation_train_1.txt");
         double[][] approxiamtionTrain2 = Utils.getArraysFromFile("approximation_train_2.txt");
@@ -65,8 +65,8 @@ int i=10;
 
             Collections.sort(approximationResults);
             Utils.savePoints("approximation" + i, approximationResults);
-
-            approximationResults.clear();
+return approximationResults;
+//            approximationResults.clear();
        // }
     }
 

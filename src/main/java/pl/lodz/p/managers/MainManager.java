@@ -27,4 +27,5 @@ public interface MainManager {
     List<Object[]> findExchangeRate();
     void createCompanyStockValue(QuoteResponseDTO quote);
     void getExchangeRate();
+
 }

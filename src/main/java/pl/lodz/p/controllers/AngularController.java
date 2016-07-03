@@ -14,9 +14,12 @@ import pl.lodz.p.dto.CreateCompanyDTO;
 import pl.lodz.p.managers.MainManager;
 import pl.lodz.p.model.Company;
 import pl.lodz.p.model.Currency;
+import pl.lodz.p.neuralNetwork.Approximation;
+import pl.lodz.p.neuralNetwork.Point;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by kamil on 5/22/16.
@@ -108,5 +111,17 @@ public class AngularController {
     public void createCompany(@RequestBody CreateCompanyDTO createCompanyDTO) {
         log.info("Jestem w createCompany");
         mainManager.createCompany(createCompanyDTO);
+    }
+
+    @RequestMapping(value = "/getApproximation", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    String showApproximation() {
+        Approximation aprox = new Approximation();
+        List<Point> approxResult = aprox.doApproximation();
+
+        String json = new Gson().toJson(approxResult);
+        return json;
+
     }
 }

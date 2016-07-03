@@ -1,4 +1,24 @@
 <div id="prognozy">
-    <p>Na tej stronie powinny pojawić się wykresy i wyniki</p>
-
+    <div ng-controller="graphCtrl">
+        <p>Na tej stronie powinny pojawić się wykresy i wyniki</p>
+        <p>{{$scope.graphFun}}</p>
+        <div class="container">
+            <h3>Punkt(x, y)</h3>
+            <br>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>x</th>
+                    <th>y</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="result in approximation">
+                    <td>{{result.x}}</td>
+                    <td>{{result.y}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

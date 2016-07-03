@@ -40,3 +40,9 @@ services.factory('getDate', function ($resource) {
         create: {method: 'GET', isArray: false}
     })
 });
+
+services.factory('getApproximation', function ($resource) {
+    return $resource('http://localhost:8080/getApproximation', {}, {
+        create: {method: 'GET', isArray: true}
+    })
+});

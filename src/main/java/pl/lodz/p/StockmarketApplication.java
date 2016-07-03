@@ -28,8 +28,8 @@ public class StockmarketApplication {
 
 	public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
 		SpringApplication.run(StockmarketApplication.class, args);
-		Approximation aprox = new Approximation();
-		aprox.doApproximation();
+//		Approximation aprox = new Approximation();
+//		aprox.doApproximation();
 	}
 
 

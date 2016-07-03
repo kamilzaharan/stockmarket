@@ -14,7 +14,7 @@ var myApp = angular.module('myApp', ['services', 'controllers', 'ngRoute'])
                      // controller: 'networkConfigurationCtrl',
                      templateUrl: 'views/networkConfiguration.html'
                  }).when('/graph', {
-                   //  controller: 'graphCtrl',
+                     controller: 'graphCtrl',
                      templateUrl: 'views/graph.html'
                  }).when('/currencies', {
                          controller: 'currenciesController',
