@@ -16,9 +16,9 @@ public class NeuralNetwork {
 		   this.randomPattern= networkConfiguration.isRandomPattern();
 		   
 		    this.epsilon= networkConfiguration.getEpsilon();
-		   	int[] howManyNeuronInHiddenLayersTable= networkConfiguration.hiddenLayersAmount;
-		   	int howManyNeuronsInOutputLayer= networkConfiguration.howManyOutputNeurons;
-		   	int howManyNeuronsInInputLayer=networkConfiguration.howManyInputNeurons;
+		   	int[] howManyNeuronInHiddenLayersTable= networkConfiguration.getHiddenLayersAmount();
+		   	int howManyNeuronsInOutputLayer= networkConfiguration.getHowManyOutputNeurons();
+		   	int howManyNeuronsInInputLayer=networkConfiguration.getHowManyInputNeurons();
 
 		   	Neuron baseNeuron = new Neuron(neuronConfiguration);
 	       
@@ -120,7 +120,7 @@ public class NeuralNetwork {
 
 	    public void singleCompute(double[] input) {
 	    	 
-	         inputLayer.setInputs(input);
+	        inputLayer.setInputs(input);
 	        inputLayer.calcLinearOutputs();
 	        inputLayer.sendOutputs(hidedLayers[0]);
 	 

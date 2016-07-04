@@ -1,4 +1,5 @@
 package pl.lodz.p.neuralNetwork;
+
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 

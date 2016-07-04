@@ -29,7 +29,6 @@ public class NeuronTests {
 	@Before 
 	public void setNeuron(){
 		neuron= new Neuron(configuration);
-		System.out.println(configuration.getAlpha());
 	}
 	
 	@Test
