@@ -45,12 +45,6 @@ public class OnlineStockServiceImpl implements OnlineStockService {
         }
     }
 
-    public void importCurrenciesName(){
-        RestTemplate restTemplate = new RestTemplate();
-
-
-    }
-
     @Override
     public void getInfoFromStock() {
 
