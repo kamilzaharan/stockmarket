@@ -39,8 +39,6 @@ public class Neuron implements Cloneable{
 		beta = neuronConfiguration.getBeta();
 		isBias = neuronConfiguration.isBias();
 		momentum = neuronConfiguration.getMomentum();
-
-
 		initBias();
 	}
 	

@@ -6,19 +6,22 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
 
+@RunWith(MockitoJUnitRunner.class)
 public class NeuralNetworkTests {
 	
-	NeuralNetwork network;
+	private NeuralNetwork network;
 	
 	@Mock
 	NeuronConfiguration neuronConfiguration;
 	
 	@Mock 
 	NeuralNetworkConfiguration networkConfiguration;
-
+	
 
     @Before
 	public void setMock(){
@@ -43,12 +46,11 @@ public class NeuralNetworkTests {
 	@Test
 	public void initializationTest() {
 	    double[][] inputs=new double[1][3] ;
-	    inputs[1][1]=1;
-	    inputs[1][2]=2;
-	    inputs[1][3]=3;
+	    inputs[0][0]=1;
 	    double outputBeforeCompute=network.outputLayer.getSingleOutput(0);
         network.singleCompute(inputs[0]);
         double outputAfterCompute=network.outputLayer.getSingleOutput(0); 
+        assertThat(outputBeforeCompute).isEqualTo(outputAfterCompute);
 	}
 
 }

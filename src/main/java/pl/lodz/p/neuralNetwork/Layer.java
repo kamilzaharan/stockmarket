@@ -28,7 +28,6 @@ public class Layer {
 
 	public void setInputs(double[] inputs) {
 		for (int i = 0; i < neurons.length; i++) {
-
 			neurons[i].setInputs(inputs);
 		}
 	}
