@@ -29,7 +29,7 @@ public class QuoteResponseDTO {
     @JsonProperty(value = "MarketCap")
     private double marketCap;
     @JsonProperty(value = "Volume")
-    private int Volume;
+    private double Volume;
     @JsonProperty(value = "ChangeYTD")
     private double changeYTD;
     @JsonProperty(value = "ChangePercentYTD")
@@ -113,11 +113,11 @@ public class QuoteResponseDTO {
         this.marketCap = marketCap;
     }
 
-    public int getVolume() {
+    public double getVolume() {
         return Volume;
     }
 
-    public void setVolume(int volume) {
+    public void setVolume(double volume) {
         Volume = volume;
     }
 

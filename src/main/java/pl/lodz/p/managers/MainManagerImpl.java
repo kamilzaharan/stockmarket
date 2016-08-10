@@ -136,6 +136,7 @@ public class MainManagerImpl implements MainManager {
         return companyDAO.findAll();
     }
 
+
     @Override
     public List<Object[]> findCompanyIdNameSymbol() {
         return companyDAO.findCompanyIdNameSymbolQuery();

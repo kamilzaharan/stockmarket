@@ -30,6 +30,7 @@ public class StockmarketApplication {
 		SpringApplication.run(StockmarketApplication.class, args);
 //		Approximation aprox = new Approximation();
 //		aprox.doApproximation();
+
 	}
 
 

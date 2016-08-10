@@ -15,6 +15,7 @@ services.factory('showComapnies', function ($resource) {
 });
 
 services.factory('companies', function () {
+    var companies;
     companies = {};
     
     companies.list = [];

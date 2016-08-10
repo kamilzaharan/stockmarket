@@ -5,15 +5,15 @@ import com.google.gson.JsonObject;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import pl.lodz.p.dto.CreateCompanyDTO;
+import pl.lodz.p.managers.CompanyManager;
 import pl.lodz.p.managers.MainManager;
+import pl.lodz.p.managers.StockValueManager;
+import pl.lodz.p.mocks.ObjectMocks;
 import pl.lodz.p.model.Company;
+import pl.lodz.p.model.CompanyStockValue;
 import pl.lodz.p.model.Currency;
 import pl.lodz.p.neuralNetwork.Approximation;
 import pl.lodz.p.neuralNetwork.ConfigurationException;
@@ -34,6 +34,11 @@ public class AngularController {
 
     @Autowired
     private MainManager mainManager;
+    @Autowired
+    private CompanyManager companyManager;
+    @Autowired
+    private StockValueManager stockValueManager;
+
 
 
     @RequestMapping(value = "/getAllCompanies", method = RequestMethod.GET, produces = "application/json")
@@ -52,6 +57,36 @@ public class AngularController {
         }
 
         String json = new Gson().toJson(allCompanies);
+        return json;
+    }
+
+    @RequestMapping(value = "/getCompaniesById/{id}", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    String getCompaniesById(@PathVariable String id) {
+
+        ArrayList<CompanyStockValue> allStockValues = new ArrayList();
+        Integer companyId = Integer.parseInt(id);
+
+        for (Object[] obj : stockValueManager.getStockValueById(companyId)) {
+            CompanyStockValue stockValue = new CompanyStockValue();
+
+            stockValue.setId(((BigInteger) obj[0]).longValue());
+            stockValue.setVolume(((Integer) obj[1]).doubleValue());
+            stockValue.setChange(((Double) obj[2]).doubleValue());
+            stockValue.setChangePercent(((Double) obj[3]).doubleValue());
+            stockValue.setChangePercentYTD(((Double) obj[4]).doubleValue());
+            stockValue.setChangeYTD(((Double) obj[5]).doubleValue());
+            stockValue.setHigh(((Double) obj[6]).doubleValue());
+            stockValue.setLastPrice(((Double) obj[7]).doubleValue());
+            stockValue.setLow(((Double) obj[8]).doubleValue());
+            stockValue.setMarketCap(((Double) obj[9]).doubleValue());
+            stockValue.setMsDate(((Double) obj[10]).doubleValue());
+            stockValue.setOpen(((Double) obj[11]).doubleValue());
+            allStockValues.add(stockValue);
+        }
+
+        String json = new Gson().toJson(allStockValues);
         return json;
     }
 
@@ -129,6 +164,25 @@ public class AngularController {
 
         String json = new Gson().toJson(approxResult);
         return json;
+    }
 
+
+
+    @RequestMapping(value = "/newcompany", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    String newCompany() {
+
+        ObjectMocks.CreateAllMocks();
+        companyManager.addCompany(ObjectMocks.APPLE);
+        stockValueManager.addStockValue(ObjectMocks.APPLE_STOCK_VALUE);
+        stockValueManager.addListOfStockValue(ObjectMocks.APPLE_STOCK_VALUE_LIST);
+        companyManager.addCompany(ObjectMocks.NETFLIX);
+        stockValueManager.addStockValue(ObjectMocks.NETFLIX_STOCK_VALUE);
+        stockValueManager.addListOfStockValue(ObjectMocks.NETFLIX_STOCK_VALUE_LIST);
+
+        String howManyStockValues = ObjectMocks.APPLE.getCompanyStockValueList().size()+"  ";
+        howManyStockValues += ObjectMocks.NETFLIX.getCompanyStockValueList().size()+"";
+        return howManyStockValues;
     }
 }
