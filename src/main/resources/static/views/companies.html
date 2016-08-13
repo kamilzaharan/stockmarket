@@ -1,0 +1,23 @@
+<div>
+    <div ng-controller="companiesController">
+
+        <div class="container">
+            <h3>Lista dostępnych firm: </h3>
+            <br>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Nazwa spółki</th>
+                    <th>Skrót nazwy</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="result in companies">
+                    <td>{{result.fullname}}</td>
+                    <td>{{result.symbol}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -36,7 +36,7 @@ public class NeuralNetwork {
 		for (int j = 0; j < howManyEpoch; j++) {
 
 			if (randomPattern) {
-				Utils.randomizePatterns(inputs, outputs);
+				NetworkUtils.randomizePatterns(inputs, outputs);
 			}
 			for (int i = 0; i < inputs.length; i++) {
 
@@ -64,7 +64,7 @@ public class NeuralNetwork {
 
 
 			if (randomPattern) {
-				Utils.randomizePatterns(inputs, outputs);
+				NetworkUtils.randomizePatterns(inputs, outputs);
 			}
 			for (int i = 0; i < inputs.length; i++) {
 				singleCompute(inputs[i]);

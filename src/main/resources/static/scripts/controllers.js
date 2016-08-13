@@ -58,7 +58,29 @@ cont.controller('currenciesController', ['$scope', 'showCurrencies', 'showExchan
 
                              }]);
 
-cont.controller('graphCtrl', ['$scope', 'getApproximation',
+cont.controller('companiesController', ['$scope', 'showCompanyList',
+    function ($scope, showCompanyList) {
+
+        //to znajdzie currency name, code i ID
+
+        $scope.fullname = function () {
+            showCompanyList.create().$promise
+                .then(function (response) {
+                    $scope.fullname=response;
+                })
+        }
+        $scope.fullname();
+
+        $scope.symbol = function () {
+            showExchangeRate.create().$promise
+                .then(function (response) {
+                    $scope.symbol=response;
+                })
+        }
+        $scope.symbol();
+    }]);
+
+cont.controller('graphCtrl', ['$scope', 'getApproximation/3',
     function ($scope, getApproximation) {
 
         $scope.graphFun = function () {

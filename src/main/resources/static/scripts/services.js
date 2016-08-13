@@ -47,3 +47,15 @@ services.factory('getApproximation', function ($resource) {
         create: {method: 'GET', isArray: true}
     })
 });
+
+services.factory('showCompanyList', function ($resource) {
+    return $resource('http://localhost:8080/showCompanyList', {}, {
+        create: {method: 'GET', isArray: true}
+    })
+});
+
+services.factory('getApproximation/3', function ($resource) {
+    return $resource('http://localhost:8080/getApproximation/3', {}, {
+        create: {method: 'GET', isArray: true}
+    })
+});

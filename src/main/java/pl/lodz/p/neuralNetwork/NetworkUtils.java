@@ -14,7 +14,7 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Utils {
+public class NetworkUtils {
 
     public static void printSinglePattern(double[] array) {
         for (int i = 0; i < array.length; i++) {
@@ -115,7 +115,7 @@ public class Utils {
 //        try (final PrintStream out = new PrintStream(new FileOutputStream(filePath))) {
 //            out.print(xml);
 //        } catch (FileNotFoundException ex) {
-//            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(NetworkUtils.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
 //

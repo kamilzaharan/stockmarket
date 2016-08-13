@@ -18,6 +18,7 @@ import pl.lodz.p.model.Currency;
 import pl.lodz.p.neuralNetwork.Approximation;
 import pl.lodz.p.neuralNetwork.ConfigurationException;
 import pl.lodz.p.neuralNetwork.Point;
+import pl.lodz.p.utils.Utils;
 
 import java.math.BigInteger;
 import java.security.Timestamp;
@@ -137,10 +138,19 @@ public class AngularController {
     public
     @ResponseBody
     String getApproximationByID(@PathVariable String id) {
+        Approximation aprox = new Approximation();
 
         Integer companyId = Integer.parseInt(id);
-        double[][] allStockValues = createDataToAproxFromJSON(companyId);
-        String json = new Gson().toJson(allStockValues);
+        double[][] allTrainData = createTrainingToAproxFromJSON(companyId);
+        double[][] allTestData = createTestToAproxFromJSON(allTrainData);
+        List<Point> approxResult = null;
+        try {
+            approxResult = aprox.doApproximation(allTrainData, allTestData);
+        } catch (ConfigurationException e) {
+            e.printStackTrace();
+        }
+
+        String json = new Gson().toJson(approxResult);
         return json;
     }
 
@@ -151,7 +161,7 @@ public class AngularController {
         Approximation aprox = new Approximation();
         List<Point> approxResult = null;
         try {
-            approxResult = aprox.doApproximation();
+            approxResult = aprox.doApproximation(null,null);
         } catch (ConfigurationException e) {
             e.printStackTrace();
         }
@@ -166,15 +176,10 @@ public class AngularController {
     String newCompany() {
 
         ObjectMocks.CreateAllMocks();
-        companyManager.addCompany(ObjectMocks.APPLE);
-//        stockValueManager.addStockValue(ObjectMocks.APPLE_STOCK_VALUE);
-//        stockValueManager.addListOfStockValue(ObjectMocks.APPLE_STOCK_VALUE_LIST);
-        companyManager.addCompany(ObjectMocks.NETFLIX);
-//        stockValueManager.addStockValue(ObjectMocks.NETFLIX_STOCK_VALUE);
-//        stockValueManager.addListOfStockValue(ObjectMocks.NETFLIX_STOCK_VALUE_LIST);
-
-//        String howManyStockValues = ObjectMocks.APPLE.getCompanyStockValueList().size()+"  ";
-//        howManyStockValues += ObjectMocks.NETFLIX.getCompanyStockValueList().size()+"";
+        List<Company> companyList= Utils.readCompaniesFromCsv("companylist.csv");
+        for(Company company:companyList){
+            companyManager.addCompany(company);
+        }
         return "jest okej";
     }
 
@@ -203,25 +208,46 @@ public class AngularController {
         return allStockValues;
     }
 
-    public double[][] createDataToAproxFromJSON(int companyId){
+    public double[][] createTrainingToAproxFromJSON(int companyId){
         double[][] allStockValues = new double[stockValueManager.getStockValueById(companyId).size()][2];
         int i =0;
 
         for (Object[] obj : stockValueManager.getStockValueById(companyId)) {
 
-            allStockValues[i][0]=(((Double) obj[7]).doubleValue());
-            String[] hour = (obj[12].toString()).split(" ");
+                allStockValues[i][1] = (((Double) obj[7]).doubleValue());
+                String[] hour = (obj[12].toString()).split(" ");
 
-            String time= hour[3];
-            String[] splitHour =time.split(":");
-            int hour1=Integer.parseInt(splitHour[0]);
-            int hour2= Integer.parseInt(splitHour[1]);
-            int hour3= Integer.parseInt(splitHour[2]);
-            int allTime= hour1*3600+hour2*60+hour3;
-            log.info("LALALALALALALAALALAL hour1=" +hour1 +"   minute:" +hour2+ "second:"+ hour3+" sumOfSeconds"+allTime );
-            allStockValues[i][1]=allTime;
-            i++;
+                String time = hour[3];
+                String[] splitHour = time.split(":");
+                int hour1 = Integer.parseInt(splitHour[0]);
+                int hour2 = Integer.parseInt(splitHour[1]);
+                int hour3 = Integer.parseInt(splitHour[2]);
+                int allTime = hour1 * 3600 + hour2 * 60 + hour3;
+                log.info("TimeStamp: hour1=" + hour1 + "   minute:" + hour2 + "second:" + hour3 + " sumOfSeconds" + allTime);
+                allStockValues[i][0] = allTime;
+                i++;
+
         }
         return allStockValues;
+    }
+
+    public double[][] createTestToAproxFromJSON( double[][] allStockValues){
+
+        double[][] allTestValues = new double [allStockValues.length+3][2];
+
+        for(int i=0;i<allStockValues.length-1; i++){
+            for(int j=0;j<2; j++){
+                allTestValues[i][j]=allStockValues[i][j];
+                log.info("lalal"+i+"  "+j);
+            }
+        }
+        allTestValues[allStockValues.length][0]=60000;
+        allTestValues[allStockValues.length][1]=200.99999999999773;
+        allTestValues[allStockValues.length+1][0]=70000;
+        allTestValues[allStockValues.length+1][1]=300.99999999999773;
+        allTestValues[allStockValues.length+2][0]=80000;
+        allTestValues[allStockValues.length+2][1]=400.99999999999773;
+
+        return allTestValues;
     }
 }
