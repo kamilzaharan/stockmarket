@@ -1,21 +1,26 @@
 package pl.lodz.p.controllers;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import pl.lodz.p.dao.CompanyStockValueDAO;
 import pl.lodz.p.dto.CreateCompanyDTO;
+import pl.lodz.p.managers.CompanyManager;
 import pl.lodz.p.managers.MainManager;
+import pl.lodz.p.managers.StockValueManager;
+import pl.lodz.p.mocks.ObjectMocks;
 import pl.lodz.p.model.Company;
 import pl.lodz.p.model.CompanyStockValue;
+import pl.lodz.p.model.Currency;
+import pl.lodz.p.neuralNetwork.Approximation;
+import pl.lodz.p.neuralNetwork.ConfigurationException;
+import pl.lodz.p.neuralNetwork.Point;
 
+import java.math.BigInteger;
+import java.security.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,11 +35,95 @@ public class AngularController {
 
     @Autowired
     private MainManager mainManager;
+    @Autowired
+    private CompanyManager companyManager;
+    @Autowired
+    private StockValueManager stockValueManager;
+
 
 
     @RequestMapping(value = "/getAllCompanies", method = RequestMethod.GET, produces = "application/json")
-    public @ResponseBody List<Company> showResultsFromDB() {
-        return mainManager.getAllCompanies();  //TODO blad z opakowaniem listy w obiekt jsonowy
+    public
+    @ResponseBody
+    String showResultsGosiaFromDB() {
+
+        ArrayList<Company> allCompanies = new ArrayList<Company>();
+        for (Object[] obj : mainManager.findCompanyIdNameSymbol()) {
+            Company c = new Company();
+
+            c.setId(((BigInteger) obj[0]).longValue());
+            c.setFullName((String) obj[1]);
+            c.setSymbol((String) obj[2]);
+            allCompanies.add(c);
+        }
+
+        String json = new Gson().toJson(allCompanies);
+        return json;
+    }
+
+    @RequestMapping(value = "/getCompaniesById/{id}", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    String getCompaniesById(@PathVariable String id) {
+
+        Integer companyId = Integer.parseInt(id);
+        ArrayList<CompanyStockValue> allStockValues = createStockValueFromJSON(companyId);
+        String json = new Gson().toJson(allStockValues);
+        return json;
+    }
+
+
+    @RequestMapping(value = "/getAllCurrencies", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    String showCurrenciesFromDB() {
+
+        ArrayList<Currency> allCurrencies = new ArrayList<Currency>();
+        for (Object[] obj : mainManager.findCurrencyIdCodeName()) {
+            Currency c = new Currency();
+            c.setId(((BigInteger) obj[0]).longValue());
+            c.setCurrencyCode((String) obj[1]);
+            c.setCurrencyName((String) obj[2]);
+            allCurrencies.add(c);
+        }
+
+        String json = new Gson().toJson(allCurrencies);
+        return json;
+
+    }
+
+    @RequestMapping(value = "/getExchangeRate", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    String showExchangeRate() {
+
+        ArrayList<JsonObject> allData = new ArrayList<JsonObject>();
+
+        for (Object[] obj : mainManager.findExchangeRate()) {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("code", (String) obj[0]);
+            jsonObject.addProperty("name", (String) obj[1]);
+            jsonObject.addProperty("value", (String) obj[2]);
+            allData.add(jsonObject);
+        }
+
+        String json = new Gson().toJson(allData);
+        return json;
+
+    }
+
+
+    @RequestMapping(value = "/getExchangeRateDate", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    String getExchangeRateDate() {
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("date", mainManager.getCurrentExchangeRateDate());
+
+        String json = new Gson().toJson(jsonObject);
+        return json;
+
     }
 
     @RequestMapping(value = "/addCompany", method = RequestMethod.POST, consumes = "application/json")
@@ -42,5 +131,97 @@ public class AngularController {
     public void createCompany(@RequestBody CreateCompanyDTO createCompanyDTO) {
         log.info("Jestem w createCompany");
         mainManager.createCompany(createCompanyDTO);
+    }
+
+    @RequestMapping(value = "/getApproximation/{id}", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    String getApproximationByID(@PathVariable String id) {
+
+        Integer companyId = Integer.parseInt(id);
+        double[][] allStockValues = createDataToAproxFromJSON(companyId);
+        String json = new Gson().toJson(allStockValues);
+        return json;
+    }
+
+    @RequestMapping(value = "/getApproximation", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    String showApproximation() {
+        Approximation aprox = new Approximation();
+        List<Point> approxResult = null;
+        try {
+            approxResult = aprox.doApproximation();
+        } catch (ConfigurationException e) {
+            e.printStackTrace();
+        }
+
+        String json = new Gson().toJson(approxResult);
+        return json;
+    }
+
+    @RequestMapping(value = "/newcompany", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    String newCompany() {
+
+        ObjectMocks.CreateAllMocks();
+        companyManager.addCompany(ObjectMocks.APPLE);
+//        stockValueManager.addStockValue(ObjectMocks.APPLE_STOCK_VALUE);
+//        stockValueManager.addListOfStockValue(ObjectMocks.APPLE_STOCK_VALUE_LIST);
+        companyManager.addCompany(ObjectMocks.NETFLIX);
+//        stockValueManager.addStockValue(ObjectMocks.NETFLIX_STOCK_VALUE);
+//        stockValueManager.addListOfStockValue(ObjectMocks.NETFLIX_STOCK_VALUE_LIST);
+
+//        String howManyStockValues = ObjectMocks.APPLE.getCompanyStockValueList().size()+"  ";
+//        howManyStockValues += ObjectMocks.NETFLIX.getCompanyStockValueList().size()+"";
+        return "jest okej";
+    }
+
+
+    public ArrayList<CompanyStockValue> createStockValueFromJSON(int companyId){
+        ArrayList<CompanyStockValue> allStockValues = new ArrayList();
+
+        for (Object[] obj : stockValueManager.getStockValueById(companyId)) {
+            CompanyStockValue stockValue = new CompanyStockValue();
+
+            stockValue.setId(((BigInteger) obj[0]).longValue());
+            stockValue.setVolume(((Integer) obj[1]).doubleValue());
+            stockValue.setChange(((Double) obj[2]).doubleValue());
+            stockValue.setChangePercent(((Double) obj[3]).doubleValue());
+            stockValue.setChangePercentYTD(((Double) obj[4]).doubleValue());
+            stockValue.setChangeYTD(((Double) obj[5]).doubleValue());
+            stockValue.setHigh(((Double) obj[6]).doubleValue());
+            stockValue.setLastPrice(((Double) obj[7]).doubleValue());
+            stockValue.setLow(((Double) obj[8]).doubleValue());
+            stockValue.setMarketCap(((Double) obj[9]).doubleValue());
+            stockValue.setMsDate(((Double) obj[10]).doubleValue());
+            stockValue.setOpen(((Double) obj[11]).doubleValue());
+            stockValue.setTimestamp(obj[12].toString());
+            allStockValues.add(stockValue);
+        }
+        return allStockValues;
+    }
+
+    public double[][] createDataToAproxFromJSON(int companyId){
+        double[][] allStockValues = new double[stockValueManager.getStockValueById(companyId).size()][2];
+        int i =0;
+
+        for (Object[] obj : stockValueManager.getStockValueById(companyId)) {
+
+            allStockValues[i][0]=(((Double) obj[7]).doubleValue());
+            String[] hour = (obj[12].toString()).split(" ");
+
+            String time= hour[3];
+            String[] splitHour =time.split(":");
+            int hour1=Integer.parseInt(splitHour[0]);
+            int hour2= Integer.parseInt(splitHour[1]);
+            int hour3= Integer.parseInt(splitHour[2]);
+            int allTime= hour1*3600+hour2*60+hour3;
+            log.info("LALALALALALALAALALAL hour1=" +hour1 +"   minute:" +hour2+ "second:"+ hour3+" sumOfSeconds"+allTime );
+            allStockValues[i][1]=allTime;
+            i++;
+        }
+        return allStockValues;
     }
 }

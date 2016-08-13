@@ -1,7 +1,5 @@
 package pl.lodz.p.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -42,7 +40,7 @@ public class CompanyStockValue {
     private double marketCap;
 
     @Column(name = "VOLUME")
-    private int Volume;
+    private double Volume;
 
     @Column(name = "CXHANGE_YTD")
     private double changeYTD;
@@ -119,11 +117,11 @@ public class CompanyStockValue {
         this.marketCap = marketCap;
     }
 
-    public int getVolume() {
+    public double getVolume() {
         return Volume;
     }
 
-    public void setVolume(int volume) {
+    public void setVolume(double volume) {
         Volume = volume;
     }
 

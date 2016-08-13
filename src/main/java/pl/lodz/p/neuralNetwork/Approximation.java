@@ -1,15 +1,15 @@
 package pl.lodz.p.neuralNetwork;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.lang3.ArrayUtils;
-
 
 public class Approximation {
 
-    public void doApproximation() {
+    public List<Point> doApproximation() throws ConfigurationException {
 
         double[][] approximationTrain1 = Utils.getArraysFromFile("approximation_train_1.txt");
         double[][] approxiamtionTrain2 = Utils.getArraysFromFile("approximation_train_2.txt");
@@ -17,8 +17,6 @@ public class Approximation {
 
         approximationTest = Utils.arraySort(approximationTest);
         Utils.saveArraysToFile("approximation_test_sorted.txt", approximationTest);
-
-        List<Point> errPoints = new ArrayList();
 
         double[][] inputs1 = Utils.getColumnArrayFromArray(0, approximationTrain1);
         double[][] outputs1 = Utils.getColumnArrayFromArray(1, approximationTrain1);
@@ -32,19 +30,54 @@ public class Approximation {
         double[][] testInputs = Utils.getColumnArrayFromArray(0, approximationTest);
         double[][] testOutputs = Utils.getColumnArrayFromArray(1, approximationTest);
 
-         
-        
-        NeuronConfiguration neuronConf=new NeuronConfiguration(0.6, 1, 0.2, true);
+        double alpha = 0.2, beta = 1, momentum = 0.2;
+
+        if (alpha < 0 || alpha >= 1) {
+            throw new ConfigurationException("Wrong alpha");
+        }
+        if (beta < 0 || beta > 1) {
+            throw new ConfigurationException("Wrong beta");
+        }
+        if (momentum < 0 || momentum >= 1) {
+            throw new ConfigurationException("Wrong momentum");}
+
+        NeuronConfiguration neuronConf = new NeuronConfiguration(alpha, beta, momentum, true);
+
         int[] howManyHiddenNeurons = {15};
-        
-        NeuralNetworkConfiguration networkConf=new NeuralNetworkConfiguration(1, howManyHiddenNeurons, 1, true, 0.7);
+
+        if (howManyHiddenNeurons.length < 1) {
+            throw new ConfigurationException("Wrong number of hidden layers");
+        }
+        for (int i = 0; i < howManyHiddenNeurons.length; i++) {
+            if (howManyHiddenNeurons[i] < 1) {
+                throw new ConfigurationException("Wrong number of neurons on hidden layer. Layer: " + i + ", Neurons: " + howManyHiddenNeurons[i]);
+            }
+        }
+
+        int inputNeurons = 1, outputNeurons = 1;
+        double epsilon = 0.7;
+
+        if (inputNeurons <= 0 || inputNeurons >= 10) {
+            throw new ConfigurationException("Wrong number of input neurons");
+        }
+        if (outputNeurons <= 0 || outputNeurons >= 10) {
+            throw new ConfigurationException("Wrong number of output neurons");
+        }
+        if (epsilon < 0 || epsilon > 1) {
+            throw new ConfigurationException("Wrong epsilon");
+        }
+
+
+        NeuralNetworkConfiguration networkConf = new NeuralNetworkConfiguration(inputNeurons, howManyHiddenNeurons, outputNeurons, true, epsilon);
  
         int howManyEpoch = 10000;
 
         List<Point> approximationResults = new ArrayList<>();
 
-        for (int i = 1; i <= 20; i++) {
+        //for (int i = 1; i <= 20; i++) {
+        List<Point> errPoints = new ArrayList();
 
+        int i=10;
             NeuralNetwork approximationNetwork = new NeuralNetwork(networkConf, neuronConf);
             
             //dla treningowych 1,2 i obie
@@ -65,9 +98,9 @@ public class Approximation {
 
             Collections.sort(approximationResults);
             Utils.savePoints("approximation" + i, approximationResults);
-
-            approximationResults.clear();
-        }
+return approximationResults;
+//            approximationResults.clear();
+       // }
     }
 
 }

@@ -3,9 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <title>Stock Market</title>
-    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">-->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link href="css/d3fc.min.css" rel="stylesheet"/>
 </head>
 <body>
+
+<div>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+            </button> <a class="navbar-brand" href="/">Strona główna</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li >
+                    <a href="/graph">Wykresy akcji</a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Akcje<strong class="caret"></strong></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#">Dodaj akcjed do śledzonych</a>
+                        </li>
+                        <li>
+                            <a href="#">Usuń akcje</a>
+                        </li>
+                        <li class="divider">
+                        </li>
+                        <li>
+                            <a href="#">bla bla</a>
+                        </li>
+                    </ul>
+                </li>
+
+
+            </ul>
+
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input class="form-control" type="text">
+                </div>
+                <button type="submit" class="btn btn-default">
+                    wyszukaj akcje
+                </button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li >
+                    <a href="/currencies">Aktualne kursy walut </a>
+                </li>
+                <li>
+                    <a href="#">Inbox <span class="badge" >42</span></a>
+                </li>
+
+            </ul>
+        </div>
+
+    </nav>
+</div>
+
     <div ng-view></div>
 
     <script src="libraries/jquery.min.js"></script>
@@ -13,6 +72,7 @@
     <script src="libraries/angular.min.js"></script>
     <script src="libraries/angular-resource.min.js"></script>
     <script src="libraries/angular-route.min.js"></script>
+    <script src="libraries/d3fc.bundle.min.js"></script>
 
     <script src="app.js"></script>
     <script src="scripts/controllers.js"></script>

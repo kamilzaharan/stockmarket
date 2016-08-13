@@ -3,29 +3,9 @@ package pl.lodz.p.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.DoubleSummaryStatistics;
-
 /**
  * Created by kamil on 5/22/16.
  */
-
-/*<StockQuote>
-<Status>SUCCESS</Status>
-<Name>Alphabet Inc</Name>
-<Symbol>GOOGL</Symbol>
-<LastPrice>721.52</LastPrice>
-<Change>6.21</Change>
-<ChangePercent>0.8681550656</ChangePercent>
-<Timestamp>Fri May 20 15:59:00 UTC-04:00 2016</Timestamp>
-<MSDate>42510.6659722222</MSDate>
-<MarketCap>247565056320</MarketCap>
-<Volume>172376</Volume>
-<ChangeYTD>778.01</ChangeYTD>
-<ChangePercentYTD>-7.260832123</ChangePercentYTD>
-<High>727.6</High>
-<Low>716.97</Low>
-<Open>717.44</Open>
-</StockQuote>*/
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class QuoteResponseDTO {
@@ -49,7 +29,7 @@ public class QuoteResponseDTO {
     @JsonProperty(value = "MarketCap")
     private double marketCap;
     @JsonProperty(value = "Volume")
-    private int Volume;
+    private double Volume;
     @JsonProperty(value = "ChangeYTD")
     private double changeYTD;
     @JsonProperty(value = "ChangePercentYTD")
@@ -133,11 +113,11 @@ public class QuoteResponseDTO {
         this.marketCap = marketCap;
     }
 
-    public int getVolume() {
+    public double getVolume() {
         return Volume;
     }
 
-    public void setVolume(int volume) {
+    public void setVolume(double volume) {
         Volume = volume;
     }
 

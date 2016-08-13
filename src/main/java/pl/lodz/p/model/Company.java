@@ -2,6 +2,7 @@ package pl.lodz.p.model;
 
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +31,7 @@ public class Company {
     private String symbol;
 
     @OneToMany(mappedBy = "companyId")
-    private List<CompanyStockValue> companyStockValueList;
+    private Set<CompanyStockValue> companyStockValueList;
 
     public long getId() {
         return id;
@@ -56,11 +57,11 @@ public class Company {
         this.symbol = symbol;
     }
 
-    public List<CompanyStockValue> getCompanyStockValueList() {
+    public Set<CompanyStockValue> getCompanyStockValueList() {
         return companyStockValueList;
     }
 
-    public void setCompanyStockValueList(List<CompanyStockValue> companyStockValueList) {
+    public void setCompanyStockValueList(Set<CompanyStockValue> companyStockValueList) {
         this.companyStockValueList = companyStockValueList;
     }
 }
