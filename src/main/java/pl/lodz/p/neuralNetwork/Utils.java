@@ -171,6 +171,12 @@ public class Utils {
         return temp;
     }
 
+    public static double[][] getArraysFromJson(String filename) {
+        double[][] temp = null;
+
+        return temp;
+    }
+
     public static void saveArraysToFile(String filename, double[][] array) {
         try (final PrintStream out = new PrintStream(new FileOutputStream(filename))) {
 

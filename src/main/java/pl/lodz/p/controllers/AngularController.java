@@ -20,6 +20,7 @@ import pl.lodz.p.neuralNetwork.ConfigurationException;
 import pl.lodz.p.neuralNetwork.Point;
 
 import java.math.BigInteger;
+import java.security.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,30 +66,12 @@ public class AngularController {
     @ResponseBody
     String getCompaniesById(@PathVariable String id) {
 
-        ArrayList<CompanyStockValue> allStockValues = new ArrayList();
         Integer companyId = Integer.parseInt(id);
-
-        for (Object[] obj : stockValueManager.getStockValueById(companyId)) {
-            CompanyStockValue stockValue = new CompanyStockValue();
-
-            stockValue.setId(((BigInteger) obj[0]).longValue());
-            stockValue.setVolume(((Integer) obj[1]).doubleValue());
-            stockValue.setChange(((Double) obj[2]).doubleValue());
-            stockValue.setChangePercent(((Double) obj[3]).doubleValue());
-            stockValue.setChangePercentYTD(((Double) obj[4]).doubleValue());
-            stockValue.setChangeYTD(((Double) obj[5]).doubleValue());
-            stockValue.setHigh(((Double) obj[6]).doubleValue());
-            stockValue.setLastPrice(((Double) obj[7]).doubleValue());
-            stockValue.setLow(((Double) obj[8]).doubleValue());
-            stockValue.setMarketCap(((Double) obj[9]).doubleValue());
-            stockValue.setMsDate(((Double) obj[10]).doubleValue());
-            stockValue.setOpen(((Double) obj[11]).doubleValue());
-            allStockValues.add(stockValue);
-        }
-
+        ArrayList<CompanyStockValue> allStockValues = createStockValueFromJSON(companyId);
         String json = new Gson().toJson(allStockValues);
         return json;
     }
+
 
     @RequestMapping(value = "/getAllCurrencies", method = RequestMethod.GET, produces = "application/json")
     public
@@ -150,6 +133,17 @@ public class AngularController {
         mainManager.createCompany(createCompanyDTO);
     }
 
+    @RequestMapping(value = "/getApproximation/{id}", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    String getApproximationByID(@PathVariable String id) {
+
+        Integer companyId = Integer.parseInt(id);
+        double[][] allStockValues = createDataToAproxFromJSON(companyId);
+        String json = new Gson().toJson(allStockValues);
+        return json;
+    }
+
     @RequestMapping(value = "/getApproximation", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
@@ -166,8 +160,6 @@ public class AngularController {
         return json;
     }
 
-
-
     @RequestMapping(value = "/newcompany", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
@@ -175,14 +167,61 @@ public class AngularController {
 
         ObjectMocks.CreateAllMocks();
         companyManager.addCompany(ObjectMocks.APPLE);
-        stockValueManager.addStockValue(ObjectMocks.APPLE_STOCK_VALUE);
-        stockValueManager.addListOfStockValue(ObjectMocks.APPLE_STOCK_VALUE_LIST);
+//        stockValueManager.addStockValue(ObjectMocks.APPLE_STOCK_VALUE);
+//        stockValueManager.addListOfStockValue(ObjectMocks.APPLE_STOCK_VALUE_LIST);
         companyManager.addCompany(ObjectMocks.NETFLIX);
-        stockValueManager.addStockValue(ObjectMocks.NETFLIX_STOCK_VALUE);
-        stockValueManager.addListOfStockValue(ObjectMocks.NETFLIX_STOCK_VALUE_LIST);
+//        stockValueManager.addStockValue(ObjectMocks.NETFLIX_STOCK_VALUE);
+//        stockValueManager.addListOfStockValue(ObjectMocks.NETFLIX_STOCK_VALUE_LIST);
 
-        String howManyStockValues = ObjectMocks.APPLE.getCompanyStockValueList().size()+"  ";
-        howManyStockValues += ObjectMocks.NETFLIX.getCompanyStockValueList().size()+"";
-        return howManyStockValues;
+//        String howManyStockValues = ObjectMocks.APPLE.getCompanyStockValueList().size()+"  ";
+//        howManyStockValues += ObjectMocks.NETFLIX.getCompanyStockValueList().size()+"";
+        return "jest okej";
+    }
+
+
+    public ArrayList<CompanyStockValue> createStockValueFromJSON(int companyId){
+        ArrayList<CompanyStockValue> allStockValues = new ArrayList();
+
+        for (Object[] obj : stockValueManager.getStockValueById(companyId)) {
+            CompanyStockValue stockValue = new CompanyStockValue();
+
+            stockValue.setId(((BigInteger) obj[0]).longValue());
+            stockValue.setVolume(((Integer) obj[1]).doubleValue());
+            stockValue.setChange(((Double) obj[2]).doubleValue());
+            stockValue.setChangePercent(((Double) obj[3]).doubleValue());
+            stockValue.setChangePercentYTD(((Double) obj[4]).doubleValue());
+            stockValue.setChangeYTD(((Double) obj[5]).doubleValue());
+            stockValue.setHigh(((Double) obj[6]).doubleValue());
+            stockValue.setLastPrice(((Double) obj[7]).doubleValue());
+            stockValue.setLow(((Double) obj[8]).doubleValue());
+            stockValue.setMarketCap(((Double) obj[9]).doubleValue());
+            stockValue.setMsDate(((Double) obj[10]).doubleValue());
+            stockValue.setOpen(((Double) obj[11]).doubleValue());
+            stockValue.setTimestamp(obj[12].toString());
+            allStockValues.add(stockValue);
+        }
+        return allStockValues;
+    }
+
+    public double[][] createDataToAproxFromJSON(int companyId){
+        double[][] allStockValues = new double[stockValueManager.getStockValueById(companyId).size()][2];
+        int i =0;
+
+        for (Object[] obj : stockValueManager.getStockValueById(companyId)) {
+
+            allStockValues[i][0]=(((Double) obj[7]).doubleValue());
+            String[] hour = (obj[12].toString()).split(" ");
+
+            String time= hour[3];
+            String[] splitHour =time.split(":");
+            int hour1=Integer.parseInt(splitHour[0]);
+            int hour2= Integer.parseInt(splitHour[1]);
+            int hour3= Integer.parseInt(splitHour[2]);
+            int allTime= hour1*3600+hour2*60+hour3;
+            log.info("LALALALALALALAALALAL hour1=" +hour1 +"   minute:" +hour2+ "second:"+ hour3+" sumOfSeconds"+allTime );
+            allStockValues[i][1]=allTime;
+            i++;
+        }
+        return allStockValues;
     }
 }

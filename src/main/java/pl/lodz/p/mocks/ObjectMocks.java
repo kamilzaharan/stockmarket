@@ -21,9 +21,9 @@ public class ObjectMocks {
 
     public static void CreateAllMocks(){
         CreateCompanyMocks();
-        CreateStockValueMocks();
-        CreateStockValueListMocks();
-        AddListToCompanyMock();
+//        CreateStockValueMocks();
+//        CreateStockValueListMocks();
+//        AddListToCompanyMock();
     }
 
     public static void CreateStockValueMocks() {
@@ -89,7 +89,7 @@ public class ObjectMocks {
     }
 
     public static void CreateCompanyMocks(){
-        APPLE.setSymbol("APPL");
+        APPLE.setSymbol("AAPL");
         APPLE.setId(1);
         APPLE.setFullName("AppleInc");
 
