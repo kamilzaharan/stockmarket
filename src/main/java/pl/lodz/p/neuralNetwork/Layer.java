@@ -114,4 +114,9 @@ public class Layer {
 	}
 
 
+	public void setLinnearError(int i, double d) {
+		neurons[i].setLinearError(d);
+	}
+
+
 }
