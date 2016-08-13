@@ -39,7 +39,8 @@ public class Approximation {
             throw new ConfigurationException("Wrong beta");
         }
         if (momentum < 0 || momentum >= 1) {
-            throw new ConfigurationException("Wrong momentum");}
+            throw new ConfigurationException("Wrong momentum");
+        }
 
         NeuronConfiguration neuronConf = new NeuronConfiguration(alpha, beta, momentum, true);
 
@@ -69,7 +70,7 @@ public class Approximation {
 
 
         NeuralNetworkConfiguration networkConf = new NeuralNetworkConfiguration(inputNeurons, howManyHiddenNeurons, outputNeurons, true, epsilon);
- 
+
         int howManyEpoch = 10000;
 
         List<Point> approximationResults = new ArrayList<>();
@@ -77,30 +78,30 @@ public class Approximation {
         //for (int i = 1; i <= 20; i++) {
         List<Point> errPoints = new ArrayList();
 
-        int i=10;
-            NeuralNetwork approximationNetwork = new NeuralNetwork(networkConf, neuronConf);
-            
-            //dla treningowych 1,2 i obie
-            // approximationNetwork.learn(howManyEpoch, inputs1, outputs1, errPoints);
-            // approximationNetwork.learn(howManyEpoch, inputs2, outputs2, errPoints);
-            approximationNetwork.learn(howManyEpoch, trainInputs, trainOutputs, errPoints);
-            // Utils.savePoints("app_error_Train_"+i, errPoints);
-            //errPoints.clear();
-            
-            //dane testowe
-            // approximationNetwork.learn(howManyEpoch, testInputs, testOutputs, errPoints);
-            //  Utils.savePoints("app_error_Test_" + i, errPoints);
-            // errPoints.clear();
-            for (double[] testInput : testInputs) {
-                approximationNetwork.singleCompute(testInput);
-                approximationResults.add(new Point(testInput[0], approximationNetwork.returnSingleOutput()));
-            }
+        int i = 10;
+        NeuralNetwork approximationNetwork = new NeuralNetwork(networkConf, neuronConf);
 
-            Collections.sort(approximationResults);
-            Utils.savePoints("approximation" + i, approximationResults);
-return approximationResults;
+        //dla treningowych 1,2 i obie
+        // approximationNetwork.learn(howManyEpoch, inputs1, outputs1, errPoints);
+        // approximationNetwork.learn(howManyEpoch, inputs2, outputs2, errPoints);
+        approximationNetwork.learn(howManyEpoch, trainInputs, trainOutputs, errPoints);
+        // Utils.savePoints("app_error_Train_"+i, errPoints);
+        //errPoints.clear();
+
+        //dane testowe
+        // approximationNetwork.learn(howManyEpoch, testInputs, testOutputs, errPoints);
+        //  Utils.savePoints("app_error_Test_" + i, errPoints);
+        // errPoints.clear();
+        for (double[] testInput : testInputs) {
+            approximationNetwork.singleCompute(testInput);
+            approximationResults.add(new Point(testInput[0], approximationNetwork.returnSingleOutput()));
+        }
+
+        Collections.sort(approximationResults);
+        Utils.savePoints("approximation" + i, approximationResults);
+        return approximationResults;
 //            approximationResults.clear();
-       // }
+        // }
     }
 
 }
