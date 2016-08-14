@@ -42,20 +42,14 @@ services.factory('getDate', function ($resource) {
     })
 });
 
-services.factory('getApproximation', function ($resource) {
-    return $resource('http://localhost:8080/getApproximation', {}, {
-        create: {method: 'GET', isArray: true}
-    })
-});
-
 services.factory('showCompanyList', function ($resource) {
     return $resource('http://localhost:8080/companiesList', {}, {
         create: {method: 'GET', isArray: true}
     })
 });
 
-services.factory('getApproximation/3', function ($resource) {
-    return $resource('http://localhost:8080/getApproximation/3', {}, {
-        create: {method: 'GET', isArray: true}
+services.factory('getApproximation', function ($resource) {
+    return $resource('http://localhost:8080/getApproximation/:id', {}, {
+        create: {method: 'GET', params: {id: '@id'}, isArray: true}
     })
 });

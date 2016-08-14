@@ -13,10 +13,11 @@
                 </tr>
                 </thead>
                 <tbody>
+
                 <tr ng-repeat="result in companies">
                     <td>{{result.fullName}}</td>
                     <td>{{result.symbol}}</td>
-                    <td><a href="/graph" class="btn btn-primary  btn-md active" role="button" aria-pressed="true">Zobacz wykres</a></td>
+                    <td><a class="btn btn-primary" href="/graph/{{result.id}}" role="button">Zobacz wykres</a></td>
                 </tr>
                 </tbody>
             </table>

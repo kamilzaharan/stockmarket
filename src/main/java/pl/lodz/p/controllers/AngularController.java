@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import pl.lodz.p.dto.CreateCompanyDTO;
@@ -183,7 +184,6 @@ public class AngularController {
         return "jest okej";
     }
 
-
     public ArrayList<CompanyStockValue> createStockValueFromJSON(int companyId){
         ArrayList<CompanyStockValue> allStockValues = new ArrayList();
 
@@ -214,17 +214,8 @@ public class AngularController {
 
         for (Object[] obj : stockValueManager.getStockValueById(companyId)) {
 
-                allStockValues[i][1] = (((Double) obj[7]).doubleValue());
-                String[] hour = (obj[12].toString()).split(" ");
-
-                String time = hour[3];
-                String[] splitHour = time.split(":");
-                int hour1 = Integer.parseInt(splitHour[0]);
-                int hour2 = Integer.parseInt(splitHour[1]);
-                int hour3 = Integer.parseInt(splitHour[2]);
-                int allTime = hour1 * 3600 + hour2 * 60 + hour3;
-                log.info("TimeStamp: hour1=" + hour1 + "   minute:" + hour2 + "second:" + hour3 + " sumOfSeconds" + allTime);
-                allStockValues[i][0] = allTime;
+                allStockValues[i][1] = ((Double) obj[7]).doubleValue();
+                allStockValues[i][0] = i*10;
                 i++;
 
         }
@@ -240,12 +231,12 @@ public class AngularController {
                 allTestValues[i][j]=allStockValues[i][j];
             }
         }
-        allTestValues[allStockValues.length][0]=60000;
-        allTestValues[allStockValues.length][1]=200.99999999999773;
-        allTestValues[allStockValues.length+1][0]=70000;
-        allTestValues[allStockValues.length+1][1]=300.99999999999773;
-        allTestValues[allStockValues.length+2][0]=80000;
-        allTestValues[allStockValues.length+2][1]=400.99999999999773;
+        allTestValues[allStockValues.length][0]=300;
+        allTestValues[allStockValues.length][1]=200.99283999999773;
+        allTestValues[allStockValues.length+1][0]=310;
+        allTestValues[allStockValues.length+1][1]=300.9997469999773;
+        allTestValues[allStockValues.length+2][0]=320;
+        allTestValues[allStockValues.length+2][1]=400.99912399999773;
 
         return allTestValues;
     }

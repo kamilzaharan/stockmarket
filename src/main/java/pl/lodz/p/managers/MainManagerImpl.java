@@ -80,7 +80,7 @@ public class MainManagerImpl implements MainManager {
 
     @Override
     public void getExchangeRate() {
-        try {
+     /*   try {
             URL file = new URL("http://nbp.pl/kursy/xml/LastA.xml");
 
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -123,8 +123,9 @@ public class MainManagerImpl implements MainManager {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
+
 
     @Override
     public String getCurrentExchangeRateDate(){

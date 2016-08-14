@@ -68,16 +68,16 @@ cont.controller('companiesController', ['$scope', 'showCompanyList',
                 .then(function (response) {
                     $scope.companies=response;
                 })
-        }
+        };
         $scope.companies();
 
     }]);
 
-cont.controller('graphCtrl', ['$scope', 'getApproximation/3',
-    function ($scope, getApproximation) {
+cont.controller('graphCtrl', ['$scope', '$routeParams', 'getApproximation',
+    function ($scope, $routeParams, getApproximation) {
 
         $scope.graphFun = function () {
-            getApproximation.create().$promise
+            getApproximation.create({id: $routeParams.id}).$promise
                 .then(function (response) {
                     $scope.approximation=response;
 
