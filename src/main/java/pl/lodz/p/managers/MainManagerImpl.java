@@ -80,50 +80,50 @@ public class MainManagerImpl implements MainManager {
 
     @Override
     public void getExchangeRate() {
-        try {
-            URL file = new URL("http://nbp.pl/kursy/xml/LastA.xml");
-
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            DocumentBuilder db = dbf.newDocumentBuilder();
-
-            Document document = db.parse(file.openStream());
-
-            NodeList data = document.getElementsByTagName("data_publikacji");
-            Element element = (Element) data.item(0);
-//            System.out.print(element.getTextContent());
-
-            currentExchangeRateDate=element.getTextContent();
-
-            NodeList nList = document.getElementsByTagName("pozycja");
-
-            for (int temp = 0; temp < nList.getLength(); temp++) {
-
-                Node nNode = nList.item(temp);
-
-                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-
-                    Element eElement = (Element) nNode;
-
-                    Currency currency = new Currency();
-                    currency.setCurrencyName(eElement.getElementsByTagName("nazwa_waluty").item(0).getTextContent());
-                    currency.setCurrencyCode(eElement.getElementsByTagName("kod_waluty").item(0).getTextContent());
-                    CurrencyValue currencyValue = new CurrencyValue();
-                    currencyValue.setCurrencyValue(eElement.getElementsByTagName("kurs_sredni").item(0).getTextContent());
-                    currencyValue.setCurrencyId(currency);
-                    currencyDAO.save(currency);
-                    currencyValueDAO.save(currencyValue);
-
-                }
-            }
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            URL file = new URL("http://nbp.pl/kursy/xml/LastA.xml");
+//
+//            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+//            DocumentBuilder db = dbf.newDocumentBuilder();
+//
+//            Document document = db.parse(file.openStream());
+//
+//            NodeList data = document.getElementsByTagName("data_publikacji");
+//            Element element = (Element) data.item(0);
+////            System.out.print(element.getTextContent());
+//
+//            currentExchangeRateDate=element.getTextContent();
+//
+//            NodeList nList = document.getElementsByTagName("pozycja");
+//
+//            for (int temp = 0; temp < nList.getLength(); temp++) {
+//
+//                Node nNode = nList.item(temp);
+//
+//                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+//
+//                    Element eElement = (Element) nNode;
+//
+//                    Currency currency = new Currency();
+//                    currency.setCurrencyName(eElement.getElementsByTagName("nazwa_waluty").item(0).getTextContent());
+//                    currency.setCurrencyCode(eElement.getElementsByTagName("kod_waluty").item(0).getTextContent());
+//                    CurrencyValue currencyValue = new CurrencyValue();
+//                    currencyValue.setCurrencyValue(eElement.getElementsByTagName("kurs_sredni").item(0).getTextContent());
+//                    currencyValue.setCurrencyId(currency);
+//                    currencyDAO.save(currency);
+//                    currencyValueDAO.save(currencyValue);
+//
+//                }
+//            }
+//        } catch (ParserConfigurationException e) {
+//            e.printStackTrace();
+//        } catch (SAXException e) {
+//            e.printStackTrace();
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override

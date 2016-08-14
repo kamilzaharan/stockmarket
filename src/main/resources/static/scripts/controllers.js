@@ -73,7 +73,7 @@ cont.controller('companiesController', ['$scope', 'showCompanyList',
 
     }]);
 
-cont.controller('graphCtrl', ['$scope', 'getApproximation/3',
+cont.controller('graphCtrl', ['$scope', 'getApproximation/1991',
     function ($scope, getApproximation) {
 
         $scope.graphFun = function () {

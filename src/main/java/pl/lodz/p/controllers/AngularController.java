@@ -183,6 +183,22 @@ public class AngularController {
         return "jest okej";
     }
 
+    @RequestMapping(value = "/addMockStockValue", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    String addMockStockValue() {
+
+        ObjectMocks.CreateAllMocks();
+
+            companyManager.addCompany(ObjectMocks.APPLE);
+            companyManager.addCompany(ObjectMocks.NETFLIX);
+
+            stockValueManager.addListOfStockValue(ObjectMocks.NETFLIX_STOCK_VALUE_LIST);
+            stockValueManager.addListOfStockValue(ObjectMocks.APPLE_STOCK_VALUE_LIST);
+
+        return "DODALEM MOCKI";
+    }
+
 
     public ArrayList<CompanyStockValue> createStockValueFromJSON(int companyId){
         ArrayList<CompanyStockValue> allStockValues = new ArrayList();
@@ -217,14 +233,16 @@ public class AngularController {
                 allStockValues[i][1] = (((Double) obj[7]).doubleValue());
                 String[] hour = (obj[12].toString()).split(" ");
 
-                String time = hour[3];
-                String[] splitHour = time.split(":");
-                int hour1 = Integer.parseInt(splitHour[0]);
-                int hour2 = Integer.parseInt(splitHour[1]);
-                int hour3 = Integer.parseInt(splitHour[2]);
-                int allTime = hour1 * 3600 + hour2 * 60 + hour3;
-                log.info("TimeStamp: hour1=" + hour1 + "   minute:" + hour2 + "second:" + hour3 + " sumOfSeconds" + allTime);
-                allStockValues[i][0] = allTime;
+//                String time = hour[3];
+//                String[] splitHour = time.split(":");
+//                int hour1 = Integer.parseInt(splitHour[0]);
+//                int hour2 = Integer.parseInt(splitHour[1]);
+//                int hour3 = Integer.parseInt(splitHour[2]);
+//                int allTime = hour1 * 3600 + hour2 * 60 + hour3;
+//
+//                log.info("TimeStamp: hour1=" + hour1 + "   minute:" + hour2 + "second:" + hour3 + " sumOfSeconds" + allTime);
+
+                allStockValues[i][0] = i+1;
                 i++;
 
         }
@@ -242,9 +260,9 @@ public class AngularController {
         }
         allTestValues[allStockValues.length][0]=60000;
         allTestValues[allStockValues.length][1]=200.99999999999773;
-        allTestValues[allStockValues.length+1][0]=70000;
+        allTestValues[allStockValues.length+1][0]=5000;
         allTestValues[allStockValues.length+1][1]=300.99999999999773;
-        allTestValues[allStockValues.length+2][0]=80000;
+        allTestValues[allStockValues.length+2][0]=300;
         allTestValues[allStockValues.length+2][1]=400.99999999999773;
 
         return allTestValues;
