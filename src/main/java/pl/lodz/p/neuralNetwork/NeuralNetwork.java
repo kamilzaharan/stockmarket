@@ -1,7 +1,11 @@
 package pl.lodz.p.neuralNetwork;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
+@Component
 public class NeuralNetwork {
 
 	protected boolean randomPattern;
@@ -10,26 +14,25 @@ public class NeuralNetwork {
 	protected Layer outputLayer;
 	double epsilon;
 
+	public void setNeuralNetwork(NeuralNetworkConfiguration networkConfiguration, NeuronConfiguration neuronConfiguration) {
+        this.randomPattern= networkConfiguration.isRandomPattern();
 
-	public NeuralNetwork (NeuralNetworkConfiguration networkConfiguration, NeuronConfiguration neuronConfiguration){
+        this.epsilon= networkConfiguration.getEpsilon();
+        int[] howManyNeuronInHiddenLayersTable= networkConfiguration.getHiddenLayersAmount();
+        int howManyNeuronsInOutputLayer= networkConfiguration.getHowManyOutputNeurons();
+        int howManyNeuronsInInputLayer=networkConfiguration.getHowManyInputNeurons();
 
-		this.randomPattern= networkConfiguration.isRandomPattern();
+        Neuron baseNeuron = new Neuron(neuronConfiguration);
 
-		this.epsilon= networkConfiguration.getEpsilon();
-		int[] howManyNeuronInHiddenLayersTable= networkConfiguration.getHiddenLayersAmount();
-		int howManyNeuronsInOutputLayer= networkConfiguration.getHowManyOutputNeurons();
-		int howManyNeuronsInInputLayer=networkConfiguration.getHowManyInputNeurons();
+        inputLayer = new Layer(baseNeuron, howManyNeuronsInInputLayer, howManyNeuronsInInputLayer);
+        hidedLayers = new Layer[howManyNeuronInHiddenLayersTable.length];
+        hidedLayers[0] = new Layer(baseNeuron, howManyNeuronsInInputLayer, howManyNeuronInHiddenLayersTable[0]);
+        for (int i = 1; i < hidedLayers.length; i++) {
+            hidedLayers[i] = new Layer(baseNeuron, howManyNeuronInHiddenLayersTable[i - 1], howManyNeuronInHiddenLayersTable[i]);
+        }
+        outputLayer = new Layer(baseNeuron, howManyNeuronInHiddenLayersTable[howManyNeuronInHiddenLayersTable.length - 1],howManyNeuronsInOutputLayer );
 
-		Neuron baseNeuron = new Neuron(neuronConfiguration);
-
-		inputLayer = new Layer(baseNeuron, howManyNeuronsInInputLayer, howManyNeuronsInInputLayer);
-		hidedLayers = new Layer[howManyNeuronInHiddenLayersTable.length];
-		hidedLayers[0] = new Layer(baseNeuron, howManyNeuronsInInputLayer, howManyNeuronInHiddenLayersTable[0]);
-		for (int i = 1; i < hidedLayers.length; i++) {
-			hidedLayers[i] = new Layer(baseNeuron, howManyNeuronInHiddenLayersTable[i - 1], howManyNeuronInHiddenLayersTable[i]);
-		}
-		outputLayer = new Layer(baseNeuron, howManyNeuronInHiddenLayersTable[howManyNeuronInHiddenLayersTable.length - 1],howManyNeuronsInOutputLayer );
-	}
+    }
 
 	public void learn(int howManyEpoch, double[][] inputs, double[][] outputs, List<Point> err) {
 		double error = 0;

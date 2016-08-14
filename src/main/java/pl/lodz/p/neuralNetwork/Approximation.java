@@ -1,14 +1,21 @@
 package pl.lodz.p.neuralNetwork;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import pl.lodz.p.controllers.AngularController;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
+@Component
 public class Approximation {
+
+    @Autowired
+    private NeuralNetworkConfiguration networkConf;
+    @Autowired
+    private NeuralNetwork approximationNetwork;
 
     private Logger log = Logger.getLogger(AngularController.class);
     public List<Point> doApproximation(double[][] train, double[][] test) throws ConfigurationException {
@@ -63,19 +70,18 @@ public class Approximation {
             throw new ConfigurationException("Wrong epsilon");
         }
 
-
-        NeuralNetworkConfiguration networkConf = new NeuralNetworkConfiguration(inputNeurons, howManyHiddenNeurons, outputNeurons, true, epsilon);
- 
+        networkConf.setConfiguration(inputNeurons, howManyHiddenNeurons, outputNeurons, true, epsilon);
         int howManyEpoch = 10000;
 
         List<Point> approximationResults = new ArrayList<>();
         List<Point> errPoints = new ArrayList();
 
         int i=10;
-            NeuralNetwork approximationNetwork = new NeuralNetwork(networkConf, neuronConf);
+        approximationNetwork.setNeuralNetwork(networkConf, neuronConf);
             approximationNetwork.learn(howManyEpoch, trainInputs, trainOutputs, errPoints);
             for (double[] testInput : testInputs) {
                 approximationNetwork.singleCompute(testInput);
+
                 approximationResults.add(new Point(testInput[0], approximationNetwork.returnSingleOutput()));
             }
 

@@ -1,5 +1,8 @@
 package pl.lodz.p.neuralNetwork;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class NeuralNetworkConfiguration {
 	int howManyInputNeurons;
 	int[] hiddenLayersAmount;
@@ -7,15 +10,14 @@ public class NeuralNetworkConfiguration {
 	boolean randomPattern;
 	double epsilon;
 
-
-
-	public NeuralNetworkConfiguration(int howManyInputNeurons,int[] hiddenLayersAmount,int howManyOutputNeurons, boolean randomPattern, double epsilon){
-		this.howManyInputNeurons=howManyInputNeurons;
-		this.hiddenLayersAmount=hiddenLayersAmount;
-		this.howManyOutputNeurons= howManyOutputNeurons;
-		this.randomPattern= randomPattern;
-		this.epsilon=epsilon;
-	}
+	public void setConfiguration(int howManyInputNeurons,int[] hiddenLayersAmount,int howManyOutputNeurons,
+                                         boolean randomPattern, double epsilon){
+        this.howManyInputNeurons=howManyInputNeurons;
+        this.hiddenLayersAmount=hiddenLayersAmount;
+        this.howManyOutputNeurons= howManyOutputNeurons;
+        this.randomPattern= randomPattern;
+        this.epsilon=epsilon;
+    }
 
 	public int getHowManyInputNeurons() {
 		return howManyInputNeurons;

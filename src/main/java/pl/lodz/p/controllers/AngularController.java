@@ -41,7 +41,8 @@ public class AngularController {
     private CompanyManager companyManager;
     @Autowired
     private StockValueManager stockValueManager;
-
+    @Autowired
+    private Approximation approx;
 
 
     @RequestMapping(value = "/companiesList", method = RequestMethod.GET, produces = "application/json")
@@ -139,14 +140,14 @@ public class AngularController {
     public
     @ResponseBody
     String getApproximationByID(@PathVariable String id) {
-        Approximation aprox = new Approximation();
+//        Approximation aprox = new Approximation();
 
         Integer companyId = Integer.parseInt(id);
         double[][] allTrainData = createTrainingToAproxFromJSON(companyId);
         double[][] allTestData = createTestToAproxFromJSON(allTrainData);
         List<Point> approxResult = null;
         try {
-            approxResult = aprox.doApproximation(allTrainData, allTestData);
+            approxResult = approx.doApproximation(allTrainData, allTestData);
         } catch (ConfigurationException e) {
             e.printStackTrace();
         }
@@ -159,10 +160,10 @@ public class AngularController {
     public
     @ResponseBody
     String showApproximation() {
-        Approximation aprox = new Approximation();
+//        Approximation aprox = new Approximation();
         List<Point> approxResult = null;
         try {
-            approxResult = aprox.doApproximation(null,null);
+            approxResult = approx.doApproximation(null,null);
         } catch (ConfigurationException e) {
             e.printStackTrace();
         }
