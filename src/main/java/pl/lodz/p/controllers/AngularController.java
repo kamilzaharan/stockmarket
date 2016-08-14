@@ -43,7 +43,7 @@ public class AngularController {
 
 
 
-    @RequestMapping(value = "/getAllCompanies", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/companiesList", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
     String showResultsGosiaFromDB() {
@@ -238,7 +238,6 @@ public class AngularController {
         for(int i=0;i<allStockValues.length-1; i++){
             for(int j=0;j<2; j++){
                 allTestValues[i][j]=allStockValues[i][j];
-                log.info("lalal"+i+"  "+j);
             }
         }
         allTestValues[allStockValues.length][0]=60000;

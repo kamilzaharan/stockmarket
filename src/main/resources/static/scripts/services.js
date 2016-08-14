@@ -49,7 +49,7 @@ services.factory('getApproximation', function ($resource) {
 });
 
 services.factory('showCompanyList', function ($resource) {
-    return $resource('http://localhost:8080/showCompanyList', {}, {
+    return $resource('http://localhost:8080/companiesList', {}, {
         create: {method: 'GET', isArray: true}
     })
 });

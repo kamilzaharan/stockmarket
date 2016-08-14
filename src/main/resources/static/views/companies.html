@@ -9,12 +9,14 @@
                 <tr>
                     <th>Nazwa spółki</th>
                     <th>Skrót nazwy</th>
+                    <th>Opcje</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr ng-repeat="result in companies">
-                    <td>{{result.fullname}}</td>
+                    <td>{{result.fullName}}</td>
                     <td>{{result.symbol}}</td>
+                    <td><a href="/graph" class="btn btn-primary  btn-md active" role="button" aria-pressed="true">Zobacz wykres</a></td>
                 </tr>
                 </tbody>
             </table>

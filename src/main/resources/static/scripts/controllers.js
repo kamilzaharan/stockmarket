@@ -63,21 +63,14 @@ cont.controller('companiesController', ['$scope', 'showCompanyList',
 
         //to znajdzie currency name, code i ID
 
-        $scope.fullname = function () {
+        $scope.companies = function () {
             showCompanyList.create().$promise
                 .then(function (response) {
-                    $scope.fullname=response;
+                    $scope.companies=response;
                 })
         }
-        $scope.fullname();
+        $scope.companies();
 
-        $scope.symbol = function () {
-            showExchangeRate.create().$promise
-                .then(function (response) {
-                    $scope.symbol=response;
-                })
-        }
-        $scope.symbol();
     }]);
 
 cont.controller('graphCtrl', ['$scope', 'getApproximation/3',

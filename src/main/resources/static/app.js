@@ -19,6 +19,9 @@ var myApp = angular.module('myApp', ['services', 'controllers', 'ngRoute'])
                  }).when('/currencies', {
                          controller: 'currenciesController',
                          templateUrl: 'views/currencies.html'
+                 }).when('/companies', {
+                     controller: 'companiesController',
+                     templateUrl: 'views/companies.html'
                  }).otherwise({
               redirectTo: '/'
           });
