@@ -13,6 +13,8 @@ bower_components/
 .classpath
 .project
 .settings/
+src/main/resources/application.properties
+
 approximation1
 approximation2
 approximation3
