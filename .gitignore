@@ -13,6 +13,7 @@ bower_components/
 .classpath
 .project
 .settings/
+application.properties
 approximation1
 approximation2
 approximation3
