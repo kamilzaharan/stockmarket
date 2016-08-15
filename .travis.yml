@@ -12,6 +12,6 @@ addons:
     - mysql-client-core-5.6
     - mysql-client-5.6
 before_script:
-  - sudo mysql -e 'create database stockmarket;'
-  - sudo mysql -e 'create user makler;'
-  - sudo mysql -e 'grant all on stockmarket.* to 'makler'@'localhost' identified by 'makler';
+  - mysql -u root -e 'create database stockmarket;'
+  - mysql -u root -e 'create user makler;'
+  - mysql -u root -e 'grant all on stockmarket.* to 'makler'@'localhost' identified by 'makler';'
