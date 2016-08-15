@@ -73,6 +73,7 @@ cont.controller('companiesController', ['$scope', 'showCompanyList',
 
     }]);
 
+
 cont.controller('graphCtrl', ['$scope', '$routeParams', 'getApproximation',
     function ($scope, $routeParams, getApproximation) {
 

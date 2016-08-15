@@ -185,6 +185,22 @@ public class AngularController {
         return "jest okej";
     }
 
+    @RequestMapping(value = "/addMockStockValue", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    String addMockStockValue() {
+
+        ObjectMocks.CreateAllMocks();
+
+            companyManager.addCompany(ObjectMocks.APPLE);
+            companyManager.addCompany(ObjectMocks.NETFLIX);
+
+            stockValueManager.addListOfStockValue(ObjectMocks.NETFLIX_STOCK_VALUE_LIST);
+            stockValueManager.addListOfStockValue(ObjectMocks.APPLE_STOCK_VALUE_LIST);
+
+        return "DODALEM MOCKI";
+    }
+
     public ArrayList<CompanyStockValue> createStockValueFromJSON(int companyId){
         ArrayList<CompanyStockValue> allStockValues = new ArrayList();
 
@@ -215,6 +231,7 @@ public class AngularController {
 
         for (Object[] obj : stockValueManager.getStockValueById(companyId)) {
 
+
                 allStockValues[i][1] = ((Double) obj[7]).doubleValue();
                 allStockValues[i][0] = i*10;
                 i++;
@@ -232,6 +249,7 @@ public class AngularController {
                 allTestValues[i][j]=allStockValues[i][j];
             }
         }
+
         allTestValues[allStockValues.length][0]=300;
         allTestValues[allStockValues.length][1]=200.99283999999773;
         allTestValues[allStockValues.length+1][0]=310;
