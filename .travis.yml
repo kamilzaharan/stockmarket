@@ -12,6 +12,6 @@ addons:
     - mysql-client-core-5.6
     - mysql-client-5.6
 before_script:
-  - mysql -u root -e 'CREATE DATABASE stockmarket;'
-  - mysql -u root -e 'CREATE USER 'makler'@'localhost' IDENTIFIED BY 'makler';'
-  - mysql -u root -e 'GRANT ALL ON stockmarket.* TO 'makler'@'localhost';'
+  - sudo mysql -h localhost -u root -p -e 'CREATE DATABASE stockmarket;'
+  - sudo mysql -h localhost -u root -p -e 'CREATE USER 'makler'@'localhost' IDENTIFIED BY 'makler';'
+  - sudo mysql -h localhost -u root -p -e 'GRANT ALL ON stockmarket.* TO 'makler'@'localhost';'
