@@ -27,6 +27,7 @@ public class StockValueManagerImpl implements StockValueManager {
 
     @Override
     public void addListOfStockValue (Set<CompanyStockValue> stockValues){
+
         for(CompanyStockValue stockValue: stockValues) {
             companyStockValueDAO.save(stockValue);
             companyStockValueDAO.flush();

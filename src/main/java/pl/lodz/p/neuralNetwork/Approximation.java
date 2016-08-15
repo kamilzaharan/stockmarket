@@ -23,8 +23,6 @@ public class Approximation {
         double[][] approximationTrain = train;
         double[][] approximationTest = test;
 
-
-        approximationTest = NetworkUtils.arraySort(approximationTest);
         NetworkUtils.saveArraysToFile("approximation_test_sorted.txt", approximationTest);
         NetworkUtils.saveArraysToFile("approximation_train_sorted.txt", approximationTrain);
 
@@ -46,7 +44,7 @@ public class Approximation {
 
         NeuronConfiguration neuronConf = new NeuronConfiguration(alpha, beta, momentum, true);
 
-        int[] howManyHiddenNeurons = {15};
+        int[] howManyHiddenNeurons = {20};
 
         if (howManyHiddenNeurons.length < 1) {
             throw new ConfigurationException("Wrong number of hidden layers");
@@ -70,8 +68,8 @@ public class Approximation {
             throw new ConfigurationException("Wrong epsilon");
         }
 
-        networkConf.setConfiguration(inputNeurons, howManyHiddenNeurons, outputNeurons, true, epsilon);
-        int howManyEpoch = 10000;
+        networkConf.setConfiguration(inputNeurons, howManyHiddenNeurons, outputNeurons, false, epsilon);
+        int howManyEpoch = 20000;
 
         List<Point> approximationResults = new ArrayList<>();
         List<Point> errPoints = new ArrayList();

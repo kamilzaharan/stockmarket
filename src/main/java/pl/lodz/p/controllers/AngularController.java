@@ -45,6 +45,22 @@ public class AngularController {
     private Approximation approx;
 
 
+    @RequestMapping(value = "/addMockStockValue", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    String addMockStockValue() {
+
+        ObjectMocks.CreateAllMocks();
+
+        companyManager.addCompany(ObjectMocks.APPLE);
+        companyManager.addCompany(ObjectMocks.NETFLIX);
+
+        stockValueManager.addListOfStockValue(ObjectMocks.NETFLIX_STOCK_VALUE_LIST);
+        stockValueManager.addListOfStockValue(ObjectMocks.APPLE_STOCK_VALUE_LIST);
+
+        return "DODALEM MOCKI";
+    }
+
     @RequestMapping(value = "/companiesList", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
@@ -225,19 +241,13 @@ public class AngularController {
 
     public double[][] createTestToAproxFromJSON( double[][] allStockValues){
 
-        double[][] allTestValues = new double [allStockValues.length+3][2];
+        double[][] allTestValues = new double [allStockValues.length][2];
 
         for(int i=0;i<allStockValues.length-1; i++){
             for(int j=0;j<2; j++){
                 allTestValues[i][j]=allStockValues[i][j];
             }
         }
-        allTestValues[allStockValues.length][0]=300;
-        allTestValues[allStockValues.length][1]=200.99283999999773;
-        allTestValues[allStockValues.length+1][0]=310;
-        allTestValues[allStockValues.length+1][1]=300.9997469999773;
-        allTestValues[allStockValues.length+2][0]=320;
-        allTestValues[allStockValues.length+2][1]=400.99912399999773;
 
         return allTestValues;
     }
