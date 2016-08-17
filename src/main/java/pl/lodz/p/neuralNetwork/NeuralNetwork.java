@@ -30,6 +30,7 @@ public class NeuralNetwork {
         for (int i = 1; i < hidedLayers.length; i++) {
             hidedLayers[i] = new Layer(baseNeuron, howManyNeuronInHiddenLayersTable[i - 1], howManyNeuronInHiddenLayersTable[i]);
         }
+
         outputLayer = new Layer(baseNeuron, howManyNeuronInHiddenLayersTable[howManyNeuronInHiddenLayersTable.length - 1],howManyNeuronsInOutputLayer );
 
     }
@@ -141,8 +142,5 @@ public class NeuralNetwork {
 	public double returnSingleOutput() {
 		return outputLayer.getSingleOutput(0);
 	}
-
-
-
 
 }

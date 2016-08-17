@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class NeuralNetworkConfiguration {
+
 	int howManyInputNeurons;
 	int[] hiddenLayersAmount;
 	int howManyOutputNeurons;
@@ -53,4 +54,5 @@ public class NeuralNetworkConfiguration {
 	public void setEpsilon(double epsilon) {
 		this.epsilon = epsilon;
 	}
+
 }

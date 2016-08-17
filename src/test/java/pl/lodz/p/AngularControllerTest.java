@@ -27,18 +27,18 @@ public class AngularControllerTest {
 
     }
 
-//    @Test
-//    public void shouldShowApproximation() {
-//
-//        double numberOfResults = 1000;
-//
-//        AngularController ang = new AngularController();
-//        String jsonObject = ang.showApproximation();
-//
-//        String[] sp = jsonObject.split("},\\{");
-//
-//        assertThat(numberOfResults).isEqualTo(sp.length);
-//    }
+  /*  @Test
+    public void shouldShowApproximation() {
+
+        double numberOfResults = 1000;
+
+        AngularController ang = new AngularController();
+        String jsonObject = ang.showApproximation();
+
+        String[] sp = jsonObject.split("},\\{");
+
+        assertThat(numberOfResults).isEqualTo(sp.length);
+    }*/
 
     @Test
     public void shouldGetExchangeRateDate() {

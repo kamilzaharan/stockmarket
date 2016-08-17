@@ -1,6 +1,6 @@
 package pl.lodz.p.neuralNetwork;
 
-public class Point implements Comparable<Point>{
+public class Point implements Comparable<Point> {
 
     private final double x;
     private final double y;
@@ -17,10 +17,10 @@ public class Point implements Comparable<Point>{
     public double getY() {
         return y;
     }
-    
+
     @Override
     public int compareTo(Point t) {
-        
+
         return Double.compare(x, t.getX());
     }
 }

@@ -42,7 +42,8 @@ public class Approximation {
             throw new ConfigurationException("Wrong beta");
         }
         if (momentum < 0 || momentum >= 1) {
-            throw new ConfigurationException("Wrong momentum");}
+            throw new ConfigurationException("Wrong momentum");
+        }
 
         NeuronConfiguration neuronConf = new NeuronConfiguration(alpha, beta, momentum, true);
 
@@ -71,6 +72,7 @@ public class Approximation {
         }
 
         networkConf.setConfiguration(inputNeurons, howManyHiddenNeurons, outputNeurons, true, epsilon);
+
         int howManyEpoch = 10000;
 
         List<Point> approximationResults = new ArrayList<>();
