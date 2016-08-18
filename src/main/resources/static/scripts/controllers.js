@@ -27,6 +27,9 @@ cont.controller('exampleCtrl', ['$scope', 'companyFactory',
 cont.controller('currenciesController', ['$scope', 'showCurrencies', 'showExchangeRate', 'getDate',
                              function ($scope, showCurrencies, showExchangeRate, getDate) {
 
+                             //default amount
+                             $scope.amount='100.00';
+
                              //to znajdzie currency name, code i ID
 
                                  $scope.currenciesFun = function () {
@@ -47,13 +50,48 @@ cont.controller('currenciesController', ['$scope', 'showCurrencies', 'showExchan
                                   $scope.exchangeRate();
 
                                //to zwraca date
-                                   $scope.getDate = function () {
-                                        getDate.create().$promise
-                                            .then(function (response) {
-                                             $scope.date=response;
-                                            })
-                                    }
-                                    $scope.getDate();
+                               $scope.getDate = function () {
+                               $scope.date = new Date();
+                                }
+                                $scope.getDate();
+
+                                //to przelicza walute
+                                $scope.calculate = function() {
+                                    console.log($scope.selected);
+                                    console.log($scope.selected2);
+                                    console.log($scope.amount);
+                                    //console.log($scope.exchangeRate);
+                                    var first=1.00;
+                                    var second=1.00;
+                                    angular.forEach($scope.exchangeRate, function(value, key){
+                                           // console.log($scope.selected);
+                                            //console.log($scope.selected2);
+                                            //console.log(value.code);
+                                             if(value.code == $scope.selected){
+                                              first=value.value;
+                                              first = first.replace(/,/g, '.')
+                                              first=parseFloat(first).toFixed(4);
+                                             }
+                                             if(value.code == $scope.selected2){
+                                              second=value.value;
+                                              second = second.replace(/,/g, '.')
+                                              second=parseFloat(value.value).toFixed(4);
+                                             }
+                                             });
+                                     console.log(first);
+                                     console.log(second);
+                                     console.log((parseFloat($scope.amount)*first)/second);
+                                     $scope.kwota=parseFloat(Math.round((((parseFloat($scope.amount)*first)/second)) * 100) / 100).toFixed(2);
+
+                                     console.log($scope.selected);
+                                     console.log($scope.selected2);
+                                     console.log($scope.kwota);
+
+
+                                 }
+
+
+
 
 
                              }]);
