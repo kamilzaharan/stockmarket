@@ -44,7 +44,6 @@ public class AngularController {
     @Autowired
     private Approximation approx;
 
-
     @RequestMapping(value = "/companiesList", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
@@ -199,6 +198,15 @@ public class AngularController {
         stockValueManager.addListOfStockValue(ObjectMocks.APPLE_STOCK_VALUE_LIST);
 
         return "DODALEM MOCKI";
+    }
+
+    @RequestMapping(value = "/companies/max", method = RequestMethod.GET, produces = "application/json")
+    public @ResponseBody String maxIncrease() {
+
+        List<Point> stockValues = companyManager.findMaxIncrease();
+
+        //String json = new Gson().toJson(stockValues);
+        return new Gson().toJson(stockValues);
     }
 
     public ArrayList<CompanyStockValue> createStockValueFromJSON(int companyId){

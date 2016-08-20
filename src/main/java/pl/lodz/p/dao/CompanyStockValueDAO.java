@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import pl.lodz.p.model.CompanyStockValue;
+import pl.lodz.p.neuralNetwork.Point;
 
 import java.util.List;
 
@@ -17,4 +18,5 @@ public interface CompanyStockValueDAO extends JpaRepository<CompanyStockValue,Lo
 
     @Query(value= FIND_STOCK_VALUE_BY_ID, nativeQuery = true)
     List<Object[]> findStockValueById(@Param("id") int id);
+
 }
