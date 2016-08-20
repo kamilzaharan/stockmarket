@@ -1,16 +1,10 @@
 package pl.lodz.p.model;
 
 
-import java.util.List;
+//import java.util.LinkedHashSet;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by kamil on 5/22/16.
@@ -30,7 +24,7 @@ public class Company {
     @Column(name = "SYMBOL")
     private String symbol;
 
-    @OneToMany(mappedBy = "companyId")
+    @OneToMany(mappedBy = "companyId", fetch = FetchType.LAZY)
     private Set<CompanyStockValue> companyStockValueList;
 
     public long getId() {
@@ -63,5 +57,11 @@ public class Company {
 
     public void setCompanyStockValueList(Set<CompanyStockValue> companyStockValueList) {
         this.companyStockValueList = companyStockValueList;
+    }
+
+    public CompanyStockValue[] getCompanyStockValuesArray() {
+        CompanyStockValue[] strArr = new CompanyStockValue[companyStockValueList.size()];
+
+        return companyStockValueList.toArray(strArr);
     }
 }

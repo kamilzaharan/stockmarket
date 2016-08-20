@@ -53,3 +53,9 @@ services.factory('getApproximation', function ($resource) {
         create: {method: 'GET', params: {id: '@id'}, isArray: true}
     })
 });
+
+services.factory('maxIncrease', function ($resource) {
+    return $resource('http://localhost:8080/companies/max', {}, {
+        create: {method: 'GET', isArray: true}
+    })
+});

@@ -5,6 +5,7 @@ import pl.lodz.p.model.CompanyStockValue;
 
 import java.sql.Timestamp;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
@@ -13,11 +14,11 @@ import java.util.Set;
 public class ObjectMocks {
 
     public static CompanyStockValue APPLE_STOCK_VALUE = new CompanyStockValue();
-    public static Set<CompanyStockValue> APPLE_STOCK_VALUE_LIST = new HashSet<>();
+    public static LinkedHashSet<CompanyStockValue> APPLE_STOCK_VALUE_LIST = new LinkedHashSet<>();
     public static Company APPLE = new Company();
 
     public static CompanyStockValue NETFLIX_STOCK_VALUE = new CompanyStockValue();
-    public static Set<CompanyStockValue> NETFLIX_STOCK_VALUE_LIST = new HashSet<>();
+    public static LinkedHashSet<CompanyStockValue> NETFLIX_STOCK_VALUE_LIST = new LinkedHashSet<>();
     public static Company NETFLIX = new Company();
 
     public static void CreateAllMocks() {
