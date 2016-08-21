@@ -41,16 +41,19 @@ select {
             </div>
         </div>
         <div id="div2" align="center" ng-controller="currenciesController">
+            <br/><br/>
             <h3>Kwota: </h3>
-            <input type="text" ng-model="amount" name="Kwota" value="100.00" style="font-size:120%;"><br>
+            <input type="text" ng-model="amount" name="Kwota" value="100.00" style="font-size:120%;" ng-change="calculate()"><br>
             <h3>Przelicz z: </h3>
             <select ng-model="selected" ng-change="calculate()">
                 <option selected disabled value="">Wybierz walutę</option>
+                <option value="PLN">PLN - Polski złoty</option>
                 <option class="btn-default dropdown-toggle"  ng-repeat="result in exchangeRate" value="{{result.code}}">{{result.code}} - {{result.name}}</option>
             </select>
             <h3>Przelicz na: </h3>
             <select ng-model="selected2" ng-change="calculate()">
                 <option selected disabled value="">Wybierz walutę</option>
+                <option value="PLN">PLN - Polski złoty</option>
                 <option class="btn-default dropdown-toggle" ng-repeat="result in exchangeRate" value="{{result.code}}">{{result.code}} - {{result.name}}</option>
             </select>
 
