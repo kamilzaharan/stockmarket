@@ -23,6 +23,8 @@ public class Approximation {
         double[][] approximationTrain = train;
         double[][] approximationTest = test;
 
+
+        approximationTest = NetworkUtils.arraySort(approximationTest);
         NetworkUtils.saveArraysToFile("approximation_test_sorted.txt", approximationTest);
         NetworkUtils.saveArraysToFile("approximation_train_sorted.txt", approximationTrain);
 
@@ -40,11 +42,12 @@ public class Approximation {
             throw new ConfigurationException("Wrong beta");
         }
         if (momentum < 0 || momentum >= 1) {
-            throw new ConfigurationException("Wrong momentum");}
+            throw new ConfigurationException("Wrong momentum");
+        }
 
         NeuronConfiguration neuronConf = new NeuronConfiguration(alpha, beta, momentum, true);
 
-        int[] howManyHiddenNeurons = {20};
+        int[] howManyHiddenNeurons = {15};
 
         if (howManyHiddenNeurons.length < 1) {
             throw new ConfigurationException("Wrong number of hidden layers");
@@ -68,23 +71,24 @@ public class Approximation {
             throw new ConfigurationException("Wrong epsilon");
         }
 
-        networkConf.setConfiguration(inputNeurons, howManyHiddenNeurons, outputNeurons, false, epsilon);
-        int howManyEpoch = 20000;
+        networkConf.setConfiguration(inputNeurons, howManyHiddenNeurons, outputNeurons, true, epsilon);
+
+        int howManyEpoch = 10000;
 
         List<Point> approximationResults = new ArrayList<>();
         List<Point> errPoints = new ArrayList();
 
         int i=10;
         approximationNetwork.setNeuralNetwork(networkConf, neuronConf);
-            approximationNetwork.learn(howManyEpoch, trainInputs, trainOutputs, errPoints);
-            for (double[] testInput : testInputs) {
-                approximationNetwork.singleCompute(testInput);
+        approximationNetwork.learn(howManyEpoch, trainInputs, trainOutputs, errPoints);
+        for (double[] testInput : testInputs) {
+            approximationNetwork.singleCompute(testInput);
 
-                approximationResults.add(new Point(testInput[0], approximationNetwork.returnSingleOutput()));
-            }
+            approximationResults.add(new Point(testInput[0], approximationNetwork.returnSingleOutput()));
+        }
 
-            Collections.sort(approximationResults);
-            NetworkUtils.savePoints("approximation" + i, approximationResults);
+        Collections.sort(approximationResults);
+        NetworkUtils.savePoints("approximation" + i, approximationResults);
 
         return approximationResults;
     }
