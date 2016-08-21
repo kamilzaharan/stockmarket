@@ -1,26 +1,33 @@
-<div id="prognozy">
+<div id="prognozy" xmlns:c="http://java.sun.com/jsp/jstl/core">
     <div ng-controller="maxCtrl">
-        <p>Tu powinna pojawić się firma z największą zwyżką</p>
+        <p>Tu powinien pojawić się wykres</p>
 
         <div id="chart" style="width: 100%; height: 250px"></div>
 
         <div class="container">
-            <h3>Punkt(x, y)</h3>
-            <br>
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>x</th>
-                    <th>y</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="stock in stockValues">
-                    <td>{{stock.x}}</td>
-                    <td>{{stock.y}}</td>
-                </tr>
-                </tbody>
-            </table>
+
+            <div ng-if="stockValues">
+                <h3>Punkt(x, y)</h3>
+                <br>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>x</th>
+                        <th>y</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="stock in stockValues">
+                        <td>{{stock.x}}</td>
+                        <td>{{stock.y}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ng-if="!stockValues">
+                <h1>Nie ma firmy, która w ostatnim miesiącu odnotowała zwyżkę</h1>
+                <!--TODO: zmienić komunikat w zależności, czy maxDecrease, czy maxIncrease-->
+            </div>
         </div>
     </div>
 </div>

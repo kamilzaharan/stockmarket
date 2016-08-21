@@ -35,8 +35,6 @@ public class CompanyManagerImpl implements CompanyManager {
         Company companyWithMaxIncrease = null;
 
         double max = -1;
-        double firstStockValue;
-        double lastStockValue;
         double change;
 
         List<Object> companiesId = companyDAO.getCompaniesId();
@@ -44,12 +42,7 @@ public class CompanyManagerImpl implements CompanyManager {
         for (Object companyId : companiesId) {
             Company company = companyDAO.getCompany((BigInteger) companyId);
 
-            CompanyStockValue[] strArr = company.getCompanyStockValuesArray();
-            strArr = bubbleSort(strArr);
-
-            firstStockValue = strArr[0].getLastPrice();
-            lastStockValue = strArr[strArr.length - 1].getLastPrice();
-            change = lastStockValue - firstStockValue;
+            change = getChangeBetweenStockValues(company);
 
             if (change > max) {
                 max = change;
@@ -60,18 +53,56 @@ public class CompanyManagerImpl implements CompanyManager {
         return createPoints(companyWithMaxIncrease);
     }
 
+    @Override
+    public List<Point> findMaxDecrease() {
+        Company companyWithMaxDecrease = null;
+
+        double min = 0;
+        double change;
+
+        List<Object> companiesId = companyDAO.getCompaniesId();
+
+        for (Object companyId : companiesId) {
+            Company company = companyDAO.getCompany((BigInteger) companyId);
+            change = getChangeBetweenStockValues(company);
+
+            if (change < min) {
+                min = change;
+                companyWithMaxDecrease = company;
+            }
+        }
+
+        return createPoints(companyWithMaxDecrease);
+    }
+
+    private double getChangeBetweenStockValues(Company company) {
+        double firstStockValue;
+        double lastStockValue;
+
+        CompanyStockValue[] strArr = company.getCompanyStockValuesArray();
+        strArr = bubbleSort(strArr);
+
+        firstStockValue = strArr[0].getLastPrice();
+        lastStockValue = strArr[strArr.length - 1].getLastPrice();
+
+        return lastStockValue - firstStockValue;
+    }
+
     private List<Point> createPoints(Company companyWithMaxIncrease) {
         int day = 0;
         List<Point> points = new ArrayList<>();
 
-        CompanyStockValue[] pointsArray = companyWithMaxIncrease.getCompanyStockValuesArray();
-        pointsArray = bubbleSort(pointsArray);
+        if(companyWithMaxIncrease != null) {
 
-        for (CompanyStockValue companyStockValue : pointsArray) {
-            points.add((new Point(day, companyStockValue.getLastPrice())));
+            CompanyStockValue[] pointsArray = companyWithMaxIncrease.getCompanyStockValuesArray();
+            pointsArray = bubbleSort(pointsArray);
 
-            //TODO: zamienić timestamp na dzień i wrzucić w miejsce x
-            day += 1;
+            for (CompanyStockValue companyStockValue : pointsArray) {
+                points.add((new Point(day, companyStockValue.getLastPrice())));
+
+                //TODO: zamienić timestamp na dzień i wrzucić w miejsce x
+                day += 1;
+            }
         }
 
         return points;

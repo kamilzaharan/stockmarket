@@ -19,6 +19,9 @@ var myApp = angular.module('myApp', ['services', 'controllers', 'ngRoute'])
                  }).when('/companies/max', {
                      controller: 'maxCtrl',
                      templateUrl: '/views/companyMax.html'
+                 }).when('/companies/min', {
+                     controller: 'minCtrl',
+                     templateUrl: '/views/companyMax.html'
                  }).when('/currencies', {
                          controller: 'currenciesController',
                          templateUrl: 'views/currencies.html'
