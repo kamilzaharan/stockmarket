@@ -205,7 +205,14 @@ public class AngularController {
 
         List<Point> stockValues = companyManager.findMaxIncrease();
 
-        //String json = new Gson().toJson(stockValues);
+        return new Gson().toJson(stockValues);
+    }
+
+    @RequestMapping(value = "/companies/min", method = RequestMethod.GET, produces = "application/json")
+    public @ResponseBody String maxDecrease() {
+
+        List<Point> stockValues = companyManager.findMaxDecrease();
+
         return new Gson().toJson(stockValues);
     }
 

@@ -59,3 +59,9 @@ services.factory('maxIncrease', function ($resource) {
         create: {method: 'GET', isArray: true}
     })
 });
+
+services.factory('maxDecrease', function ($resource) {
+    return $resource('http://localhost:8080/companies/min', {}, {
+        create: {method: 'GET', isArray: true}
+    })
+});

@@ -12,4 +12,5 @@ public interface CompanyManager {
 
      void addCompany (Company company);
      List<Point> findMaxIncrease();
+     List<Point> findMaxDecrease();
 }
