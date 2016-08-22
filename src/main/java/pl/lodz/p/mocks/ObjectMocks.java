@@ -13,6 +13,10 @@ import java.util.Set;
  */
 public class ObjectMocks {
 
+    public static CompanyStockValue TESTTEST_STOCK_VALUE = new CompanyStockValue();
+    public static LinkedHashSet<CompanyStockValue> TESTTEST_STOCK_VALUE_LIST = new LinkedHashSet<>();
+    public static Company TESTTEST = new Company();
+
     public static CompanyStockValue APPLE_STOCK_VALUE = new CompanyStockValue();
     public static LinkedHashSet<CompanyStockValue> APPLE_STOCK_VALUE_LIST = new LinkedHashSet<>();
     public static Company APPLE = new Company();
@@ -95,6 +99,9 @@ public class ObjectMocks {
     }
 
     public static void CreateCompanyMocks() {
+        TESTTEST.setSymbol("AAATEST");
+        TESTTEST.setFullName("TestTestInc");
+
         APPLE.setSymbol("AAPL1");
 //        APPLE.setId(0);
         APPLE.setFullName("AppleInc");

@@ -88,19 +88,18 @@ cont.controller('currenciesController', ['$scope', 'showCurrencies', 'showExchan
                                  }
                              }]);
 
-cont.controller('companiesController', ['$scope', 'showCompanyList',
-    function ($scope, showCompanyList) {
+cont.controller('companiesController', ['$scope', '$routeParams', 'showCompanyList',
+    function ($scope, $routeParams, showCompanyList) {
 
         //to znajdzie currency name, code i ID
         $scope.companies = function () {
-            showCompanyList.create().$promise
+            showCompanyList.create({sortType: $routeParams.sortType}).$promise
                 .then(function (response) {
                     $scope.companies=response;
                 })
         };
         $scope.companies();
     }]);
-
 
 cont.controller('graphCtrl', ['$scope', '$routeParams', 'getApproximation',
     function ($scope, $routeParams, getApproximation) {

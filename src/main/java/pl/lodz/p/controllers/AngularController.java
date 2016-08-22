@@ -44,10 +44,10 @@ public class AngularController {
     @Autowired
     private Approximation approx;
 
-    @RequestMapping(value = "/companiesList", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/companiesList/{sortType}", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
-    String showResultsGosiaFromDB() {
+    String showResultsGosiaFromDB(@PathVariable String sortType) {
 
         ArrayList<Company> allCompanies = new ArrayList<Company>();
         for (Object[] obj : mainManager.findCompanyIdNameSymbol()) {
@@ -58,6 +58,9 @@ public class AngularController {
             c.setSymbol((String) obj[2]);
             allCompanies.add(c);
         }
+
+        Integer sortTypeInt = Integer.parseInt(sortType);
+        allCompanies = mainManager.sort(allCompanies, sortTypeInt);
 
         String json = new Gson().toJson(allCompanies);
         return json;
@@ -191,6 +194,7 @@ public class AngularController {
 
         ObjectMocks.CreateAllMocks();
 
+        companyManager.addCompany(ObjectMocks.TESTTEST);
         companyManager.addCompany(ObjectMocks.APPLE);
         companyManager.addCompany(ObjectMocks.NETFLIX);
 

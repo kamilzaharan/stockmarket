@@ -43,8 +43,8 @@ services.factory('getDate', function ($resource) {
 });
 
 services.factory('showCompanyList', function ($resource) {
-    return $resource('http://localhost:8080/companiesList', {}, {
-        create: {method: 'GET', isArray: true}
+    return $resource('http://localhost:8080/companiesList/:sortType', {}, {
+        create: {method: 'GET', params: {sortType: '@sortType'}, isArray: true}
     })
 });
 
