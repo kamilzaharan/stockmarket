@@ -159,7 +159,7 @@ public class AngularController {
         return json;
     }
 
-    @RequestMapping(value = "/getCompanyDetails/{id}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/companyDetails/{id}", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
     String getCompanyDetailByID(@PathVariable String id) {
