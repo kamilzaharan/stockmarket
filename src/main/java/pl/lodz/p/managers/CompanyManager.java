@@ -10,8 +10,19 @@ import java.util.List;
  */
 public interface CompanyManager {
 
-     void addCompany (Company company);
+     void addCompany(Company company);
+
      List<Point> findMaxIncrease();
+
      List<Point> findMaxDecrease();
+
      List<Point> findStockValuesList(int id);
+
+     Double getAverage(int id);
+
+     Double getVariance(int id);
+
+     Double getStandardDeviation(int id);
 }
+
+
