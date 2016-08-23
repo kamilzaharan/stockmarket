@@ -48,7 +48,7 @@ public class AngularController {
     @RequestMapping(value = "/companiesList/{sortType}", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
-    String showResultsGosiaFromDB(@PathVariable String sortType) {
+    String showCompanies(@PathVariable String sortType) {
 
         ArrayList<Company> allCompanies = new ArrayList<Company>();
         for (Object[] obj : mainManager.findCompanyIdNameSymbol()) {

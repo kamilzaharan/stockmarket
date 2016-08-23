@@ -2,21 +2,20 @@ package pl.lodz.p.managers;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import pl.lodz.p.comparators.CompanyComparatorName;
-import pl.lodz.p.comparators.CompanyComparatorSymbol;
 import pl.lodz.p.dao.CompanyDAO;
 import pl.lodz.p.dao.CompanyStockValueDAO;
 import pl.lodz.p.dao.CurrencyDAO;
 import pl.lodz.p.dao.CurrencyValueDAO;
 import pl.lodz.p.dto.CreateCompanyDTO;
 import pl.lodz.p.dto.QuoteResponseDTO;
+import pl.lodz.p.handlers.Handler;
 import pl.lodz.p.model.Company;
 import pl.lodz.p.model.CompanyStockValue;
 import pl.lodz.p.model.Currency;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -41,6 +40,10 @@ public class MainManagerImpl implements MainManager {
 
     @Autowired
     private CompanyStockValueDAO companyStockValueDAO;
+
+    @Autowired
+    @Qualifier("sortSymbolHandler")
+    private Handler sortSymbolHandler;
 
 
     public void createCompany(CreateCompanyDTO quote) {
@@ -121,17 +124,7 @@ public class MainManagerImpl implements MainManager {
     @Override
     public ArrayList<Company> sort(ArrayList<Company> companyList, Integer sortType) {
 
-        switch(sortType) {
-            case 1:
-                Collections.sort(companyList, new CompanyComparatorName());
-                break;
-
-            case 2:
-                Collections.sort(companyList, new CompanyComparatorSymbol());
-                break;
-        }
-
-        return companyList;
+        return sortSymbolHandler.process(sortType, companyList);
     }
 
 
