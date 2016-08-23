@@ -7,6 +7,7 @@ import pl.lodz.p.dao.CompanyStockValueDAO;
 import pl.lodz.p.model.Company;
 import pl.lodz.p.model.CompanyStockValue;
 import pl.lodz.p.neuralNetwork.Point;
+import pl.lodz.p.utils.Utils;
 
 import java.math.BigInteger;
 import java.util.*;
@@ -50,7 +51,16 @@ public class CompanyManagerImpl implements CompanyManager {
             }
         }
 
-        return createPoints(companyWithMaxIncrease);
+        return Utils.createPoints(companyWithMaxIncrease);
+    }
+
+    @Override
+    public List<Point> findStockValuesList(int id) {
+
+        //TODO: jak inaczej zainicjalizować?
+
+        Company company = companyDAO.getCompany(BigInteger.valueOf(id));
+        return Utils.createPoints(company);
     }
 
     @Override
@@ -72,7 +82,7 @@ public class CompanyManagerImpl implements CompanyManager {
             }
         }
 
-        return createPoints(companyWithMaxDecrease);
+        return Utils.createPoints(companyWithMaxDecrease);
     }
 
     private double getChangeBetweenStockValues(Company company) {
@@ -80,7 +90,7 @@ public class CompanyManagerImpl implements CompanyManager {
         double lastStockValue;
 
         CompanyStockValue[] strArr = company.getCompanyStockValuesArray();
-        strArr = bubbleSort(strArr);
+        strArr = Utils.bubbleSort(strArr);
 
         firstStockValue = strArr[0].getLastPrice();
         lastStockValue = strArr[strArr.length - 1].getLastPrice();
@@ -88,40 +98,5 @@ public class CompanyManagerImpl implements CompanyManager {
         return lastStockValue - firstStockValue;
     }
 
-    private List<Point> createPoints(Company companyWithMaxIncrease) {
-        int day = 0;
-        List<Point> points = new ArrayList<>();
 
-        if(companyWithMaxIncrease != null) {
-
-            CompanyStockValue[] pointsArray = companyWithMaxIncrease.getCompanyStockValuesArray();
-            pointsArray = bubbleSort(pointsArray);
-
-            for (CompanyStockValue companyStockValue : pointsArray) {
-                points.add((new Point(day, companyStockValue.getLastPrice())));
-
-                //TODO: zamienić timestamp na dzień i wrzucić w miejsce x
-                day += 1;
-            }
-        }
-
-        return points;
-    }
-
-    private CompanyStockValue[] bubbleSort(CompanyStockValue[] a) {
-        for (int i = 0; i < a.length; i++) {
-
-            for (int j = 0; j < a.length - 1; j++) {
-
-                if (a[j].getId() > a[j + 1].getId()) {
-                    CompanyStockValue temp;
-                    temp = a[j + 1];
-                    a[j + 1] = a[j];
-                    a[j] = temp;
-                }
-            }
-        }
-
-        return a;
-    }
 }

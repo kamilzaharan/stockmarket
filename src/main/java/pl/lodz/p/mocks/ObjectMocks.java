@@ -25,11 +25,15 @@ public class ObjectMocks {
     public static LinkedHashSet<CompanyStockValue> NETFLIX_STOCK_VALUE_LIST = new LinkedHashSet<>();
     public static Company NETFLIX = new Company();
 
+    public static CompanyStockValue MICROSOFT_STOCK_VALUE = new CompanyStockValue();
+    public static LinkedHashSet<CompanyStockValue> MICROSOF_STOCK_VALUE_LIST = new LinkedHashSet<>();
+    public static Company MICROSOFT = new Company();
+
     public static void CreateAllMocks() {
         CreateCompanyMocks();
         //    CreateStockValueMocks();
-        CreateStockValueListMocks();
-        AddListToCompanyMock();
+        //CreateStockValueListMocks();
+        //AddListToCompanyMock();
     }
 
     public static void CreateStockValueMocks() {
@@ -96,19 +100,41 @@ public class ObjectMocks {
 
             NETFLIX_STOCK_VALUE_LIST.add(stock);
         }
+
+        for (int i = 10; i < 20; i++) {
+            CompanyStockValue stock = new CompanyStockValue();
+            Timestamp timestamp = new Timestamp(100, 10, i + 1, 12, 12, 29, 00);
+//            stock.setId(i);
+            stock.setChange(11.6);
+            stock.setChangePercent(2.06);
+            stock.setChangeYTD(133.17);
+            stock.setChangePercentYTD(-4.4432322937733);
+            stock.setLastPrice(713.49 - i);
+            stock.setHigh(11199);
+            stock.setTimestamp(timestamp.toString());
+            stock.setLow(299.175);
+            stock.setOpen(333.175);
+            stock.setCompanyId(MICROSOFT);
+
+            MICROSOF_STOCK_VALUE_LIST.add(stock);
+        }
     }
 
     public static void CreateCompanyMocks() {
         TESTTEST.setSymbol("AAATEST");
         TESTTEST.setFullName("TestTestInc");
 
-        APPLE.setSymbol("AAPL1");
+        APPLE.setSymbol("AAPL");
 //        APPLE.setId(0);
         APPLE.setFullName("AppleInc");
 
-        NETFLIX.setSymbol("NFLX1");
+        NETFLIX.setSymbol("NFLX");
 //        NETFLIX.setId(1);
         NETFLIX.setFullName("NETFLIXInc");
+
+        MICROSOFT.setSymbol("MSFT");
+//        NETFLIX.setId(2);
+        MICROSOFT.setFullName("MicrosoftInc");
     }
 
     public static void AddListToCompanyMock() {

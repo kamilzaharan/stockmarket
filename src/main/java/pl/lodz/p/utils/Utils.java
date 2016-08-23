@@ -1,6 +1,8 @@
 package pl.lodz.p.utils;
 import com.opencsv.CSVReader;
 import pl.lodz.p.model.Company;
+import pl.lodz.p.model.CompanyStockValue;
+import pl.lodz.p.neuralNetwork.Point;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -32,5 +34,42 @@ public class Utils {
             e.printStackTrace();
         }
     return listOfCompanys;
+    }
+
+    public static List<Point> createPoints(Company company) {
+        int day = 0;
+        List<Point> points = new ArrayList<>();
+
+        if(company != null) {
+
+            CompanyStockValue[] pointsArray = company.getCompanyStockValuesArray();
+            pointsArray = bubbleSort(pointsArray);
+
+            for (CompanyStockValue companyStockValue : pointsArray) {
+                points.add((new Point(day, companyStockValue.getLastPrice())));
+
+                //TODO: zamienić timestamp na dzień i wrzucić w miejsce x
+                day += 1;
+            }
+        }
+
+        return points;
+    }
+
+    public static CompanyStockValue[] bubbleSort(CompanyStockValue[] a) {
+        for (int i = 0; i < a.length; i++) {
+
+            for (int j = 0; j < a.length - 1; j++) {
+
+                if (a[j].getId() > a[j + 1].getId()) {
+                    CompanyStockValue temp;
+                    temp = a[j + 1];
+                    a[j + 1] = a[j];
+                    a[j] = temp;
+                }
+            }
+        }
+
+        return a;
     }
 }

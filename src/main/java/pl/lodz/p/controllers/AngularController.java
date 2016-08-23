@@ -159,6 +159,18 @@ public class AngularController {
         return json;
     }
 
+    @RequestMapping(value = "/getCompanyDetails/{id}", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    String getCompanyDetailByID(@PathVariable String id) {
+
+        Integer companyId = Integer.parseInt(id);
+        List<Point> stockValues = companyManager.findStockValuesList(companyId);
+        return new Gson().toJson(stockValues);
+    }
+
+
+
     @RequestMapping(value = "/getApproximation", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
@@ -195,7 +207,7 @@ public class AngularController {
 
         ObjectMocks.CreateAllMocks();
 
-        companyManager.addCompany(ObjectMocks.TESTTEST);
+        companyManager.addCompany(ObjectMocks.MICROSOFT);
         companyManager.addCompany(ObjectMocks.APPLE);
         companyManager.addCompany(ObjectMocks.NETFLIX);
 

@@ -34,7 +34,6 @@ public class StockValueManagerImpl implements StockValueManager {
         }
     }
 
-
     @Override
     public List<Object[]> getStockValueById(int companyId) {
         return  companyStockValueDAO.findStockValueById(companyId);

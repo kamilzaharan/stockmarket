@@ -1,0 +1,26 @@
+<div id="prognozy">
+    <div>
+        <p>Na tej stronie powinny pojawić się wykresy i wyniki</p>
+
+        <div id="chart" style="width: 100%; height: 250px"></div>
+
+        <div class="container">
+            <h3>Punkt(x, y)</h3>
+            <br>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>x</th>
+                    <th>y</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="result in details">
+                    <td>{{result.x}}</td>
+                    <td>{{result.y}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
