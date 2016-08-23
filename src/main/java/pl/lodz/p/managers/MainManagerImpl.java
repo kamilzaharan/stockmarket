@@ -3,11 +3,8 @@ package pl.lodz.p.managers;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
+import pl.lodz.p.comparators.CompanyComparatorName;
+import pl.lodz.p.comparators.CompanyComparatorSymbol;
 import pl.lodz.p.dao.CompanyDAO;
 import pl.lodz.p.dao.CompanyStockValueDAO;
 import pl.lodz.p.dao.CurrencyDAO;
@@ -17,14 +14,9 @@ import pl.lodz.p.dto.QuoteResponseDTO;
 import pl.lodz.p.model.Company;
 import pl.lodz.p.model.CompanyStockValue;
 import pl.lodz.p.model.Currency;
-import pl.lodz.p.model.CurrencyValue;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -124,6 +116,22 @@ public class MainManagerImpl implements MainManager {
         } catch (IOException e) {
             e.printStackTrace();
         }*/
+    }
+
+    @Override
+    public ArrayList<Company> sort(ArrayList<Company> companyList, Integer sortType) {
+
+        switch(sortType) {
+            case 1:
+                Collections.sort(companyList, new CompanyComparatorName());
+                break;
+
+            case 2:
+                Collections.sort(companyList, new CompanyComparatorSymbol());
+                break;
+        }
+
+        return companyList;
     }
 
 
