@@ -33,7 +33,7 @@ public class Utils {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    return listOfCompanys;
+        return listOfCompanys;
     }
 
     public static List<Point> createPoints(Company company) {
@@ -48,7 +48,7 @@ public class Utils {
             for (CompanyStockValue companyStockValue : pointsArray) {
                 points.add((new Point(day, companyStockValue.getLastPrice())));
 
-                //TODO: zamienić timestamp na dzień i wrzucić w miejsce x
+                //TODO: zamieniÄ‡ timestamp na dzieĹ„ i wrzuciÄ‡ w miejsce x
                 day += 1;
             }
         }
@@ -63,6 +63,23 @@ public class Utils {
 
                 if (a[j].getId() > a[j + 1].getId()) {
                     CompanyStockValue temp;
+                    temp = a[j + 1];
+                    a[j + 1] = a[j];
+                    a[j] = temp;
+                }
+            }
+        }
+
+        return a;
+    }
+
+    public static Double[] bubbleSortByValue(Double[] a) {
+        for (int i = 0; i < a.length; i++) {
+
+            for (int j = 0; j < a.length - 1; j++) {
+
+                if (a[j] > a[j + 1]) {
+                    Double temp;
                     temp = a[j + 1];
                     a[j + 1] = a[j];
                     a[j] = temp;

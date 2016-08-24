@@ -24,6 +24,7 @@ import java.util.*;
 public class CompanyManagerImpl implements CompanyManager {
 
     private Logger log = Logger.getLogger(AngularController.class);
+    List<Double> listOfStockValuesLastPrice = new ArrayList();
 
     @Autowired
     StatisticEquations statisticEquations;
@@ -41,7 +42,7 @@ public class CompanyManagerImpl implements CompanyManager {
     @Override
     public List<Point> findMaxIncrease() {
 
-        //TODO: jak inaczej zainicjalizować?
+        //TODO: jak inaczej zainicjalizowaÄ‡?
         Company companyWithMaxIncrease = null;
 
         double max = -1;
@@ -66,13 +67,18 @@ public class CompanyManagerImpl implements CompanyManager {
     @Override
     public List<Point> findStockValuesList(int id) {
 
-        //TODO: jak inaczej zainicjalizować?
+        //TODO: jak inaczej zainicjalizowaÄ‡?
 
         Company company = companyDAO.getCompany(BigInteger.valueOf(id));
+        for(CompanyStockValue stockValue: company.getCompanyStockValueList()){
+            listOfStockValuesLastPrice.add(stockValue.getLastPrice());
+        }
+
+
         log.info("Srednia wartosc akcji dla tej firmy wynosi "+getAverage(id));
         log.info("Wariancja akcji dla tej firmy wynosi "+getVariance(id));
         log.info("Odchylenie standardowe akcji dla tej firmy wynosi "+getStandardDeviation(id));
-
+        log.info("Mediana akcji dla tej firmy wynosi "+getMedian(id));
 
         return Utils.createPoints(company);
     }
@@ -102,26 +108,36 @@ public class CompanyManagerImpl implements CompanyManager {
     @Override
     public Double getStandardDeviation(int companyId){
         double standardDeviation;
-        Company company = companyDAO.getCompany(BigInteger.valueOf(companyId));
-        standardDeviation= statisticEquations.getStockValuesStandardDeviation(company);
+        standardDeviation= statisticEquations.getStockValuesStandardDeviation(listOfStockValuesLastPrice);
         return standardDeviation;
     }
 
     @Override
     public Double getAverage(int companyId){
         double average;
-        Company company = companyDAO.getCompany(BigInteger.valueOf(companyId));
-        average= statisticEquations.getStockValuesAverage(company);
+        average= statisticEquations.getStockValuesAverage(listOfStockValuesLastPrice);
         return average;
     }
 
     @Override
     public Double getVariance(int companyId){
         double variance;
-        Company company = companyDAO.getCompany(BigInteger.valueOf(companyId));
-        variance= statisticEquations.getStockValuesVariance(company);
+        variance= statisticEquations.getStockValuesVariance(listOfStockValuesLastPrice);
         return variance;
     }
+
+    @Override
+    public Double getMedian(int companyId){
+        double median;
+        Double[] companyStockValueArray = new Double[listOfStockValuesLastPrice.size()];
+        for(int i=0; i<listOfStockValuesLastPrice.size();i++){
+            companyStockValueArray[i]=listOfStockValuesLastPrice.get(i);
+        }
+        Double[] companySortedStockValueArray = Utils.bubbleSortByValue(companyStockValueArray);
+        median= statisticEquations.getStockValuesMedian(companySortedStockValueArray);
+        return median;
+    }
+
 
     private double getChangeBetweenStockValues(Company company) {
         double firstStockValue;

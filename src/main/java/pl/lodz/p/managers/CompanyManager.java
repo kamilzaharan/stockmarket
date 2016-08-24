@@ -23,6 +23,9 @@ public interface CompanyManager {
      Double getVariance(int id);
 
      Double getStandardDeviation(int id);
+
+     Double getMedian(int id);
+
 }
 
 

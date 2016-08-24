@@ -4,46 +4,64 @@ import org.springframework.stereotype.Service;
 import pl.lodz.p.model.Company;
 import pl.lodz.p.model.CompanyStockValue;
 
+import java.util.List;
+
 /**
  * Created by Kaltair on 2016-08-23.
  */
 @Service
 public class StatisticEquations {
 
-    public double getStockValuesAverage(Company company) {
+    public double getStockValuesAverage(List<Double> listOfStockValuesLastPrice) {
+
         double average=0;
 
-        for(CompanyStockValue stockValue: company.getCompanyStockValueList()){
-            average+=stockValue.getLastPrice();
+        for(Double lastPrice: listOfStockValuesLastPrice){
+            average+=lastPrice;
         }
-        average/=company.getCompanyStockValueList().size();
+        average/=listOfStockValuesLastPrice.size();
         return average;
     }
 
-    public double getStockValuesVariance(Company company) {
+    public double getStockValuesVariance(List<Double> listOfStockValuesLastPrice) {
         double average=0;
 
-        for(CompanyStockValue stockValue: company.getCompanyStockValueList()){
-            average+=stockValue.getLastPrice();
+        for(Double lastPrice: listOfStockValuesLastPrice){
+            average+=lastPrice;
         }
-        average/=company.getCompanyStockValueList().size();
+        average/=listOfStockValuesLastPrice.size();
 
         double variance=0;
 
-        for(CompanyStockValue stockValue: company.getCompanyStockValueList()){
-            variance+=Math.pow((stockValue.getLastPrice()-average),2);
+        for(Double lastPrice: listOfStockValuesLastPrice){
+            variance+=Math.pow((lastPrice-average),2);
         }
-        variance/=company.getCompanyStockValueList().size();
+        variance/=listOfStockValuesLastPrice.size();
 
         return variance;
     }
 
-    public double getStockValuesStandardDeviation(Company company) {
+    public double getStockValuesStandardDeviation(List<Double> listOfStockValuesLastPrice) {
 
         double standardDeviation=0;
-        standardDeviation= Math.sqrt(getStockValuesVariance(company));
+        standardDeviation= Math.sqrt(getStockValuesVariance(listOfStockValuesLastPrice));
 
         return standardDeviation;
+    }
+
+    public double getStockValuesMedian(Double[] companySortedArray ) {
+        double median=0;
+        int medianId = companySortedArray.length;
+        if(medianId%2==0){
+            medianId/=2;
+            median= (companySortedArray[medianId]+companySortedArray[medianId+1])/2;
+            return median;
+        }
+        else{
+            medianId/=2;
+            median =companySortedArray[medianId+1];
+            return median;
+        }
     }
 
 }
