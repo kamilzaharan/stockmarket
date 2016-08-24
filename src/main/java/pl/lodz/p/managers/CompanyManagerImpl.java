@@ -19,7 +19,6 @@ import java.util.*;
  * Created by Kaltair on 2016-08-09.
  */
 
-
 @Service
 public class CompanyManagerImpl implements CompanyManager {
 
@@ -70,11 +69,11 @@ public class CompanyManagerImpl implements CompanyManager {
         //TODO: jak inaczej zainicjalizowaÄ‡?
 
         Company company = companyDAO.getCompany(BigInteger.valueOf(id));
+
+        listOfStockValuesLastPrice.clear();
         for(CompanyStockValue stockValue: company.getCompanyStockValueList()){
             listOfStockValuesLastPrice.add(stockValue.getLastPrice());
         }
-
-
         log.info("Srednia wartosc akcji dla tej firmy wynosi "+getAverage(id));
         log.info("Wariancja akcji dla tej firmy wynosi "+getVariance(id));
         log.info("Odchylenie standardowe akcji dla tej firmy wynosi "+getStandardDeviation(id));
