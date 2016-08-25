@@ -129,7 +129,6 @@ public class MainManagerImpl implements MainManager {
     public void getExchangeRate() {
         List<Currency> allCurrencies=getAllCurrencies();
         List<CurrencyValue> allCurValues =getAllCurrenciesValues();
-
         try {
             URL file = new URL("http://nbp.pl/kursy/xml/LastA.xml");
             Document document = prepareFile(file);
@@ -160,11 +159,9 @@ public class MainManagerImpl implements MainManager {
 
     @Override
     public ArrayList<Company> sort(ArrayList<Company> companyList, Integer sortType) {
-
         return sortSymbolHandler.process(sortType, companyList);
     }
-
-
+    
     @Override
     public String getCurrentExchangeRateDate(){
         return currentExchangeRateDate;
