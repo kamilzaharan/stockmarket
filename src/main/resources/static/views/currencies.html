@@ -19,7 +19,7 @@ select {
 <div ng-controller="currenciesController">
     <div id="div0" >
         <div  class="container" id="div1">
-            <h3>Aktualne kursy walut na dzień: {{date | date:'dd-MM-yyyy'}}</h3>
+            <h3>Aktualne średnie kursy walut na dzień: {{date | date:'dd-MM-yyyy'}}</h3>
             <br>
             <div>
                 <table class="table table-bordered">
@@ -57,7 +57,7 @@ select {
                 <option class="btn-default dropdown-toggle" ng-repeat="result in exchangeRate" value="{{result.code}}">{{result.code}} - {{result.name}}</option>
             </select>
 
-            <h3>Obliczona wartość: {{kwota}}</h3>
+            <h3>Obliczona wartość: {{calculatedValue}}</h3>
 
             <h5>* według aktualnego średniego kursu NBP</h5>
         </div>

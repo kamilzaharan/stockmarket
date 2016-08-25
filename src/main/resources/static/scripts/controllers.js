@@ -29,10 +29,10 @@ cont.controller('currenciesController', ['$scope', 'showCurrencies', 'showExchan
 
                              //default amount
                              $scope.amount='100.00';
-                             //default kwota
-                             $scope.kwota='0.00';
+                             //default calculated value
+                             $scope.calculatedValue='0.00';
 
-                             //to znajdzie currency name, code i ID
+                             // currency name, code and ID
                              $scope.currenciesFun = function () {
                                  showCurrencies.create().$promise
                                      .then(function (response) {
@@ -41,7 +41,7 @@ cont.controller('currenciesController', ['$scope', 'showCurrencies', 'showExchan
                              }
                              $scope.currenciesFun();
 
-                             //to znajdzie currency name i value
+                             //currency name and value
                              $scope.exchangeRate = function () {
                                   showExchangeRate.create().$promise
                                       .then(function (response) {
@@ -50,13 +50,13 @@ cont.controller('currenciesController', ['$scope', 'showCurrencies', 'showExchan
                               }
                               $scope.exchangeRate();
 
-                              //to zwraca date
+                              //return date
                               $scope.getDate = function () {
                               $scope.date = new Date();
                               }
                               $scope.getDate();
 
-                              //to przelicza walute
+                              //calculate value
                               $scope.calculate = function() {
                               var first=1.00;
                               var second=1.00;
@@ -76,15 +76,15 @@ cont.controller('currenciesController', ['$scope', 'showCurrencies', 'showExchan
                                               }
                                          }
                                      });
-                                     $scope.kwota='0.00';
+                                     $scope.calculatedValue='0.00';
                                      if(typeof($scope.selected)!='undefined' && typeof($scope.selected2)!='undefined')
-                                     $scope.kwota=parseFloat(Math.round((((parseFloat($scope.amount)*first)/second)) * 100) / 100).toFixed(2);
+                                     $scope.calculatedValue=parseFloat(Math.round((((parseFloat($scope.amount)*first)/second)) * 100) / 100).toFixed(2);
                                      if(typeof($scope.selected)=='PLN' && typeof($scope.selected2)!='undefined')
-                                     $scope.kwota= parseFloat($scope.amount/second).toFixed(2);
+                                     $scope.calculatedValue= parseFloat($scope.amount/second).toFixed(2);
                                      if(typeof($scope.selected2)=='PLN' && typeof($scope.selected)!='undefined')
-                                     $scope.kwota= parseFloat($scope.amount*first).toFixed(2);
+                                     $scope.calculatedValue= parseFloat($scope.amount*first).toFixed(2);
                                      if(typeof($scope.selected2)=='PLN' && typeof($scope.selected)=='PLN')
-                                     $scope.kwota= parseFloat($scope.amount);
+                                     $scope.calculatedValue= parseFloat($scope.amount);
                                  }
                              }]);
 

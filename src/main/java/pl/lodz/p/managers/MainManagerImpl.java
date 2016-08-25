@@ -23,8 +23,10 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,6 +37,8 @@ import java.util.List;
 public class MainManagerImpl implements MainManager {
 
     private String currentExchangeRateDate;
+    private MainManager mainManager;
+    private boolean isNewDay;
 
     private Logger log = Logger.getLogger(MainManagerImpl.class);
 
@@ -78,41 +82,64 @@ public class MainManagerImpl implements MainManager {
         log.info("Stworzono obiekt CompanyStockValue w bazie danych");
     }
 
+    private Boolean isCurrencyTableFilled() {
+        List<Object[]> currencyList = mainManager.checkIfCurrencyTableIsFilled();
+        if(currencyList.size()>0) return false;
+        else return true;
+    }
+
+    private void addCurrencyToDB(Element eElement){
+        Currency currency = new Currency();
+        currency.setCurrencyName(eElement.getElementsByTagName("nazwa_waluty").item(0).getTextContent());
+        currency.setCurrencyCode(eElement.getElementsByTagName("kod_waluty").item(0).getTextContent());
+        currencyDAO.save(currency);
+        addCurrencyValueToDB(eElement,currency);
+    }
+
+    private void addCurrencyValueToDB(Element eElement, Currency currency){
+        CurrencyValue currencyValue = new CurrencyValue();
+        currencyValue.setCurrencyValue(eElement.getElementsByTagName("kurs_sredni").item(0).getTextContent());
+        currencyValue.setCurrencyId(currency);
+        currencyValue.setDate(currentExchangeRateDate);
+        currencyValueDAO.save(currencyValue);
+    }
+
+    private void checkIfNewDay(CurrencyValue cv){
+        if (cv.getDate().equals(currentExchangeRateDate)) isNewDay = false;
+        else isNewDay = true;
+    }
+
+    private Document prepareFile(URL file) throws ParserConfigurationException, IOException, SAXException {
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        Document document = db.parse(file.openStream());
+        NodeList data = document.getElementsByTagName("data_publikacji");
+
+        Element element = (Element) data.item(0);
+        currentExchangeRateDate=element.getTextContent();
+        return document;
+    }
+
     @Override
     public void getExchangeRate() {
-     /*   try {
+        List<Currency> allCurrencies=getAllCurrencies();
+        List<CurrencyValue> allCurValues =getAllCurrenciesValues();
+
+        try {
             URL file = new URL("http://nbp.pl/kursy/xml/LastA.xml");
-
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            DocumentBuilder db = dbf.newDocumentBuilder();
-
-            Document document = db.parse(file.openStream());
-
-            NodeList data = document.getElementsByTagName("data_publikacji");
-            Element element = (Element) data.item(0);
-//            System.out.print(element.getTextContent());
-
-            currentExchangeRateDate=element.getTextContent();
+            Document document = prepareFile(file);
+            if(allCurValues.size()>0) checkIfNewDay(allCurValues.get(allCurValues.size()-1));
 
             NodeList nList = document.getElementsByTagName("pozycja");
-
-            for (int temp = 0; temp < nList.getLength(); temp++) {
-
-                Node nNode = nList.item(temp);
-
+            for (int i = 0; i < nList.getLength(); i++) {
+                Node nNode = nList.item(i);
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-
                     Element eElement = (Element) nNode;
-
-                    Currency currency = new Currency();
-                    currency.setCurrencyName(eElement.getElementsByTagName("nazwa_waluty").item(0).getTextContent());
-                    currency.setCurrencyCode(eElement.getElementsByTagName("kod_waluty").item(0).getTextContent());
-                    CurrencyValue currencyValue = new CurrencyValue();
-                    currencyValue.setCurrencyValue(eElement.getElementsByTagName("kurs_sredni").item(0).getTextContent());
-                    currencyValue.setCurrencyId(currency);
-                    currencyDAO.save(currency);
-                    currencyValueDAO.save(currencyValue);
-
+                    if(allCurrencies.size()==0){
+                        addCurrencyToDB(eElement);
+                    }else{
+                        if(isNewDay) addCurrencyValueToDB(eElement, allCurrencies.get(i));
+                    }
                 }
             }
         } catch (ParserConfigurationException e) {
@@ -123,7 +150,7 @@ public class MainManagerImpl implements MainManager {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 
 
@@ -149,10 +176,24 @@ public class MainManagerImpl implements MainManager {
     }
 
     @Override
+    public List<Object[]> checkIfCurrencyTableIsFilled() {
+        return currencyDAO.checkIfCurrencyTableIsFilledQuery();
+    }
+
+    @Override
+    public List<Object[]> getLastDate() {
+        return currencyValueDAO.getLastDateQuery();
+    }
+
+    @Override
     public List<Object[]> findExchangeRate() {
         return currencyDAO.findExchangeRateQuery();
     }
 
+    @Override
+    public List<CurrencyValue> getAllCurrenciesValues() {
+        return currencyValueDAO.findAll();
+    }
 
     @Override
     public List<Currency> getAllCurrencies() {

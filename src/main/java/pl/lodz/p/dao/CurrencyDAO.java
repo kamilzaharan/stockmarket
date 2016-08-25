@@ -14,10 +14,14 @@ public interface CurrencyDAO extends JpaRepository<Currency,Long> {
 
     String FIND_ID_CODE_NAME = "SELECT id, currency_code, currency_name FROM stockmarket.currency";
     String FIND_EXCHANGE_RATE = "SELECT c.currency_code, c.currency_name, v.currency_value FROM stockmarket.currency c, stockmarket.currency_value v where c.id=v.id";
+    String CHECK_IF_TABLE_HAS_DATA ="SELECT * FROM stockmarket.currency c limit 1;";
 
     @Query(value = FIND_ID_CODE_NAME,nativeQuery = true)
     List<Object[]> findCurrencyIdCodeNameQuery();
 
     @Query(value = FIND_EXCHANGE_RATE,nativeQuery = true)
     List<Object[]> findExchangeRateQuery();
+
+    @Query(value = CHECK_IF_TABLE_HAS_DATA,nativeQuery = true)
+    List<Object[]> checkIfCurrencyTableIsFilledQuery();
 }

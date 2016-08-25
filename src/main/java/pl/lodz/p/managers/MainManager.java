@@ -7,6 +7,7 @@ import pl.lodz.p.dto.QuoteResponseDTO;
 import pl.lodz.p.model.Company;
 import pl.lodz.p.model.CompanyStockValue;
 import pl.lodz.p.model.Currency;
+import pl.lodz.p.model.CurrencyValue;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,9 +22,12 @@ public interface MainManager {
     void createCompany(CreateCompanyDTO quote);
     List<Company> getAllCompanies();
     List<Currency> getAllCurrencies();
+    List<CurrencyValue> getAllCurrenciesValues();
     List<CompanyStockValue> getAllStockValues();
     List<Object[]> findCompanyIdNameSymbol();
     List<Object[]> findCurrencyIdCodeName();
+    List<Object[]> checkIfCurrencyTableIsFilled();
+    List<Object[]> getLastDate();
     List<Object[]> findExchangeRate();
     void createCompanyStockValue(QuoteResponseDTO quote);
     void getExchangeRate();

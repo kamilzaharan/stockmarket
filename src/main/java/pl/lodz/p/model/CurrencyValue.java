@@ -28,6 +28,9 @@ public class CurrencyValue {
     @Column(name = "CURRENCY_VALUE")
     private String currencyValue;
 
+    @Column(name = "DATE")
+    private String date;
+
     @ManyToOne
     @JoinColumn(name = "REF_CURRENCY_ID", referencedColumnName = "ID")
     private Currency currencyId;
@@ -47,6 +50,12 @@ public class CurrencyValue {
     public void setCurrencyValue(String currencyValue) {
         this.currencyValue = currencyValue;
     }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {this.date = date; }
 
     public Currency getCurrencyId() {
         return currencyId;
