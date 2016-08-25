@@ -2,6 +2,7 @@ package pl.lodz.p.managers;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -14,6 +15,7 @@ import pl.lodz.p.dao.CurrencyDAO;
 import pl.lodz.p.dao.CurrencyValueDAO;
 import pl.lodz.p.dto.CreateCompanyDTO;
 import pl.lodz.p.dto.QuoteResponseDTO;
+import pl.lodz.p.handlers.Handler;
 import pl.lodz.p.model.Company;
 import pl.lodz.p.model.CompanyStockValue;
 import pl.lodz.p.model.Currency;
@@ -23,7 +25,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -53,6 +54,10 @@ public class MainManagerImpl implements MainManager {
 
     @Autowired
     private CompanyStockValueDAO companyStockValueDAO;
+
+    @Autowired
+    @Qualifier("sortSymbolHandler")
+    private Handler sortSymbolHandler;
 
 
     public void createCompany(CreateCompanyDTO quote) {
@@ -151,6 +156,12 @@ public class MainManagerImpl implements MainManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public ArrayList<Company> sort(ArrayList<Company> companyList, Integer sortType) {
+
+        return sortSymbolHandler.process(sortType, companyList);
     }
 
 

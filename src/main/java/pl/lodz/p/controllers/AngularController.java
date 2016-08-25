@@ -45,10 +45,10 @@ public class AngularController {
     private Approximation approx;
 
 
-    @RequestMapping(value = "/companiesList", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/companiesList/{sortType}", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
-    String showResultsGosiaFromDB() {
+    String showCompanies(@PathVariable String sortType) {
 
         ArrayList<Company> allCompanies = new ArrayList<Company>();
         for (Object[] obj : mainManager.findCompanyIdNameSymbol()) {
@@ -59,6 +59,9 @@ public class AngularController {
             c.setSymbol((String) obj[2]);
             allCompanies.add(c);
         }
+
+        Integer sortTypeInt = Integer.parseInt(sortType);
+        allCompanies = mainManager.sort(allCompanies, sortTypeInt);
 
         String json = new Gson().toJson(allCompanies);
         return json;
@@ -156,6 +159,18 @@ public class AngularController {
         return json;
     }
 
+    @RequestMapping(value = "/companyDetails/{id}", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    String getCompanyDetailByID(@PathVariable String id) {
+
+        Integer companyId = Integer.parseInt(id);
+        List<Point> stockValues = companyManager.findStockValuesList(companyId);
+        return new Gson().toJson(stockValues);
+    }
+
+
+
     @RequestMapping(value = "/getApproximation", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
@@ -192,6 +207,7 @@ public class AngularController {
 
         ObjectMocks.CreateAllMocks();
 
+        companyManager.addCompany(ObjectMocks.MICROSOFT);
         companyManager.addCompany(ObjectMocks.APPLE);
         companyManager.addCompany(ObjectMocks.NETFLIX);
 
@@ -199,6 +215,22 @@ public class AngularController {
         stockValueManager.addListOfStockValue(ObjectMocks.APPLE_STOCK_VALUE_LIST);
 
         return "DODALEM MOCKI";
+    }
+
+    @RequestMapping(value = "/companies/max", method = RequestMethod.GET, produces = "application/json")
+    public @ResponseBody String maxIncrease() {
+
+        List<Point> stockValues = companyManager.findMaxIncrease();
+
+        return new Gson().toJson(stockValues);
+    }
+
+    @RequestMapping(value = "/companies/min", method = RequestMethod.GET, produces = "application/json")
+    public @ResponseBody String maxDecrease() {
+
+        List<Point> stockValues = companyManager.findMaxDecrease();
+
+        return new Gson().toJson(stockValues);
     }
 
     public ArrayList<CompanyStockValue> createStockValueFromJSON(int companyId){

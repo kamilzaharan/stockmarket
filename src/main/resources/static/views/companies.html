@@ -1,10 +1,11 @@
 <div>
-    <div ng-controller="companiesController">
-
         <div class="container">
             <h3>Lista dostępnych firm: </h3>
+            <span class="glyphicons glyphicons-sorting"></span>
             <br>
 
+            <a href="/companies/1" class="button">Sortuj po nazwie</a>
+            <a href="/companies/2" class="button">Sortuj po symbolu</a>
             <table class="table table-bordered">
                 <thead>
                 <tr>
@@ -19,7 +20,8 @@
                 <!--<tr dir-paginate="result in companies|itemsPerPage:10" pagination-id="pagination1">-->
                     <td>{{result.fullName}}</td>
                     <td>{{result.symbol}}</td>
-                    <td><a class="btn btn-primary" href="/graph/{{result.id}}" role="button">Zobacz wykres</a></td>
+                    <td><a class="btn btn-primary" href="/graph/{{result.id}}" role="button">Aproksymuj</a></td>
+                    <td><a class="btn btn-primary" href="/companyDetails/{{result.id}}" role="button">Zobacz wykres</a></td>
                 </tr>
                 </tbody>
             </table>
@@ -30,5 +32,4 @@
                     <!--boundary-links="true">-->
             <!--</dir-pagination-controls>-->
         </div>
-    </div>
 </div>

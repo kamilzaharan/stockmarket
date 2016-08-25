@@ -10,6 +10,7 @@ import pl.lodz.p.model.Currency;
 import pl.lodz.p.model.CurrencyValue;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -31,5 +32,6 @@ public interface MainManager {
     List<Object[]> findExchangeRate();
     void createCompanyStockValue(QuoteResponseDTO quote);
     void getExchangeRate();
+    ArrayList<Company> sort(ArrayList<Company> companyList, Integer sortType);
 
 }

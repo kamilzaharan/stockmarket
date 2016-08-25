@@ -16,12 +16,21 @@ var myApp = angular.module('myApp', ['services', 'controllers', 'ngRoute'])
                  }).when('/graph/:id', {
                      controller: 'graphCtrl',
                      templateUrl: '/views/graph.html'
+                 }).when('/companies/max', {
+                     controller: 'maxCtrl',
+                     templateUrl: '/views/companyMax.html'
+                 }).when('/companyDetails/:id', {
+                     controller: 'companyDetailsCtrl',
+                     templateUrl: '/views/companyDetail.html'
+                 }).when('/companies/min', {
+                     controller: 'minCtrl',
+                     templateUrl: '/views/companyMax.html'
                  }).when('/currencies', {
                          controller: 'currenciesController',
                          templateUrl: 'views/currencies.html'
-                 }).when('/companies', {
+                 }).when('/companies/:sortType', {
                      controller: 'companiesController',
-                     templateUrl: 'views/companies.html'
+                     templateUrl: '/views/companies.html'
                  }).otherwise({
               redirectTo: '/'
           });

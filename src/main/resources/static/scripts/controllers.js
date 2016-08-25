@@ -88,19 +88,18 @@ cont.controller('currenciesController', ['$scope', 'showCurrencies', 'showExchan
                                  }
                              }]);
 
-cont.controller('companiesController', ['$scope', 'showCompanyList',
-    function ($scope, showCompanyList) {
+cont.controller('companiesController', ['$scope', '$routeParams', 'showCompanyList',
+    function ($scope, $routeParams, showCompanyList) {
 
         //to znajdzie currency name, code i ID
         $scope.companies = function () {
-            showCompanyList.create().$promise
+            showCompanyList.create({sortType: $routeParams.sortType}).$promise
                 .then(function (response) {
                     $scope.companies=response;
                 })
         };
         $scope.companies();
     }]);
-
 
 cont.controller('graphCtrl', ['$scope', '$routeParams', 'getApproximation',
     function ($scope, $routeParams, getApproximation) {
@@ -129,6 +128,135 @@ cont.controller('graphCtrl', ['$scope', '$routeParams', 'getApproximation',
 
                         .chartLabel("Wartość akcji w ostatnich 30 dniach, albo jakiś inny tytuł wykresu")
                         .margin({left: 50, bottom: 20, top: 30});
+
+                    var sinLine = fc.series.line()
+                        .xValue(function(d) { return d.x; })
+                        .yValue(function(d) { return d.y; });
+
+                    chart.plotArea(sinLine);
+
+                    d3.select("#chart")
+                        .datum(data)
+                        .call(chart);
+                })
+        };
+
+        $scope.graphFun();
+    }]);
+
+cont.controller('companyDetailsCtrl', ['$scope', '$routeParams', 'getCompanyDetails',
+    function ($scope, $routeParams, getCompanyDetails) {
+
+        $scope.graphFun = function () {
+            getCompanyDetails.create({id: $routeParams.id}).$promise
+                .then(function (response) {
+                    $scope.details=response;
+
+                    var data = $scope.details.map(function(d) {
+                        return {
+                            x: d.x,
+                            y: d.y
+                        };
+                    });
+
+                    var chart = fc.chart.cartesian(
+                        d3.scale.linear(),
+                        d3.scale.linear())
+                        .yDomain(fc.util.extent().pad(0.2).fields(["y", "z"])(data))
+                        .yLabel("Wartość akcji")
+                        .yNice()
+                        .yOrient("left")
+                        .xDomain(fc.util.extent().fields(["x"])(data))
+                        .xLabel("Czas [h]")
+
+                        .chartLabel("Wartość akcji w ostatnich 30 dniach, albo jakiś inny tytuł wykresu")
+                        .margin({left: 50, bottom: 20, top: 30});
+
+                    var sinLine = fc.series.line()
+                        .xValue(function(d) { return d.x; })
+                        .yValue(function(d) { return d.y; });
+
+                    chart.plotArea(sinLine);
+
+                    d3.select("#chart")
+                        .datum(data)
+                        .call(chart);
+                })
+        };
+
+        $scope.graphFun();
+    }]);
+
+cont.controller('maxCtrl', ['$scope', 'maxIncrease',
+    function ($scope, maxIncrease) {
+
+        $scope.graphFun = function () {
+            maxIncrease.create().$promise
+                .then(function (response) {
+                    $scope.stockValues=response;
+
+                    var data = $scope.stockValues.map(function(d) {
+                        return {
+                            x: d.x,
+                            y: d.y
+                        };
+                    });
+
+                    var chart = fc.chart.cartesian(
+                        d3.scale.linear(),
+                        d3.scale.linear())
+                        .yDomain(fc.util.extent().pad(0.2).fields(["y", "z"])(data))
+                        .yLabel("Wartość akcji")
+                        .yNice()
+                        .yOrient("left")
+                        .xDomain(fc.util.extent().fields(["x"])(data))
+                        .xLabel("Czas")
+
+                        .chartLabel("Wartość akcji w ostatnich 30 dniach")
+                        .margin({left: 80, bottom: 20, top: 30});
+
+                    var sinLine = fc.series.line()
+                        .xValue(function(d) { return d.x; })
+                        .yValue(function(d) { return d.y; });
+
+                    chart.plotArea(sinLine);
+
+                    d3.select("#chart")
+                        .datum(data)
+                        .call(chart);
+                })
+        };
+
+        $scope.graphFun();
+    }]);
+
+cont.controller('minCtrl', ['$scope', 'maxDecrease',
+    function ($scope, maxDecrease) {
+
+        $scope.graphFun = function () {
+            maxDecrease.create().$promise
+                .then(function (response) {
+                    $scope.stockValues=response;
+
+                    var data = $scope.stockValues.map(function(d) {
+                        return {
+                            x: d.x,
+                            y: d.y
+                        };
+                    });
+
+                    var chart = fc.chart.cartesian(
+                        d3.scale.linear(),
+                        d3.scale.linear())
+                        .yDomain(fc.util.extent().pad(0.2).fields(["y", "z"])(data))
+                        .yLabel("Wartość akcji")
+                        .yNice()
+                        .yOrient("left")
+                        .xDomain(fc.util.extent().fields(["x"])(data))
+                        .xLabel("Czas")
+
+                        .chartLabel("Wartość akcji w ostatnich 30 dniach")
+                        .margin({left: 80, bottom: 20, top: 30});
 
                     var sinLine = fc.series.line()
                         .xValue(function(d) { return d.x; })

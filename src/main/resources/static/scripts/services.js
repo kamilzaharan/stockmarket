@@ -43,13 +43,31 @@ services.factory('getDate', function ($resource) {
 });
 
 services.factory('showCompanyList', function ($resource) {
-    return $resource('http://localhost:8080/companiesList', {}, {
-        create: {method: 'GET', isArray: true}
+    return $resource('http://localhost:8080/companiesList/:sortType', {}, {
+        create: {method: 'GET', params: {sortType: '@sortType'}, isArray: true}
     })
 });
 
 services.factory('getApproximation', function ($resource) {
     return $resource('http://localhost:8080/getApproximation/:id', {}, {
         create: {method: 'GET', params: {id: '@id'}, isArray: true}
+    })
+});
+
+services.factory('getCompanyDetails', function ($resource) {
+    return $resource('http://localhost:8080/companyDetails/:id', {}, {
+        create: {method: 'GET', params: {id: '@id'}, isArray: true}
+    })
+});
+
+services.factory('maxIncrease', function ($resource) {
+    return $resource('http://localhost:8080/companies/max', {}, {
+        create: {method: 'GET', isArray: true}
+    })
+});
+
+services.factory('maxDecrease', function ($resource) {
+    return $resource('http://localhost:8080/companies/min', {}, {
+        create: {method: 'GET', isArray: true}
     })
 });
