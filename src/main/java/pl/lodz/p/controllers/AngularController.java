@@ -169,6 +169,31 @@ public class AngularController {
         return new Gson().toJson(stockValues);
     }
 
+    @RequestMapping(value = "/companyDetails/{id}/stats", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    String getStatistics(@PathVariable String id) {
+        Integer companyId = Integer.parseInt(id);
+
+//        String average = companyManager.getAverage(companyId);
+//        String variance = companyManager.getVariance(companyId);
+//        String standardDeviation = companyManager.getStandardDeviation(companyId);
+//        String median = companyManager.getMedian(companyId);
+
+//        log.info("Srednia wartosc akcji dla tej firmy wynosi " + average);
+//        log.info("Wariancja akcji dla tej firmy wynosi " + variance);
+//        log.info("Odchylenie standardowe akcji dla tej firmy wynosi " + standardDeviation);
+//        log.info("Mediana akcji dla tej firmy wynosi " + median);
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("average", companyManager.getAverage(companyId));
+        jsonObject.addProperty("variance", companyManager.getVariance(companyId));
+        jsonObject.addProperty("standardDeviation", companyManager.getStandardDeviation(companyId));
+        jsonObject.addProperty("median", companyManager.getMedian(companyId));
+
+        return new Gson().toJson(jsonObject);
+    }
+
 
 
     @RequestMapping(value = "/getApproximation", method = RequestMethod.GET, produces = "application/json")

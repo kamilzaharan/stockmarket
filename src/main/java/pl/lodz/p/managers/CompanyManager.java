@@ -18,13 +18,13 @@ public interface CompanyManager {
 
      List<Point> findStockValuesList(int id);
 
-     Double getAverage(int id);
+     String getAverage(int id);
 
-     Double getVariance(int id);
+     String getVariance(int id);
 
-     Double getStandardDeviation(int id);
+     String getStandardDeviation(int id);
 
-     Double getMedian(int id);
+     String getMedian(int id);
 
 }
 

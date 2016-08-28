@@ -13,7 +13,9 @@ import pl.lodz.p.neuralNetwork.Point;
 import pl.lodz.p.utils.Utils;
 
 import java.math.BigInteger;
+import java.text.DecimalFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by Kaltair on 2016-08-09.
@@ -71,13 +73,19 @@ public class CompanyManagerImpl implements CompanyManager {
         Company company = companyDAO.getCompany(BigInteger.valueOf(id));
 
         listOfStockValuesLastPrice.clear();
-        for(CompanyStockValue stockValue: company.getCompanyStockValueList()){
-            listOfStockValuesLastPrice.add(stockValue.getLastPrice());
-        }
-        log.info("Srednia wartosc akcji dla tej firmy wynosi "+getAverage(id));
-        log.info("Wariancja akcji dla tej firmy wynosi "+getVariance(id));
-        log.info("Odchylenie standardowe akcji dla tej firmy wynosi "+getStandardDeviation(id));
-        log.info("Mediana akcji dla tej firmy wynosi "+getMedian(id));
+        listOfStockValuesLastPrice.addAll(company.getCompanyStockValueList().stream()
+                                .map(CompanyStockValue::getLastPrice)
+                                .collect(Collectors.toList()));
+
+//        double average = getAverage(id);
+//        double variance = getVariance(id);
+//        double standardDeviation = getStandardDeviation(id);
+//        double median = getMedian(id);
+//
+//        log.info("Srednia wartosc akcji dla tej firmy wynosi " + average);
+//        log.info("Wariancja akcji dla tej firmy wynosi " + variance);
+//        log.info("Odchylenie standardowe akcji dla tej firmy wynosi " + standardDeviation);
+//        log.info("Mediana akcji dla tej firmy wynosi " + median);
 
         return Utils.createPoints(company);
     }
@@ -105,28 +113,28 @@ public class CompanyManagerImpl implements CompanyManager {
     }
 
     @Override
-    public Double getStandardDeviation(int companyId){
-        double standardDeviation;
-        standardDeviation= statisticEquations.getStockValuesStandardDeviation(listOfStockValuesLastPrice);
-        return standardDeviation;
+    public String getStandardDeviation(int companyId){
+        double standardDeviation = statisticEquations.getStockValuesStandardDeviation(listOfStockValuesLastPrice);
+
+        return new DecimalFormat("#.##").format(standardDeviation);
     }
 
     @Override
-    public Double getAverage(int companyId){
-        double average;
-        average= statisticEquations.getStockValuesAverage(listOfStockValuesLastPrice);
-        return average;
+    public String getAverage(int companyId){
+        double average = statisticEquations.getStockValuesAverage(listOfStockValuesLastPrice);
+
+        return new DecimalFormat("#.##").format(average);
     }
 
     @Override
-    public Double getVariance(int companyId){
-        double variance;
-        variance= statisticEquations.getStockValuesVariance(listOfStockValuesLastPrice);
-        return variance;
+    public String getVariance(int companyId){
+        double variance = statisticEquations.getStockValuesVariance(listOfStockValuesLastPrice);
+
+        return new DecimalFormat("#.##").format(variance);
     }
 
     @Override
-    public Double getMedian(int companyId){
+    public String getMedian(int companyId){
         double median;
         Double[] companyStockValueArray = new Double[listOfStockValuesLastPrice.size()];
         for(int i=0; i<listOfStockValuesLastPrice.size();i++){
@@ -134,7 +142,7 @@ public class CompanyManagerImpl implements CompanyManager {
         }
         Double[] companySortedStockValueArray = Utils.bubbleSortByValue(companyStockValueArray);
         median= statisticEquations.getStockValuesMedian(companySortedStockValueArray);
-        return median;
+        return new DecimalFormat("#.##").format(median);
     }
 
 
