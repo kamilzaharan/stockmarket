@@ -144,13 +144,27 @@ cont.controller('graphCtrl', ['$scope', '$routeParams', 'getApproximation',
         $scope.graphFun();
     }]);
 
-cont.controller('companyDetailsCtrl', ['$scope', '$routeParams', 'getCompanyDetails',
-    function ($scope, $routeParams, getCompanyDetails) {
+cont.controller('companyDetailsCtrl', ['$scope', '$routeParams', 'getCompanyDetails', 'stats',
+    function ($scope, $routeParams, getCompanyDetails, stats) {
 
         $scope.graphFun = function () {
             getCompanyDetails.create({id: $routeParams.id}).$promise
                 .then(function (response) {
                     $scope.details=response;
+
+                    $scope.statistics = function() {
+                        stats.create({id: $routeParams.id}).$promise
+                            .then(function (response) {
+                                $scope.statistics = response;
+
+                                $scope.avg = $scope.statistics.average;
+                                $scope.variance = $scope.statistics.variance;
+                                $scope.standardDeviation = $scope.statistics.standardDeviation;
+                                $scope.median = $scope.statistics.median;
+
+                            })
+                    };
+                    $scope.statistics();
 
                     var data = $scope.details.map(function(d) {
                         return {

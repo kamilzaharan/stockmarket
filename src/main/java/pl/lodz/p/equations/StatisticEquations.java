@@ -25,12 +25,7 @@ public class StatisticEquations {
     }
 
     public double getStockValuesVariance(List<Double> listOfStockValuesLastPrice) {
-        double average=0;
-
-        for(int i=0;i<listOfStockValuesLastPrice.size();i++){
-            average+=listOfStockValuesLastPrice.get(i);
-        }
-        average/=listOfStockValuesLastPrice.size();
+        double average=getStockValuesAverage(listOfStockValuesLastPrice);
 
         double variance=0;
 
@@ -44,10 +39,7 @@ public class StatisticEquations {
 
     public double getStockValuesStandardDeviation(List<Double> listOfStockValuesLastPrice) {
 
-        double standardDeviation=0;
-        standardDeviation= Math.sqrt(getStockValuesVariance(listOfStockValuesLastPrice));
-
-        return standardDeviation;
+        return Math.sqrt(getStockValuesVariance(listOfStockValuesLastPrice));
     }
 
     public double getStockValuesMedian(Double[] companySortedArray ) {
