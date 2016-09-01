@@ -51,10 +51,18 @@ cont.controller('currenciesController', ['$scope', 'showCurrencies', 'showExchan
                               $scope.exchangeRate();
 
                               //return date
-                              $scope.getDate = function () {
-                              $scope.date = new Date();
-                              }
-                              $scope.getDate();
+                             //$scope.getDate = function () {
+                              //$scope.date = new Date();
+                              //}
+                              //$scope.getDate();
+                              $scope.getLastDate = function () {
+                                    getDate.create().$promise
+                                        .then(function (response) {
+                                         $scope.getLastDate=response;
+                                        })
+                                }
+                              $scope.getLastDate();
+                              console.log($scope.getLastDate);
 
                               //calculate value
                               $scope.calculate = function() {

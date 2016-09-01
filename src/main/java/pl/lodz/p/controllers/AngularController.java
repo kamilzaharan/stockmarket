@@ -16,6 +16,7 @@ import pl.lodz.p.mocks.ObjectMocks;
 import pl.lodz.p.model.Company;
 import pl.lodz.p.model.CompanyStockValue;
 import pl.lodz.p.model.Currency;
+import pl.lodz.p.model.CurrencyValue;
 import pl.lodz.p.neuralNetwork.Approximation;
 import pl.lodz.p.neuralNetwork.ConfigurationException;
 import pl.lodz.p.neuralNetwork.Point;
@@ -124,12 +125,15 @@ public class AngularController {
     @ResponseBody
     String getExchangeRateDate() {
 
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("date", mainManager.getCurrentExchangeRateDate());
+        List<Object[]> lastDateList = mainManager.getLastDate();
+        CurrencyValue currencyValueLastDate = new CurrencyValue();
+        if(lastDateList.size()>0){
+            currencyValueLastDate = new CurrencyValue();
+            currencyValueLastDate.setDate((String) lastDateList.get(0)[1]);
+        }
 
-        String json = new Gson().toJson(jsonObject);
+        String json = new Gson().toJson(currencyValueLastDate);
         return json;
-
     }
 
     @RequestMapping(value = "/addCompany", method = RequestMethod.POST, consumes = "application/json")

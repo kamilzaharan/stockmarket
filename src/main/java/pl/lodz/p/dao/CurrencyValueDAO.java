@@ -11,7 +11,7 @@ import java.util.List;
  * Created by kamil on 5/31/16.
  */
 public interface CurrencyValueDAO extends JpaRepository<CurrencyValue,Long> {
-    String GET_LAST_DATE="SELECT * FROM currency_value ORDER BY id DESC LIMIT 1;";
+    String GET_LAST_DATE="SELECT id, date FROM currency_value ORDER BY id DESC LIMIT 1;";
 
     @Query(value = GET_LAST_DATE,nativeQuery = true)
     List<Object[]> getLastDateQuery();
