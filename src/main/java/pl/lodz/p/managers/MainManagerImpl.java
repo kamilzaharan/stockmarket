@@ -84,6 +84,13 @@ public class MainManagerImpl implements MainManager {
         Company company = companyDAO.findBySymbol(quote.getSymbol());
         companyStockValue.setCompanyId(company);
         companyStockValueDAO.save(companyStockValue);
+
+        if((companyStockValueDAO.checkAmountOfValues(quote.getSymbol()))>30) {
+
+            companyStockValueDAO.delete(companyStockValueDAO.deleteFirstStockValue(quote.getSymbol()));
+            log.info("Usunięto pierwszy element company stock value firmy: " + quote.getName());
+        }
+
         log.info("Stworzono obiekt CompanyStockValue w bazie danych");
     }
 

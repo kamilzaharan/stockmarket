@@ -43,10 +43,9 @@ public class CompanyManagerImpl implements CompanyManager {
     @Override
     public List<Point> findMaxIncrease() {
 
-        //TODO: jak inaczej zainicjalizowaÄ‡?
         Company companyWithMaxIncrease = null;
 
-        double max = -1;
+        double max = 0;
         double change;
 
         List<Object> companiesId = companyDAO.getCompaniesId();

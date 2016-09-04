@@ -8,7 +8,7 @@
 
 ### Instalacja
 
-- Aplikacja wymaga stworzenia bazy danych MySql o nazwie Stockmarket oraz użytkownika o loginie makler z hasłem makler.
+- Aplikacja wymaga stworzenia bazy danych MySql na porcie 3306 o nazwie Stockmarket oraz użytkownika o loginie makler z hasłem makler.
 
 ### Uruchomienie aplikacji
 
@@ -18,13 +18,4 @@
 
 ### REST API
 
-Wszystkie strony znajdują się na adresie localhost:8080.
-
-- **/companies** (GET) obsługuje StatisticsService i służy do pobierania ogólnych statystyk
-
-- **adres:8080/api/v1/statistics/users/:userEmail** (GET) obsługuje StatisticsService i służy do pobierania statystyk użytkownika, którego email znajduje się w adresie
-
-- **adres:8080/api/v1/statistics/:lotteryDate** (GET) obsługuje StatisticsService i służy do pobierania statystyk losowania z podanej daty
-
-- **adres:8080/api/v1/users/actions/draw** (POST) ogsługuje LotteryService i służy do losowania zwycięzców
-
+Wszystkie strony znajdują się na adresie localhost:8080
