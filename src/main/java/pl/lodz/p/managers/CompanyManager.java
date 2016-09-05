@@ -1,5 +1,6 @@
 package pl.lodz.p.managers;
 
+import pl.lodz.p.dao.CompanyDAO;
 import pl.lodz.p.model.Company;
 import pl.lodz.p.neuralNetwork.Point;
 
@@ -25,6 +26,8 @@ public interface CompanyManager {
      String getStandardDeviation(int id);
 
      String getMedian(int id);
+
+     void setCompanyDAO(CompanyDAO companyDAO);
 
 }
 

@@ -159,6 +159,7 @@ public class CompanyManagerImpl implements CompanyManager {
     }
 
 
-
-
+    public void setCompanyDAO(CompanyDAO companyDAO){
+        this.companyDAO=companyDAO;
+    }
 }
