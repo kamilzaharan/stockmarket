@@ -122,12 +122,12 @@ public class CompanyManagerTests {
     @Test
     public void decimalFormatTest() {
         companyManager.setStatisticEquations(statisticEquationMock);
-        assertThat(companyManager.getStandardDeviation()).isEqualTo("1,23")
-                .isNotEqualTo("1.23")
+        assertThat(companyManager.getStandardDeviation()).isEqualTo("1.23")
+                .isNotEqualTo("1,23")
                 .hasSize(4);
 
-        assertThat(companyManager.getStandardDeviation()).isEqualTo("322,22")
-                .isNotEqualTo("322.22")
+        assertThat(companyManager.getStandardDeviation()).isEqualTo("322.22")
+                .isNotEqualTo("322,22")
                 .hasSize(6);
 
         assertThat(companyManager.getStandardDeviation()).isEqualTo("111111")
