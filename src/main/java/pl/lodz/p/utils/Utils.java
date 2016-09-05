@@ -15,13 +15,14 @@ import java.util.List;
 public class Utils {
     public static List<Company> readCompaniesFromCsv(String path) {
 
-        String csvFile = path;
-        List<Company> listOfCompanys = new ArrayList();
+        List<Company> listOfCompanys = new ArrayList<>();
         CSVReader reader = null;
         int i=1;
+
         try {
-            reader = new CSVReader(new FileReader(csvFile));
+            reader = new CSVReader(new FileReader(path));
             String[] line;
+
             while ((line = reader.readNext()) != null) {
                 Company company=new Company();
                 company.setId(i);
@@ -33,6 +34,7 @@ public class Utils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return listOfCompanys;
     }
 
@@ -48,7 +50,6 @@ public class Utils {
             for (CompanyStockValue companyStockValue : pointsArray) {
                 points.add((new Point(day, companyStockValue.getLastPrice())));
 
-                //TODO: zamieniÄ‡ timestamp na dzieĹ„ i wrzuciÄ‡ w miejsce x
                 day += 1;
             }
         }

@@ -36,7 +36,7 @@ public class OnlineStockServiceImpl implements OnlineStockService {
         List<Company> companyList = mainManager.getAllCompanies();
         log.info(companyList.size());
         RestTemplate restTemplate = new RestTemplate();
-        //QuoteResponseDTO quote = restTemplate.postForObject("http://dev.markitondemand.com/MODApis/Api/v2/Quote/json",)
+
         for (Company company : companyList
              ) {
             QuoteResponseDTO quote = restTemplate.getForObject("http://dev.markitondemand.com/MODApis/Api/v2/Quote/json?symbol="+company.getSymbol(), QuoteResponseDTO.class);

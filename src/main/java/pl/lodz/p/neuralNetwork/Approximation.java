@@ -3,7 +3,6 @@ package pl.lodz.p.neuralNetwork;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import pl.lodz.p.controllers.AngularController;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,71 +15,38 @@ public class Approximation {
     private NeuralNetworkConfiguration networkConf;
     @Autowired
     private NeuralNetwork approximationNetwork;
+    @Autowired
+    private NeuronConfiguration neuronConf;
 
-    private Logger log = Logger.getLogger(AngularController.class);
+    private Logger log = Logger.getLogger(Approximation.class);
+
     public List<Point> doApproximation(double[][] train, double[][] test) throws ConfigurationException {
 
-        double[][] approximationTrain = train;
-        double[][] approximationTest = test;
+        test = Utils.arraySort(test);
+        Utils.saveArraysToFile("approximation_test_sorted.txt", test);
+        Utils.saveArraysToFile("approximation_train_sorted.txt", train);
 
+        double[][] trainInputs = Utils.getColumnArrayFromArray(0, train);
+        double[][] trainOutputs = Utils.getColumnArrayFromArray(1, train);
 
-        approximationTest = NetworkUtils.arraySort(approximationTest);
-        NetworkUtils.saveArraysToFile("approximation_test_sorted.txt", approximationTest);
-        NetworkUtils.saveArraysToFile("approximation_train_sorted.txt", approximationTrain);
+        double[][] testInputs = Utils.getColumnArrayFromArray(0, test);
 
-        double[][] trainInputs = NetworkUtils.getColumnArrayFromArray(0, approximationTrain);
-        double[][] trainOutputs = NetworkUtils.getColumnArrayFromArray(1, approximationTrain);
-
-        double[][] testInputs = NetworkUtils.getColumnArrayFromArray(0, approximationTest);
-
-        double alpha = 0.2, beta = 1, momentum = 0.2;
-
-        if (alpha < 0 || alpha >= 1) {
-            throw new ConfigurationException("Wrong alpha");
-        }
-        if (beta < 0 || beta > 1) {
-            throw new ConfigurationException("Wrong beta");
-        }
-        if (momentum < 0 || momentum >= 1) {
-            throw new ConfigurationException("Wrong momentum");
-        }
-
-        NeuronConfiguration neuronConf = new NeuronConfiguration(alpha, beta, momentum, true);
-
+        double alpha = 0.2, beta = 1, momentum = 0.2, epsilon = 0.7;
+        int inputNeurons = 1, outputNeurons = 1, howManyEpoch = 10000;
         int[] howManyHiddenNeurons = {15};
 
-        if (howManyHiddenNeurons.length < 1) {
-            throw new ConfigurationException("Wrong number of hidden layers");
-        }
-        for (int i = 0; i < howManyHiddenNeurons.length; i++) {
-            if (howManyHiddenNeurons[i] < 1) {
-                throw new ConfigurationException("Wrong number of neurons on hidden layer. Layer: " + i + ", Neurons: " + howManyHiddenNeurons[i]);
-            }
-        }
-
-        int inputNeurons = 1, outputNeurons = 1;
-        double epsilon = 0.7;
-
-        if (inputNeurons <= 0 || inputNeurons >= 10) {
-            throw new ConfigurationException("Wrong number of input neurons");
-        }
-        if (outputNeurons <= 0 || outputNeurons >= 10) {
-            throw new ConfigurationException("Wrong number of output neurons");
-        }
-        if (epsilon < 0 || epsilon > 1) {
-            throw new ConfigurationException("Wrong epsilon");
-        }
-
+        neuronConf.setConfiguration(alpha, beta, momentum, true);
         networkConf.setConfiguration(inputNeurons, howManyHiddenNeurons, outputNeurons, true, epsilon);
 
-        int howManyEpoch = 10000;
+        checkNeuralNetworkConfiguration(networkConf);
+        checkNeuronConfiguration(neuronConf);
 
         List<Point> approximationResults = new ArrayList<>();
-        List<Point> errPoints = new ArrayList();
+        List<Point> errPoints = new ArrayList<>();
 
-        int i=10;
         approximationNetwork.setNeuralNetwork(networkConf, neuronConf);
         approximationNetwork.learn(howManyEpoch, trainInputs, trainOutputs, errPoints);
+
         for (double[] testInput : testInputs) {
             approximationNetwork.singleCompute(testInput);
 
@@ -88,9 +54,44 @@ public class Approximation {
         }
 
         Collections.sort(approximationResults);
-        NetworkUtils.savePoints("approximation" + i, approximationResults);
+        Utils.savePoints("approximation" + 10, approximationResults);
+        log.debug("Approximation result: " + approximationResults);
 
         return approximationResults;
     }
 
+    private void checkNeuralNetworkConfiguration(NeuralNetworkConfiguration networkConf) throws ConfigurationException {
+
+        if (networkConf.getHiddenLayersAmount().length < 1) {
+            throw new ConfigurationException("Wrong number of hidden layers");
+        }
+        for (int i = 0; i < networkConf.getHiddenLayersAmount().length; i++) {
+            if (networkConf.getHiddenLayersAmount()[i] < 1) {
+                throw new ConfigurationException("Wrong number of neurons on hidden layer. Layer: " + i + ", Neurons: "
+                        + networkConf.getHiddenLayersAmount()[i]);
+            }
+        }
+
+        if (networkConf.getHowManyInputNeurons() <= 0 || networkConf.getHowManyInputNeurons() >= 10) {
+            throw new ConfigurationException("Wrong number of input neurons");
+        }
+        if (networkConf.getHowManyOutputNeurons() <= 0 || networkConf.getHowManyOutputNeurons() >= 10) {
+            throw new ConfigurationException("Wrong number of output neurons");
+        }
+        if (networkConf.getEpsilon() < 0 || networkConf.getEpsilon() > 1) {
+            throw new ConfigurationException("Wrong epsilon");
+        }
+    }
+
+    private void checkNeuronConfiguration(NeuronConfiguration neuronConf) throws ConfigurationException {
+        if (neuronConf.getAlpha() < 0 || neuronConf.getAlpha() >= 1) {
+            throw new ConfigurationException("Wrong alpha");
+        }
+        if (neuronConf.getBeta() < 0 || neuronConf.getBeta() > 1) {
+            throw new ConfigurationException("Wrong beta");
+        }
+        if (neuronConf.getMomentum() < 0 || neuronConf.getMomentum() >= 1) {
+            throw new ConfigurationException("Wrong momentum");
+        }
+    }
 }

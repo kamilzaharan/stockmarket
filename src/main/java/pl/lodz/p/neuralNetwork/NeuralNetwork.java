@@ -1,6 +1,5 @@
 package pl.lodz.p.neuralNetwork;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -8,11 +7,11 @@ import java.util.List;
 @Component
 public class NeuralNetwork {
 
-    protected boolean randomPattern;
-    protected Layer inputLayer;
-    protected Layer[] hidedLayers;
-    protected Layer outputLayer;
-    double epsilon;
+    private boolean randomPattern;
+    private Layer inputLayer;
+    private Layer[] hidedLayers;
+    private Layer outputLayer;
+    private double epsilon;
 
     public void setNeuralNetwork(NeuralNetworkConfiguration networkConfiguration, NeuronConfiguration neuronConfiguration) {
         this.randomPattern= networkConfiguration.isRandomPattern();
@@ -40,7 +39,7 @@ public class NeuralNetwork {
         for (int j = 0; j < howManyEpoch; j++) {
 
             if (randomPattern) {
-                NetworkUtils.randomizePatterns(inputs, outputs);
+                Utils.randomizePatterns(inputs, outputs);
             }
             for (int i = 0; i < inputs.length; i++) {
 
@@ -66,17 +65,14 @@ public class NeuralNetwork {
 
             error = 0;
 
-
             if (randomPattern) {
-                NetworkUtils.randomizePatterns(inputs, outputs);
+                Utils.randomizePatterns(inputs, outputs);
             }
             for (int i = 0; i < inputs.length; i++) {
                 singleCompute(inputs[i]);
                 error = error + outputLayer.getError(outputs[i]);
                 backPropagation(outputs[i]);
-
             }
-
 
             howManyEpoch++;
             errorCheck[howManyEpoch % 5] = error / inputs.length;
@@ -97,19 +93,19 @@ public class NeuralNetwork {
 
         } while ((Math.abs(error / inputs.length) > epsilon));
         err.add(new Point(howManyEpoch, error / inputs.length));
+
         return howManyEpoch;
     }
 
     public void backPropagation(double[] expectedResults) {
-        //send error to output layer
 
         outputLayer.setLinnearError(0, expectedResults[0]);
-        // send error to another layer
         outputLayer.sendErrors(hidedLayers[hidedLayers.length - 1]);
+
         for (int i = hidedLayers.length - 1; i > 0; i--) {
             hidedLayers[i].sendErrors(hidedLayers[i - 1]);
         }
-        // set new weights
+
         for (Layer hidedLayer1 : hidedLayers) {
             hidedLayer1.calcWeights();
         }

@@ -17,7 +17,6 @@
                 <tbody>
 
                 <tr ng-repeat="result in companies">
-                <!--<tr dir-paginate="result in companies|itemsPerPage:10" pagination-id="pagination1">-->
                     <td>{{result.fullName}}</td>
                     <td>{{result.symbol}}</td>
                     <td><a class="btn btn-primary" href="/graph/{{result.id}}" role="button">Aproksymuj</a>
@@ -25,11 +24,5 @@
                 </tr>
                 </tbody>
             </table>
-            <!--<dir-pagination-controls-->
-                    <!--pagination-id="pagination1"-->
-                    <!--max-size="7"-->
-                    <!--direction-links="true"-->
-                    <!--boundary-links="true">-->
-            <!--</dir-pagination-controls>-->
         </div>
 </div>

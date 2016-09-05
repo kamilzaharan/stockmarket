@@ -2,9 +2,7 @@ package pl.lodz.p.managers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.lodz.p.dao.CompanyDAO;
 import pl.lodz.p.dao.CompanyStockValueDAO;
-import pl.lodz.p.model.Company;
 import pl.lodz.p.model.CompanyStockValue;
 
 import java.util.List;

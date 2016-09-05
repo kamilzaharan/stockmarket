@@ -1,5 +1,8 @@
 package pl.lodz.p.neuralNetwork;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class NeuronConfiguration {
 
     private double alpha;
@@ -7,7 +10,7 @@ public class NeuronConfiguration {
     private double momentum;
     private boolean isBias;
 
-    public NeuronConfiguration(double alpha, double beta, double momentum, boolean isBias) {
+    public void setConfiguration(double alpha, double beta, double momentum, boolean isBias){
         this.alpha = alpha;
         this.beta = beta;
         this.momentum = momentum;

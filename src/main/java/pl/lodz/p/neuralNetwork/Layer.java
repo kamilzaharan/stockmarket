@@ -1,8 +1,12 @@
 package pl.lodz.p.neuralNetwork;
 
-public class Layer {
+import org.apache.log4j.Logger;
 
-	Neuron[] neurons;
+class Layer {
+
+	private Neuron[] neurons;
+
+	private Logger log = Logger.getLogger(Layer.class);
 
 	public Layer(Neuron neuron, int inputsAmount, int neuronsAmount) {
 		neurons = new Neuron[neuronsAmount];
@@ -20,16 +24,15 @@ public class Layer {
 				neurons[i] = neuronCopy;
 
 			} catch (CloneNotSupportedException e) {
-				// TODO coś musimy wymyślić, jeśli wywali błąd
-				e.printStackTrace();
+				log.error("Message: " + e.getMessage() + ". Cause: " + e.getCause());
 			}
 		}
 	}
 
 	public void setInputs(double[] inputs) {
-		for (int i = 0; i < neurons.length; i++) {
-			neurons[i].setInputs(inputs);
-		}
+        for (Neuron neuron : neurons) {
+            neuron.setInputs(inputs);
+        }
 	}
 
 	public void calcOutputs() {
@@ -99,7 +102,7 @@ public class Layer {
 		return total / neurons.length;
 	}
 
-	   public double getSingleOutput(int whichNeuron) {
+    public double getSingleOutput(int whichNeuron) {
 	        return neurons[whichNeuron].getOutput();
 	    }
 

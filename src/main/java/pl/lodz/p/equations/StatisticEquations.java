@@ -1,9 +1,6 @@
 package pl.lodz.p.equations;
 
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import pl.lodz.p.model.Company;
-import pl.lodz.p.model.CompanyStockValue;
 
 import java.util.List;
 
@@ -17,8 +14,8 @@ public class StatisticEquations {
 
         double average=0;
 
-        for(int i=0;i<listOfStockValuesLastPrice.size();i++){
-            average+=listOfStockValuesLastPrice.get(i);
+        for (Double aListOfStockValuesLastPrice : listOfStockValuesLastPrice) {
+            average += aListOfStockValuesLastPrice;
         }
         average/=listOfStockValuesLastPrice.size();
         return average;
@@ -29,8 +26,8 @@ public class StatisticEquations {
 
         double variance=0;
 
-        for(int i=0;i<listOfStockValuesLastPrice.size();i++){
-            variance+=Math.pow((listOfStockValuesLastPrice.get(i)-average),2);
+        for (Double aListOfStockValuesLastPrice : listOfStockValuesLastPrice) {
+            variance += Math.pow((aListOfStockValuesLastPrice - average), 2);
         }
         variance/=listOfStockValuesLastPrice.size();
 
@@ -43,16 +40,16 @@ public class StatisticEquations {
     }
 
     public double getStockValuesMedian(Double[] companySortedArray ) {
-        double median=0;
+        double median;
         int medianId = companySortedArray.length;
-        if(medianId%2==0){
-            medianId/=2;
-            median= (companySortedArray[medianId-1]+companySortedArray[medianId])/2;
+
+        if (medianId % 2 == 0) {
+            medianId /= 2;
+            median = (companySortedArray[medianId - 1] + companySortedArray[medianId]) / 2;
             return median;
-        }
-        else{
-            medianId/=2;
-            median =companySortedArray[medianId+1];
+        } else {
+            medianId /= 2;
+            median = companySortedArray[medianId + 1];
             return median;
         }
     }
