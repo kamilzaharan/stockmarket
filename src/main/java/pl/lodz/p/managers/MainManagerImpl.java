@@ -25,7 +25,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,16 +44,12 @@ public class MainManagerImpl implements MainManager {
 
     @Autowired
     private CompanyDAO companyDAO;
-
     @Autowired
     private CurrencyValueDAO currencyValueDAO;
-
     @Autowired
     private CurrencyDAO currencyDAO;
-
     @Autowired
     private CompanyStockValueDAO companyStockValueDAO;
-
     @Autowired
     @Qualifier("sortSymbolHandler")
     private Handler sortSymbolHandler;
@@ -65,6 +60,7 @@ public class MainManagerImpl implements MainManager {
         company.setSymbol(quote.getSymbol());
         company.setFullName(quote.getFullName());
         companyDAO.save(company);
+
         log.info("Stworzono obiekt Company w bazie danych");
     }
 
@@ -96,8 +92,8 @@ public class MainManagerImpl implements MainManager {
 
     private Boolean isCurrencyTableFilled() {
         List<Object[]> currencyList = mainManager.checkIfCurrencyTableIsFilled();
-        if(currencyList.size()>0) return false;
-        else return true;
+
+        return currencyList.size() <= 0;
     }
 
     private void addCurrencyToDB(Element eElement){
@@ -117,8 +113,7 @@ public class MainManagerImpl implements MainManager {
     }
 
     private void checkIfNewDay(CurrencyValue cv){
-        if (cv.getDate().equals(currentExchangeRateDate)) isNewDay = false;
-        else isNewDay = true;
+        isNewDay = !cv.getDate().equals(currentExchangeRateDate);
     }
 
     private Document prepareFile(URL file) throws ParserConfigurationException, IOException, SAXException {
@@ -153,13 +148,7 @@ public class MainManagerImpl implements MainManager {
                     }
                 }
             }
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
         }
     }

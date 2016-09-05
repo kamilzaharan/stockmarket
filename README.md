@@ -12,7 +12,7 @@
 
 ### Uruchomienie aplikacji
 
-##### Aby uruchomić LotteryService, należy wywołać:
+##### Aby uruchomić aplikację Stockmarket, należy wywołać:
 1. `mvn clean install`
 2. `mvn spring-boot:run`
 

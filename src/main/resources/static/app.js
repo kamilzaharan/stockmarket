@@ -6,7 +6,7 @@ var myApp = angular.module('myApp', ['services', 'controllers', 'ngRoute'])
              function ($routeProvider, $locationProvider) {
                  $routeProvider.when('/', {
                      controller: 'exampleCtrl',
-                     templateUrl: 'example/example.html'
+                     templateUrl: '/views/example.html'
                  }).when('/wyniki', {
                          controller: 'mainCtrl',
                          templateUrl: 'wyniki.html'

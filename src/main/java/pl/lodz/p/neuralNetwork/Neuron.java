@@ -6,33 +6,16 @@ public class Neuron implements Cloneable{
 
 	private static double alpha;
 	private static double beta;
-	public static double getBeta() {
-		return beta;
-	}
-
-	public static void setBeta(double beta) {
-		Neuron.beta = beta;
-	}
-
 	private static boolean isBias;
 	private static double momentum;
 	private static double bias;
-
-	private double[] inputs;
-	public double[] getInputs() {
-		return inputs;
-	}
+    private double error = 0;
 
 	private double output;
+    private double[] inputs;
+    private double[] weights;
 
-	private double[] weights;
 	private double[] previousWeights;
-
-	private double error = 0;
-
-	public void setError(double error) {
-		this.error = error;
-	}
 
 	Neuron(NeuronConfiguration neuronConfiguration) {
 		alpha = neuronConfiguration.getAlpha();
@@ -44,11 +27,6 @@ public class Neuron implements Cloneable{
 
 	public Object clone() throws CloneNotSupportedException {
 		return super.clone();
-	}
-
-
-	public void setInputs(double[] inputs) {
-		this.inputs = inputs;
 	}
 
 	private void initBias() {
@@ -77,6 +55,7 @@ public class Neuron implements Cloneable{
 			previousWeights[i] = weights[i];
 		}
 	}
+
 
 	private double total() {
 		double total = 0;
@@ -112,14 +91,6 @@ public class Neuron implements Cloneable{
 		}
 	}
 
-	public static double getAlpha() {
-		return alpha;
-	}
-
-	public static void setAlpha(double alpha) {
-		Neuron.alpha = alpha;
-	}
-
 	public double getPrevoiusWeights (int index) { return previousWeights[index];}
 
 	public void setPreviousWeights (double[] previousWeights) {this.previousWeights = previousWeights;}
@@ -148,5 +119,33 @@ public class Neuron implements Cloneable{
 
 		return weights[index];
 	}
+
+	public static double getBeta() {
+		return beta;
+	}
+
+	public static void setBeta(double beta) {
+		Neuron.beta = beta;
+	}
+
+    public void setInputs(double[] inputs) {
+        this.inputs = inputs;
+    }
+
+	public double[] getInputs() {
+		return inputs;
+	}
+
+    public void setError(double error) {
+        this.error = error;
+    }
+
+    public static double getAlpha() {
+        return alpha;
+    }
+
+    public static void setAlpha(double alpha) {
+        Neuron.alpha = alpha;
+    }
 
 }
