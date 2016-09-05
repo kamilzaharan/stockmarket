@@ -75,17 +75,6 @@ public class CompanyManagerImpl implements CompanyManager {
         listOfStockValuesLastPrice.addAll(company.getCompanyStockValueList().stream()
                                 .map(CompanyStockValue::getLastPrice)
                                 .collect(Collectors.toList()));
-
-//        double average = getAverage(id);
-//        double variance = getVariance(id);
-//        double standardDeviation = getStandardDeviation(id);
-//        double median = getMedian(id);
-//
-//        log.info("Srednia wartosc akcji dla tej firmy wynosi " + average);
-//        log.info("Wariancja akcji dla tej firmy wynosi " + variance);
-//        log.info("Odchylenie standardowe akcji dla tej firmy wynosi " + standardDeviation);
-//        log.info("Mediana akcji dla tej firmy wynosi " + median);
-
         return Utils.createPoints(company);
     }
 
@@ -112,28 +101,28 @@ public class CompanyManagerImpl implements CompanyManager {
     }
 
     @Override
-    public String getStandardDeviation(int companyId){
+    public String getStandardDeviation(){
         double standardDeviation = statisticEquations.getStockValuesStandardDeviation(listOfStockValuesLastPrice);
 
         return new DecimalFormat("#.##").format(standardDeviation);
     }
 
     @Override
-    public String getAverage(int companyId){
+    public String getAverage(){
         double average = statisticEquations.getStockValuesAverage(listOfStockValuesLastPrice);
 
         return new DecimalFormat("#.##").format(average);
     }
 
     @Override
-    public String getVariance(int companyId){
+    public String getVariance(){
         double variance = statisticEquations.getStockValuesVariance(listOfStockValuesLastPrice);
 
         return new DecimalFormat("#.##").format(variance);
     }
 
     @Override
-    public String getMedian(int companyId){
+    public String getMedian(){
         double median;
         Double[] companyStockValueArray = new Double[listOfStockValuesLastPrice.size()];
         for(int i=0; i<listOfStockValuesLastPrice.size();i++){
@@ -143,7 +132,6 @@ public class CompanyManagerImpl implements CompanyManager {
         median= statisticEquations.getStockValuesMedian(companySortedStockValueArray);
         return new DecimalFormat("#.##").format(median);
     }
-
 
     private double getChangeBetweenStockValues(Company company) {
         double firstStockValue;
@@ -158,8 +146,15 @@ public class CompanyManagerImpl implements CompanyManager {
         return lastStockValue - firstStockValue;
     }
 
-
     public void setCompanyDAO(CompanyDAO companyDAO){
         this.companyDAO=companyDAO;
+    }
+
+    public void setStatisticEquations(StatisticEquations statisticEquations){
+        this.statisticEquations=statisticEquations;
+    }
+
+    public void setStatisticEquation(StatisticEquations statisticEquation) {
+        this.statisticEquations = statisticEquation;
     }
 }

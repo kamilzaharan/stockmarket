@@ -1,6 +1,7 @@
 package pl.lodz.p.managers;
 
 import pl.lodz.p.dao.CompanyDAO;
+import pl.lodz.p.equations.StatisticEquations;
 import pl.lodz.p.model.Company;
 import pl.lodz.p.neuralNetwork.Point;
 
@@ -19,15 +20,17 @@ public interface CompanyManager {
 
      List<Point> findStockValuesList(int id);
 
-     String getAverage(int id);
+     String getAverage();
 
-     String getVariance(int id);
+     String getVariance();
 
-     String getStandardDeviation(int id);
+     String getStandardDeviation();
 
-     String getMedian(int id);
+     String getMedian();
 
      void setCompanyDAO(CompanyDAO companyDAO);
+
+     void setStatisticEquations(StatisticEquations statisticEquations);
 
 }
 

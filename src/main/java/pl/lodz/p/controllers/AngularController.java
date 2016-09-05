@@ -186,10 +186,10 @@ public class AngularController {
 //        log.info("Mediana akcji dla tej firmy wynosi " + median);
 
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("average", companyManager.getAverage(companyId));
-        jsonObject.addProperty("variance", companyManager.getVariance(companyId));
-        jsonObject.addProperty("standardDeviation", companyManager.getStandardDeviation(companyId));
-        jsonObject.addProperty("median", companyManager.getMedian(companyId));
+        jsonObject.addProperty("average", companyManager.getAverage());
+        jsonObject.addProperty("variance", companyManager.getVariance());
+        jsonObject.addProperty("standardDeviation", companyManager.getStandardDeviation());
+        jsonObject.addProperty("median", companyManager.getMedian());
 
         return new Gson().toJson(jsonObject);
     }
