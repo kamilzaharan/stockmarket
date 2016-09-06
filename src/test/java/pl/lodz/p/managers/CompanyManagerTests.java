@@ -1,11 +1,9 @@
 package pl.lodz.p.managers;
 
-import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-import pl.lodz.p.controllers.AngularController;
 import pl.lodz.p.dao.CompanyDAO;
 import pl.lodz.p.equations.StatisticEquations;
 import pl.lodz.p.model.Company;
@@ -26,8 +24,6 @@ import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CompanyManagerTests {
-
-    private Logger log = Logger.getLogger(AngularController.class);
     CompanyManager companyManager = new CompanyManagerImpl();
     CompanyDAO companyDAO;
     StatisticEquations statisticEquationMock;
@@ -45,10 +41,10 @@ public class CompanyManagerTests {
 
     private List<Object> setArrayOfIndexes() {
         List<Object> companiesIdList = new ArrayList();
+
         for (int i = 0; i < 3; i++) {
             companiesIdList.add(BigInteger.valueOf(i));
         }
-
         return companiesIdList;
     }
 
@@ -104,18 +100,19 @@ public class CompanyManagerTests {
         for (Point point : listOfPoints) {
             arrayOfValues.add(point.getY());
         }
+
         assertThat(arrayOfValues).containsExactly(1.0, 4.0, 6.0);
     }
 
     @Test
     public void stockMaxDecreaseTest() {
         companyManager.setCompanyDAO(companyDAO);
-
         List<Point> listOfPoints = companyManager.findMaxDecrease();
         ArrayList<Double> arrayOfValues = new ArrayList<>();
         for (Point point : listOfPoints) {
             arrayOfValues.add(point.getY());
         }
+
         assertThat(arrayOfValues).containsExactly(3.0, 2.0, 1.0);
     }
 
@@ -124,15 +121,18 @@ public class CompanyManagerTests {
         companyManager.setStatisticEquations(statisticEquationMock);
         assertThat(companyManager.getStandardDeviation()).isEqualTo("1.23")
                 .isNotEqualTo("1,23")
+                .isInstanceOf(String.class)
                 .hasSize(4);
 
         assertThat(companyManager.getStandardDeviation()).isEqualTo("322.22")
                 .isNotEqualTo("322,22")
+                .isInstanceOf(String.class)
                 .hasSize(6);
 
         assertThat(companyManager.getStandardDeviation()).isEqualTo("111111")
                 .isNotEqualTo("111111.00")
                 .isNotEqualTo("111111,00")
+                .isInstanceOf(String.class)
                 .hasSize(6);
     }
 }
