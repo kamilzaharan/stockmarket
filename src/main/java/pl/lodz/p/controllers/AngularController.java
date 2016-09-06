@@ -184,7 +184,7 @@ public class AngularController {
         return new Gson().toJson(approxResult);
     }
 
-    @RequestMapping(value = "/newcompany", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/newCompany", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
     String newCompany() {
@@ -196,7 +196,9 @@ public class AngularController {
         for(Company company:companyList){
             companyManager.addCompany(company);
         }
-        return "jest okej";
+        log.info("Firmy zostały dodane do bazy danych");
+
+        return new Gson().toJson("Firmy zostały dodane do bazy danych");
     }
 
     @RequestMapping(value = "/addMockStockValue", method = RequestMethod.GET, produces = "application/json")
