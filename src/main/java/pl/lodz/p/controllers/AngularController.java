@@ -119,6 +119,27 @@ public class AngularController {
 
     }
 
+    @RequestMapping(value = "/getCurrencyChartData/{id}", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    String showCurrencyChartData(@PathVariable String id) {
+
+        Integer currencyID = Integer.parseInt(id);
+
+        ArrayList<JsonObject> data = new ArrayList<JsonObject>();
+        for (Object[] obj : mainManager.findCurrencyChartData()) {
+            if(currencyID==((BigInteger)obj[3]).longValue() ){
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("x", (String) obj[0]);
+                jsonObject.addProperty("y", (String) obj[1]);
+                data.add(jsonObject);
+            }
+        }
+
+        String json = new Gson().toJson(data);
+        return json;
+
+    }
 
     @RequestMapping(value = "/getExchangeRateDate", method = RequestMethod.GET, produces = "application/json")
     public

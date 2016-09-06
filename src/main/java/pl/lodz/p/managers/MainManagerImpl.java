@@ -181,13 +181,11 @@ public class MainManagerImpl implements MainManager {
     }
 
     @Override
-    public List<Object[]> checkIfCurrencyTableIsFilled() {
-        return currencyDAO.checkIfCurrencyTableIsFilledQuery();
-    }
+    public List<Object[]> getLastDate() { return currencyValueDAO.getLastDateQuery(); }
 
     @Override
-    public List<Object[]> getLastDate() {
-        return currencyValueDAO.getLastDateQuery();
+    public List<Object[]> findCurrencyChartData() {
+        return currencyDAO.findCurrencyChartDataQuery();
     }
 
     @Override

@@ -36,6 +36,12 @@ services.factory('showExchangeRate', function ($resource) {
     })
 });
 
+services.factory('showCurrencyChartData', function ($resource) {
+    return $resource('http://localhost:8080/getCurrencyChartData/:id', {}, {
+        create: {method: 'GET', isArray: true}
+    })
+});
+
 services.factory('getDate', function ($resource) {
     return $resource('http://localhost:8080/getExchangeRateDate', {}, {
         create: {method: 'GET', isArray: false}

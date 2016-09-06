@@ -1,3 +1,18 @@
 #chart > .container {
     padding-left: 150px;
 }
+
+#currencyDiv0 {
+    display: flex;
+}
+#currencyDiv1 {
+    flex: 1;
+}
+
+#currencyDiv2 {
+    width: 50%;
+}
+select {
+   width: 50%;
+   font-size: 120%
+}
