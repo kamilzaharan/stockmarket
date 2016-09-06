@@ -1,5 +1,7 @@
 # Stockmarket
 
+[![Build Status](https://travis-ci.org/kamilzaharan/stockmarket.svg?branch=master)](https://travis-ci.org/kamilzaharan/stockmarket)
+
 ## Zespół projektowy
 - Katarzyna Hibner
 - Piotr Skrocki
