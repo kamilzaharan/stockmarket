@@ -33,6 +33,9 @@ var myApp = angular.module('myApp', ['services', 'controllers', 'ngRoute'])
                  }).when('/companies/:sortType', {
                      controller: 'companiesController',
                      templateUrl: '/views/companies.html'
+                 }).when('/newCompany', {
+                     controller: 'newCompanies',
+                     templateUrl: '/views/addedCompanies.html'
                  }).otherwise({
               redirectTo: '/'
           });
