@@ -13,6 +13,7 @@ import pl.lodz.p.mocks.ObjectMocks;
 import pl.lodz.p.model.Company;
 import pl.lodz.p.model.CompanyStockValue;
 import pl.lodz.p.model.Currency;
+import pl.lodz.p.model.CurrencyValue;
 import pl.lodz.p.neuralNetwork.Approximation;
 import pl.lodz.p.neuralNetwork.ConfigurationException;
 import pl.lodz.p.neuralNetwork.Point;
@@ -108,15 +109,37 @@ public class AngularController {
         return new Gson().toJson(allData);
     }
 
+    @RequestMapping(value = "/getCurrencyChartData/{id}", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    String showCurrencyChartData(@PathVariable String id) {
+
+        Integer currencyID = Integer.parseInt(id);
+
+        ArrayList<JsonObject> data = new ArrayList<JsonObject>();
+        for (Object[] obj : mainManager.findCurrencyChartData()) {
+            if(currencyID==((BigInteger)obj[3]).longValue() ){
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("x", (String) obj[0]);
+                jsonObject.addProperty("y", (String) obj[1]);
+                data.add(jsonObject);
+            }
+        }
+        return new Gson().toJson(data);
+    }
+
     @RequestMapping(value = "/getExchangeRateDate", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
     String getExchangeRateDate() {
 
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("date", mainManager.getCurrentExchangeRateDate());
-
-        return new Gson().toJson(jsonObject);
+        List<Object[]> lastDateList = mainManager.getLastDate();
+        CurrencyValue currencyValueLastDate = new CurrencyValue();
+        if(lastDateList.size()>0){
+            currencyValueLastDate = new CurrencyValue();
+            currencyValueLastDate.setDate((String) lastDateList.get(0)[1]);
+        }
+        return new Gson().toJson(currencyValueLastDate);
     }
 
     @RequestMapping(value = "/addCompany", method = RequestMethod.POST, consumes = "application/json")
@@ -188,8 +211,6 @@ public class AngularController {
     public
     @ResponseBody
     String newCompany() {
-
-        //TODO: żle podpięte do buttona
 
         ObjectMocks.CreateAllMocks();
         List<Company> companyList= Utils.readCompaniesFromCsv("companylist.csv");

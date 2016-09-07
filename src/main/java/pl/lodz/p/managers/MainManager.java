@@ -22,9 +22,9 @@ public interface MainManager {
     List<CompanyStockValue> getAllStockValues();
     List<Object[]> findCompanyIdNameSymbol();
     List<Object[]> findCurrencyIdCodeName();
-    List<Object[]> checkIfCurrencyTableIsFilled();
     List<Object[]> getLastDate();
     List<Object[]> findExchangeRate();
+    List<Object[]> findCurrencyChartData();
     void createCompanyStockValue(QuoteResponseDTO quote);
     void getExchangeRate();
     ArrayList<Company> sort(ArrayList<Company> companyList, Integer sortType);

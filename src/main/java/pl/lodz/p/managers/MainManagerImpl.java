@@ -90,12 +90,6 @@ public class MainManagerImpl implements MainManager {
         log.info("Stworzono obiekt CompanyStockValue w bazie danych");
     }
 
-    private Boolean isCurrencyTableFilled() {
-        List<Object[]> currencyList = mainManager.checkIfCurrencyTableIsFilled();
-
-        return currencyList.size() <= 0;
-    }
-
     private void addCurrencyToDB(Element eElement){
         Currency currency = new Currency();
         currency.setCurrencyName(eElement.getElementsByTagName("nazwa_waluty").item(0).getTextContent());
@@ -127,6 +121,21 @@ public class MainManagerImpl implements MainManager {
         return document;
     }
 
+    private void addNewDataToDB(Document document, List<Currency> currencyList){
+        NodeList nList = document.getElementsByTagName("pozycja");
+        for (int i = 0; i < nList.getLength(); i++) {
+            Node nNode = nList.item(i);
+            if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element eElement = (Element) nNode;
+                if(currencyList.size()==0){
+                    addCurrencyToDB(eElement);
+                }else{
+                    if(isNewDay) addCurrencyValueToDB(eElement, currencyList.get(i));
+                }
+            }
+        }
+    }
+
     @Override
     public void getExchangeRate() {
         List<Currency> allCurrencies=getAllCurrencies();
@@ -135,20 +144,8 @@ public class MainManagerImpl implements MainManager {
             URL file = new URL("http://nbp.pl/kursy/xml/LastA.xml");
             Document document = prepareFile(file);
             if(allCurValues.size()>0) checkIfNewDay(allCurValues.get(allCurValues.size()-1));
-
-            NodeList nList = document.getElementsByTagName("pozycja");
-            for (int i = 0; i < nList.getLength(); i++) {
-                Node nNode = nList.item(i);
-                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-                    Element eElement = (Element) nNode;
-                    if(allCurrencies.size()==0){
-                        addCurrencyToDB(eElement);
-                    }else{
-                        if(isNewDay) addCurrencyValueToDB(eElement, allCurrencies.get(i));
-                    }
-                }
-            }
-        } catch (ParserConfigurationException | SAXException | IOException e) {
+            addNewDataToDB(document,allCurrencies);
+        }   catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -180,13 +177,11 @@ public class MainManagerImpl implements MainManager {
     }
 
     @Override
-    public List<Object[]> checkIfCurrencyTableIsFilled() {
-        return currencyDAO.checkIfCurrencyTableIsFilledQuery();
-    }
+    public List<Object[]> getLastDate() { return currencyValueDAO.getLastDateQuery(); }
 
     @Override
-    public List<Object[]> getLastDate() {
-        return currencyValueDAO.getLastDateQuery();
+    public List<Object[]> findCurrencyChartData() {
+        return currencyDAO.findCurrencyChartDataQuery();
     }
 
     @Override

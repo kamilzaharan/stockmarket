@@ -1,7 +1,12 @@
+<head>
+<link href="css/custom.css" rel="stylesheet"/>
+</head>
+
 <div ng-controller="currenciesController">
-    <div id="div0" >
-        <div  class="container" id="div1">
-            <h3>Aktualne średnie kursy walut na dzień: {{date | date:'dd-MM-yyyy'}}</h3>
+    <div id="currencyDiv0" >
+        <div  class="container" id="currencyDiv1">
+            <h3></h3>
+            <h3>Aktualne średnie kursy walut na dzień: {{getLastDate.date}}</h3>
             <br>
             <div>
                 <table class="table table-bordered">
@@ -22,7 +27,7 @@
                 </table>
             </div>
         </div>
-        <div id="div2" align="center" ng-controller="currenciesController">
+        <div id="currencyDiv2" align="center">
             <br/><br/>
             <h3>Kwota: </h3>
             <input type="text" ng-model="amount" name="Kwota" value="100.00" style="font-size:120%;" ng-change="calculate()"><br>
@@ -42,6 +47,45 @@
             <h3>Obliczona wartość: {{calculatedValue}}</h3>
 
             <h5>* według aktualnego średniego kursu NBP</h5>
+        </div>
+    </div>
+</div>
+<div ng-controller="currenciesChartCtrl">
+    <div id="prognozy">
+        <div>
+            <div align="center">
+            <p>Wykres warości walut w ostatnich dniach roboczych</p>
+
+            <select ng-model="selected3" ng-change="showChart()">
+                <option selected disabled value="">Wybierz walutę</option>
+                <option class="btn-default dropdown-toggle" ng-repeat="result in exchangeRate" value="{{result.code}}">{{result.code}} - {{result.name}}</option>
+            </select>
+                <br/>
+                <br/>
+
+            <div id="chart" style="width: 90%; height: 260px;"></div>
+            </div>
+            <div class="container">
+
+                <div ng-if="exchangeRate">
+                    <h3>Punkt(Data, Wartość waluty)</h3>
+                    <br>
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Wartość waluty</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="result in exchangeRateChart">
+                            <td>{{result.x}}</td>
+                            <td>{{result.y}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>

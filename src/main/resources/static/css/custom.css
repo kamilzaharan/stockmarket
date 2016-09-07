@@ -2,17 +2,19 @@
     padding-left: 150px;
 }
 
-#div0 {
+#currencyDiv0 {
     display: flex;
 }
-
-#div1 {
+#currencyDiv1 {
     flex: 1;
 }
 
-#div2 {
+#currencyDiv2 {
     width: 50%;
 }
+select {
+   width: 50%;
+   font-size: 120%
 
 #div2 > select {
     width: 50%;
