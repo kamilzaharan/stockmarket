@@ -60,13 +60,11 @@
                 <option selected disabled value="">Wybierz walutę</option>
                 <option class="btn-default dropdown-toggle" ng-repeat="result in exchangeRate" value="{{result.code}}">{{result.code}} - {{result.name}}</option>
             </select>
-                <br/>
-                <br/>
-
+            <br/>
+            <br/>
             <div id="chart" style="width: 90%; height: 260px;"></div>
             </div>
             <div class="container">
-
                 <div ng-if="exchangeRate">
                     <h3>Punkt(Data, Wartość waluty)</h3>
                     <br>
@@ -78,7 +76,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="result in exchangeRateChart">
+                        <tr ng-repeat="result in exchangeRateChartForTable">
                             <td>{{result.x}}</td>
                             <td>{{result.y}}</td>
                         </tr>
