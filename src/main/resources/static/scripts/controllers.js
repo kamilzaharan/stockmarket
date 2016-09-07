@@ -58,7 +58,6 @@ cont.controller('currenciesController', ['$scope', 'showCurrencies', 'showExchan
                                         })
                                 }
                               $scope.getLastDate();
-                              console.log($scope.getLastDate);
 
                               //calculate value
                               $scope.calculate = function() {
@@ -102,66 +101,50 @@ cont.controller('currenciesChartCtrl', ['$scope', 'showExchangeRate', 'showCurre
                    })
            }
            $scope.exchangeRate();
-            $scope.showChart = function (){
-            $scope.exchangeRateChart = function () {
-                var i = 0;
-                angular.forEach($scope.exchangeRate, function(value, key){
-                i++;
-                console.log(i);
-                console.log($scope.selected3);
-                console.log(value.code);
-                if(value.code == $scope.selected3){
-                showCurrencyChartData.create({id: i}).$promise
-                      .then(function (response) {
-                       $scope.exchangeRateChart=response;
 
-                      var data = $scope.exchangeRateChart.map(function(d) {
-                         console.log('test');
-                         console.log(d);
-                         console.log(d.x);
-                         console.log(d.y);
-                         d.y=(d.y).replace(/,/g, '.');
-                         d.x= d3.time.format("%Y-%m-%d").parse(d.x);
-                         console.log(d.x);
-                         console.log(d.y);
-                         return {
-                             x: d.x,
-                             y: Math.round((d.y)*10000)/10000
-                         };
-                     });
+           $scope.showChart = function (){
+                $scope.exchangeRateChart = function () {
+                    var i = 0;
+                    angular.forEach($scope.exchangeRate, function(value, key){
+                        i++;
+                        if(value.code == $scope.selected3){
+                        showCurrencyChartData.create({id: i}).$promise
+                              .then(function (response) {
+                               $scope.exchangeRateChart=response;
+                               $scope.exchangeRateChartForTable=response;
+                               
+                              var data = $scope.exchangeRateChart.map(function(d) {
+                                 d.y=(d.y).replace(/,/g, '.');
+                                 d.x= d3.time.format("%Y-%m-%d").parse(d.x);
+                                 return {
+                                     x: d.x,
+                                     y: Math.round((d.y)*10000)/10000
+                                 };
+                             });
 
-                    console.log('data: ');
-                    console.log(data);
+                             var chart = fc.chart.cartesian(
+                                fc.scale.dateTime().discontinuityProvider(fc.scale.discontinuity.skipWeekends()),
+                                d3.scale.linear())
+                                .margin({bottom: 50, right: 70})
+                                .xDomain(fc.util.extent().fields(['x'])(data))
+                                .xLabel("Data")
+                                .yDomain(fc.util.extent().pad(0.3).fields(['y'])(data))
+                                .yLabel("Wartość waluty");
 
-                    var chart = fc.chart.cartesian(
-                        fc.scale.dateTime().discontinuityProvider(fc.scale.discontinuity.skipWeekends()),
-                        d3.scale.linear())
-                        .margin({bottom: 30, right: 60})
-                        .xDomain(fc.util.extent().fields(['x'])(data))
-                        .yDomain(fc.util.extent().pad(0.3).fields(['y'])(data));
+                            var series = fc.series.bar()
+                               .xValue(function(d) { return d.x; })
+                               .yValue(function(d) { return d.y; });
 
-                    console.log('chart: ');
-                    console.log(chart.xDomain);
-                    console.log(chart);
+                            chart.plotArea(series);
 
-                    var series = fc.series.bar()
-                       .xValue(function(d) { return d.x; })
-                       .yValue(function(d) { return d.y; });
-
-                        console.log('series: ');
-                     console.log(series.xValue);
-
-                     chart.plotArea(series);
-
-                    // render the chart
-                    d3.select("#chart")
-                         .datum(data)
-                         .call(chart);
+                            d3.select("#chart")
+                                 .datum(data)
+                                 .call(chart);
+                                 })
+                             }
                          })
-                     }
-                 })
-          }
-          $scope.exchangeRateChart();
+                  }
+              $scope.exchangeRateChart();
           }
     }]);
 
