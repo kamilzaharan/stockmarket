@@ -11,7 +11,6 @@ public class CompanyComparatorSymbol implements Comparator<Company> {
 
     @Override
     public int compare(Company company1, Company company2) {
-
         return company1.getSymbol().compareTo(company2.getSymbol());
     }
 }

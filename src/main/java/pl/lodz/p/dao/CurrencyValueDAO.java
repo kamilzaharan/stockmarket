@@ -7,10 +7,11 @@ import pl.lodz.p.model.CurrencyValue;
 
 import java.util.List;
 
-public interface CurrencyValueDAO extends JpaRepository<CurrencyValue,Long> {
-    String GET_LAST_DATE="SELECT id, date FROM currency_value ORDER BY id DESC LIMIT 1;";
+public interface CurrencyValueDAO extends JpaRepository<CurrencyValue, Long> {
 
-    @Query(value = GET_LAST_DATE,nativeQuery = true)
+    String GET_LAST_DATE = "SELECT id, date FROM currency_value ORDER BY id DESC LIMIT 1;";
+
+    @Query(value = GET_LAST_DATE, nativeQuery = true)
     List<Object[]> getLastDateQuery();
 
 }

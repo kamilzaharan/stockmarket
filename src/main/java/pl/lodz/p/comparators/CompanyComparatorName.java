@@ -11,7 +11,6 @@ public class CompanyComparatorName implements Comparator<Company> {
 
     @Override
     public int compare(Company company1, Company company2) {
-
         return company1.getFullName().compareTo(company2.getFullName());
     }
 }

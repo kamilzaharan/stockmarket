@@ -14,12 +14,12 @@ public class NeuralNetwork {
     private double epsilon;
 
     public void setNeuralNetwork(NeuralNetworkConfiguration networkConfiguration, NeuronConfiguration neuronConfiguration) {
-        this.randomPattern= networkConfiguration.isRandomPattern();
+        this.randomPattern = networkConfiguration.isRandomPattern();
 
-        this.epsilon= networkConfiguration.getEpsilon();
-        int[] howManyNeuronInHiddenLayersTable= networkConfiguration.getHiddenLayersAmount();
-        int howManyNeuronsInOutputLayer= networkConfiguration.getHowManyOutputNeurons();
-        int howManyNeuronsInInputLayer=networkConfiguration.getHowManyInputNeurons();
+        this.epsilon = networkConfiguration.getEpsilon();
+        int[] howManyNeuronInHiddenLayersTable = networkConfiguration.getHiddenLayersAmount();
+        int howManyNeuronsInOutputLayer = networkConfiguration.getHowManyOutputNeurons();
+        int howManyNeuronsInInputLayer = networkConfiguration.getHowManyInputNeurons();
 
         Neuron baseNeuron = new Neuron(neuronConfiguration);
 
@@ -30,7 +30,7 @@ public class NeuralNetwork {
             hidedLayers[i] = new Layer(baseNeuron, howManyNeuronInHiddenLayersTable[i - 1], howManyNeuronInHiddenLayersTable[i]);
         }
 
-        outputLayer = new Layer(baseNeuron, howManyNeuronInHiddenLayersTable[howManyNeuronInHiddenLayersTable.length - 1],howManyNeuronsInOutputLayer );
+        outputLayer = new Layer(baseNeuron, howManyNeuronInHiddenLayersTable[howManyNeuronInHiddenLayersTable.length - 1], howManyNeuronsInOutputLayer);
 
     }
 

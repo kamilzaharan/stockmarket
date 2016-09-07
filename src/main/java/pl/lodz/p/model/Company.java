@@ -25,6 +25,17 @@ public class Company {
     @OneToMany(mappedBy = "companyId", fetch = FetchType.LAZY)
     private Set<CompanyStockValue> companyStockValueList;
 
+    public Company(){
+
+    }
+
+    private Company(CompanyBuilder builder) {
+        this.id = builder.id;
+        this.fullName = builder.fullName;
+        this.symbol = builder.symbol;
+        this.companyStockValueList = builder.companyStockValueList;
+    }
+
     public long getId() {
         return id;
     }
@@ -59,7 +70,37 @@ public class Company {
 
     public CompanyStockValue[] getCompanyStockValuesArray() {
         CompanyStockValue[] strArr = new CompanyStockValue[companyStockValueList.size()];
-
         return companyStockValueList.toArray(strArr);
+    }
+
+    public static class CompanyBuilder {
+        private String symbol;
+        private long id;
+        private String fullName;
+        private Set<CompanyStockValue> companyStockValueList;
+
+        public CompanyBuilder(String symbol) {
+            this.symbol = symbol;
+        }
+
+        public CompanyBuilder id(long id) {
+            this.id = id;
+            return this;
+        }
+
+        public CompanyBuilder fullName(String fullName) {
+            this.fullName = fullName;
+            return this;
+        }
+
+        public CompanyBuilder companyStockValueList(Set<CompanyStockValue> companyStockValueList) {
+            this.companyStockValueList = companyStockValueList;
+            return this;
+        }
+
+        public Company build()
+        {
+            return new Company(this);
+        }
     }
 }

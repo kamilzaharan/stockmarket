@@ -14,19 +14,33 @@ import java.util.List;
  * Created by kamil on 5/22/16.
  */
 public interface MainManager {
+
     String getCurrentExchangeRateDate();
+
     void createCompany(CreateCompanyDTO quote);
+
     List<Company> getAllCompanies();
+
     List<Currency> getAllCurrencies();
+
     List<CurrencyValue> getAllCurrenciesValues();
+
     List<CompanyStockValue> getAllStockValues();
+
     List<Object[]> findCompanyIdNameSymbol();
+
     List<Object[]> findCurrencyIdCodeName();
+
     List<Object[]> getLastDate();
+
     List<Object[]> findExchangeRate();
+
     List<Object[]> findCurrencyChartData();
+
     void createCompanyStockValue(QuoteResponseDTO quote);
+
     void getExchangeRate();
+
     ArrayList<Company> sort(ArrayList<Company> companyList, Integer sortType);
 
 }

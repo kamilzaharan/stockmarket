@@ -52,7 +52,9 @@ public class CurrencyValue {
         return date;
     }
 
-    public void setDate(String date) {this.date = date; }
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public Currency getCurrencyId() {
         return currencyId;

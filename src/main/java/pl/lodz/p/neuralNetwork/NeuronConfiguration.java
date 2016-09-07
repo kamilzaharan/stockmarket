@@ -10,7 +10,7 @@ public class NeuronConfiguration {
     private double momentum;
     private boolean isBias;
 
-    public void setConfiguration(double alpha, double beta, double momentum, boolean isBias){
+    public void setConfiguration(double alpha, double beta, double momentum, boolean isBias) {
         this.alpha = alpha;
         this.beta = beta;
         this.momentum = momentum;

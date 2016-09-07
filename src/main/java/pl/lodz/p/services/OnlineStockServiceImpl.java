@@ -25,7 +25,7 @@ import javax.xml.parsers.ParserConfigurationException;
 @Service
 public class OnlineStockServiceImpl implements OnlineStockService {
 
-    private Logger log = Logger.getLogger(OnlineStockService.class);
+    private static final Logger log = Logger.getLogger(OnlineStockService.class);
 
     @Autowired
     MainManager mainManager;
@@ -37,9 +37,8 @@ public class OnlineStockServiceImpl implements OnlineStockService {
         log.info(companyList.size());
         RestTemplate restTemplate = new RestTemplate();
 
-        for (Company company : companyList
-             ) {
-            QuoteResponseDTO quote = restTemplate.getForObject("http://dev.markitondemand.com/MODApis/Api/v2/Quote/json?symbol="+company.getSymbol(), QuoteResponseDTO.class);
+        for (Company company : companyList) {
+            QuoteResponseDTO quote = restTemplate.getForObject("http://dev.markitondemand.com/MODApis/Api/v2/Quote/json?symbol=" + company.getSymbol(), QuoteResponseDTO.class);
             log.info(quote.toString());
             mainManager.createCompanyStockValue(quote);
         }

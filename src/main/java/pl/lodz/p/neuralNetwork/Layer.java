@@ -4,121 +4,121 @@ import org.apache.log4j.Logger;
 
 class Layer {
 
-	private Neuron[] neurons;
+    private Neuron[] neurons;
 
-	private Logger log = Logger.getLogger(Layer.class);
+    private static final Logger log = Logger.getLogger(Layer.class);
 
-	public Layer(Neuron neuron, int inputsAmount, int neuronsAmount) {
-		neurons = new Neuron[neuronsAmount];
-		neurons[0] = neuron;
+    public Layer(Neuron neuron, int inputsAmount, int neuronsAmount) {
+        neurons = new Neuron[neuronsAmount];
+        neurons[0] = neuron;
 
-		setNeurons(inputsAmount);
-	}
+        setNeurons(inputsAmount);
+    }
 
-	private void setNeurons(int inputsAmount) {
-		for (int i = 0; i < neurons.length; i++) {
+    private void setNeurons(int inputsAmount) {
+        for (int i = 0; i < neurons.length; i++) {
 
-			try {
-				Neuron neuronCopy = (Neuron) neurons[0].clone();
-				neuronCopy.drawWeights(inputsAmount);
-				neurons[i] = neuronCopy;
+            try {
+                Neuron neuronCopy = (Neuron) neurons[0].clone();
+                neuronCopy.drawWeights(inputsAmount);
+                neurons[i] = neuronCopy;
 
-			} catch (CloneNotSupportedException e) {
-				log.error("Message: " + e.getMessage() + ". Cause: " + e.getCause());
-			}
-		}
-	}
+            } catch (CloneNotSupportedException e) {
+                log.error("Message: " + e.getMessage() + ". Cause: " + e.getCause());
+            }
+        }
+    }
 
-	public void setInputs(double[] inputs) {
+    public void setInputs(double[] inputs) {
         for (Neuron neuron : neurons) {
             neuron.setInputs(inputs);
         }
-	}
+    }
 
-	public void calcOutputs() {
-		for (Neuron neuron : neurons) {
-			neuron.calcOutput();
-		}
-	}
+    public void calcOutputs() {
+        for (Neuron neuron : neurons) {
+            neuron.calcOutput();
+        }
+    }
 
-	public void calcLinearOutputs() {
-		for (Neuron neuron : neurons) {
-			neuron.calcLinearOutput();
-		}
-	}
+    public void calcLinearOutputs() {
+        for (Neuron neuron : neurons) {
+            neuron.calcLinearOutput();
+        }
+    }
 
-	public void calcWeights() {
-		for (Neuron neuron : neurons) {
-			neuron.calcNewWeights();
-		}
-	}
+    public void calcWeights() {
+        for (Neuron neuron : neurons) {
+            neuron.calcNewWeights();
+        }
+    }
 
-	public void setLinearWeights() {
-		for (Neuron neuron : neurons) {
-			neuron.setLinearWeights();
-		}
-	}
+    public void setLinearWeights() {
+        for (Neuron neuron : neurons) {
+            neuron.setLinearWeights();
+        }
+    }
 
-	public void sendOutputs(Layer layer) {
-		int receiveLayerNeuronsAmount = layer.getneuronsAmount();
-		double[] inputs = new double[neurons.length];
+    public void sendOutputs(Layer layer) {
+        int receiveLayerNeuronsAmount = layer.getneuronsAmount();
+        double[] inputs = new double[neurons.length];
 
-		for (int i = 0; i < neurons.length; i++) {
-			inputs[i] = neurons[i].getOutput();
-		}
+        for (int i = 0; i < neurons.length; i++) {
+            inputs[i] = neurons[i].getOutput();
+        }
 
-		for (int i = 0; i < receiveLayerNeuronsAmount; i++) {
-			layer.getNeuron(i).setInputs(inputs);
-		}
-	}
+        for (int i = 0; i < receiveLayerNeuronsAmount; i++) {
+            layer.getNeuron(i).setInputs(inputs);
+        }
+    }
 
-	public void sendErrors(Layer layer) {
-		double total;
-		int neuronAmount = layer.getneuronsAmount();
+    public void sendErrors(Layer layer) {
+        double total;
+        int neuronAmount = layer.getneuronsAmount();
 
-		for (int i = 0; i < neuronAmount; i++) {
-			total = 0;
-			for (Neuron neuron : neurons) {
-				total += neuron.getWeight(i) * neuron.getError();
-			}
+        for (int i = 0; i < neuronAmount; i++) {
+            total = 0;
+            for (Neuron neuron : neurons) {
+                total += neuron.getWeight(i) * neuron.getError();
+            }
 
-			layer.getNeuron(i).setErrorOnHiddenLayer(total);
-		}
-	}
+            layer.getNeuron(i).setErrorOnHiddenLayer(total);
+        }
+    }
 
-	public void setErrorToOutputLayer(double[] outputs) {
-		for (int i = 0; i < outputs.length; i++) {
-			neurons[i].setErrorOnOutputLayer(outputs[i]);
-		}
-	}
+    public void setErrorToOutputLayer(double[] outputs) {
+        for (int i = 0; i < outputs.length; i++) {
+            neurons[i].setErrorOnOutputLayer(outputs[i]);
+        }
+    }
 
-	public double getError(double[] output) {
-		double total = 0;
+    public double getError(double[] output) {
+        double total = 0;
 
-		for (int i = 0; i < neurons.length; i++) {
-			total += Math.pow(neurons[i].getOutput() - output[i], 2);
-		}
+        for (int i = 0; i < neurons.length; i++) {
+            total += Math.pow(neurons[i].getOutput() - output[i], 2);
+        }
 
-		return total / neurons.length;
-	}
+        return total / neurons.length;
+    }
 
     public double getSingleOutput(int whichNeuron) {
-	        return neurons[whichNeuron].getOutput();
-	    }
+        return neurons[whichNeuron].getOutput();
+    }
 
-	public int getneuronsAmount() {
+    public int getneuronsAmount() {
 
-		return neurons.length;
-	}
+        return neurons.length;
+    }
 
-	public Neuron getNeuron(int index) {
+    public Neuron getNeuron(int index) {
 
-		return neurons[index];
-	}
+        return neurons[index];
+    }
 
-	public void setLinnearError(int i, double d) {
-		neurons[i].setLinearError(d);
-	}
+    public void setLinnearError(int i, double d) {
+        neurons[i].setLinearError(d);
+    }
 
 
 }

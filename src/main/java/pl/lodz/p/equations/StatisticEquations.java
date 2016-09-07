@@ -15,44 +15,42 @@ public class StatisticEquations {
 
     public double getStockValuesAverage(List<Double> listOfStockValuesLastPrice) {
 
-        double average=0;
+        double average = 0;
 
-        for(int i=0;i<listOfStockValuesLastPrice.size();i++){
-            average+=listOfStockValuesLastPrice.get(i);
+        for (int i = 0; i < listOfStockValuesLastPrice.size(); i++) {
+            average += listOfStockValuesLastPrice.get(i);
         }
-        average/=listOfStockValuesLastPrice.size();
+        average /= listOfStockValuesLastPrice.size();
         return average;
     }
 
     public double getStockValuesVariance(List<Double> listOfStockValuesLastPrice) {
-        double average=getStockValuesAverage(listOfStockValuesLastPrice);
+        double average = getStockValuesAverage(listOfStockValuesLastPrice);
 
-        double variance=0;
+        double variance = 0;
 
-        for(int i=0;i<listOfStockValuesLastPrice.size();i++){
-            variance+=Math.pow((listOfStockValuesLastPrice.get(i)-average),2);
+        for (int i = 0; i < listOfStockValuesLastPrice.size(); i++) {
+            variance += Math.pow((listOfStockValuesLastPrice.get(i) - average), 2);
         }
-        variance/=listOfStockValuesLastPrice.size();
+        variance /= listOfStockValuesLastPrice.size();
 
         return variance;
     }
 
     public double getStockValuesStandardDeviation(List<Double> listOfStockValuesLastPrice) {
-
         return Math.sqrt(getStockValuesVariance(listOfStockValuesLastPrice));
     }
 
-    public double getStockValuesMedian(Double[] companySortedArray ) {
-        double median=0;
+    public double getStockValuesMedian(Double[] companySortedArray) {
+        double median = 0;
         int medianId = companySortedArray.length;
-        if(medianId%2==0){
-            medianId/=2;
-            median= (companySortedArray[medianId-1]+companySortedArray[medianId])/2;
+        if (medianId % 2 == 0) {
+            medianId /= 2;
+            median = (companySortedArray[medianId - 1] + companySortedArray[medianId]) / 2;
             return median;
-        }
-        else{
-            medianId/=2;
-            median =companySortedArray[medianId+1];
+        } else {
+            medianId /= 2;
+            median = companySortedArray[medianId + 1];
             return median;
         }
     }

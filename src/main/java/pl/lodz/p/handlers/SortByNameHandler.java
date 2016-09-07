@@ -12,14 +12,15 @@ import java.util.Collections;
  * Created by Katarzyna Hibner on 8/23/16.
  */
 @Component("sortNameHandler")
-public class SortByNameHandler implements Handler{
+public class SortByNameHandler implements Handler {
+
     private final static Logger logger = Logger.getLogger(SortByNameHandler.class);
     private final static String HANDLER_NAME = "Sort By Name Handler";
 
     @Override
     public ArrayList<Company> process(Integer sortType, ArrayList<Company> companyList) {
 
-        if(sortType == 1) {
+        if (sortType == 1) {
             logger.info("Sort by name start");
             Collections.sort(companyList, new CompanyComparatorName());
         } else {

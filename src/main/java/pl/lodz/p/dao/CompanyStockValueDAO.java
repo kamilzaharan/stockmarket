@@ -11,13 +11,13 @@ import java.util.List;
 /**
  * Created by kamil on 5/22/16.
  */
-public interface CompanyStockValueDAO extends JpaRepository<CompanyStockValue,Long> {
+public interface CompanyStockValueDAO extends JpaRepository<CompanyStockValue, Long> {
 
     String FIND_STOCK_VALUE_BY_ID = "SELECT * FROM company_stock_value WHERE ref_company_id= :id";
     String CHECK_IF_MAX_AMOUNT_OF_VALUES = "SELECT count(*) FROM company_stock_value WHERE ref_company_id = (SELECT id FROM company WHERE symbol= :id)";
     String DELETE_FIRST_STOCK_VALUE = "SELECT id FROM company_stock_value WHERE ref_company_id = (SELECT id FROM company WHERE symbol= :id) LIMIT 1";
 
-    @Query(value= FIND_STOCK_VALUE_BY_ID, nativeQuery = true)
+    @Query(value = FIND_STOCK_VALUE_BY_ID, nativeQuery = true)
     List<Object[]> findStockValueById(@Param("id") int id);
 
     @Query(value = CHECK_IF_MAX_AMOUNT_OF_VALUES, nativeQuery = true)

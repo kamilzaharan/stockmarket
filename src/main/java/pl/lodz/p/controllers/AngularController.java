@@ -30,7 +30,7 @@ import java.util.List;
 @RestController
 public class AngularController {
 
-    private Logger log = Logger.getLogger(AngularController.class);
+    private static final Logger log = Logger.getLogger(AngularController.class);
 
     @Autowired
     private MainManager mainManager;
@@ -118,7 +118,7 @@ public class AngularController {
 
         ArrayList<JsonObject> data = new ArrayList<JsonObject>();
         for (Object[] obj : mainManager.findCurrencyChartData()) {
-            if(currencyID==((BigInteger)obj[3]).longValue() ){
+            if (currencyID == ((BigInteger) obj[3]).longValue()) {
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("x", (String) obj[0]);
                 jsonObject.addProperty("y", (String) obj[1]);
@@ -135,7 +135,7 @@ public class AngularController {
 
         List<Object[]> lastDateList = mainManager.getLastDate();
         CurrencyValue currencyValueLastDate = new CurrencyValue();
-        if(lastDateList.size()>0){
+        if (lastDateList.size() > 0) {
             currencyValueLastDate = new CurrencyValue();
             currencyValueLastDate.setDate((String) lastDateList.get(0)[1]);
         }
@@ -198,7 +198,7 @@ public class AngularController {
 
         List<Point> approxResult = null;
         try {
-            approxResult = approx.doApproximation(null,null);
+            approxResult = approx.doApproximation(null, null);
         } catch (ConfigurationException e) {
             e.printStackTrace();
         }
@@ -212,8 +212,8 @@ public class AngularController {
     String newCompany() {
 
         ObjectMocks.CreateAllMocks();
-        List<Company> companyList= Utils.readCompaniesFromCsv("companylist.csv");
-        for(Company company:companyList){
+        List<Company> companyList = Utils.readCompaniesFromCsv("companylist.csv");
+        for (Company company : companyList) {
             companyManager.addCompany(company);
         }
         log.info("Firmy zostały dodane do bazy danych");
@@ -239,7 +239,9 @@ public class AngularController {
     }
 
     @RequestMapping(value = "/companies/max", method = RequestMethod.GET, produces = "application/json")
-    public @ResponseBody String maxIncrease() {
+    public
+    @ResponseBody
+    String maxIncrease() {
 
         List<Point> stockValues = companyManager.findMaxIncrease();
 
@@ -247,14 +249,16 @@ public class AngularController {
     }
 
     @RequestMapping(value = "/companies/min", method = RequestMethod.GET, produces = "application/json")
-    public @ResponseBody String maxDecrease() {
+    public
+    @ResponseBody
+    String maxDecrease() {
 
         List<Point> stockValues = companyManager.findMaxDecrease();
 
         return new Gson().toJson(stockValues);
     }
 
-    public ArrayList<CompanyStockValue> createStockValueFromJSON(int companyId){
+    public ArrayList<CompanyStockValue> createStockValueFromJSON(int companyId) {
         ArrayList<CompanyStockValue> allStockValues = new ArrayList<>();
 
         for (Object[] obj : stockValueManager.getStockValueById(companyId)) {
@@ -278,9 +282,9 @@ public class AngularController {
         return allStockValues;
     }
 
-    public double[][] createTrainingToAproxFromJSON(int companyId){
+    public double[][] createTrainingToAproxFromJSON(int companyId) {
         double[][] allStockValues = new double[stockValueManager.getStockValueById(companyId).size()][2];
-        int i =0;
+        int i = 0;
 
         for (Object[] obj : stockValueManager.getStockValueById(companyId)) {
 
@@ -293,19 +297,19 @@ public class AngularController {
         return allStockValues;
     }
 
-    public double[][] createTestToAproxFromJSON( double[][] allStockValues){
+    public double[][] createTestToAproxFromJSON(double[][] allStockValues) {
 
-        double[][] allTestValues = new double [allStockValues.length+3][2];
+        double[][] allTestValues = new double[allStockValues.length + 3][2];
 
-        for(int i=0;i<allStockValues.length-1; i++){
-            for(int j=0;j<2; j++){
-                allTestValues[i][j]=allStockValues[i][j];
+        for (int i = 0; i < allStockValues.length - 1; i++) {
+            for (int j = 0; j < 2; j++) {
+                allTestValues[i][j] = allStockValues[i][j];
             }
         }
 
-        for(int i=0;i<3;i++) {
-            allTestValues[allStockValues.length+i][0] = allStockValues.length + i;
-            allTestValues[allStockValues.length+i][1] = allStockValues.length + i*10+10;
+        for (int i = 0; i < 3; i++) {
+            allTestValues[allStockValues.length + i][0] = allStockValues.length + i;
+            allTestValues[allStockValues.length + i][1] = allStockValues.length + i * 10 + 10;
         }
 
         return allTestValues;

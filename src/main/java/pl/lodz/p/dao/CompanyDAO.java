@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by kamil on 5/22/16.
  */
-public interface CompanyDAO extends JpaRepository<Company,Long> {
+public interface CompanyDAO extends JpaRepository<Company, Long> {
 
     Company findBySymbol(String symbol);
 
@@ -21,7 +21,7 @@ public interface CompanyDAO extends JpaRepository<Company,Long> {
     String GET_COMPANIES_ID = "SELECT id FROM company order by id";
     String GET_COMPANY = "SELECT * FROM company WHERE id= :id";
 
-    @Query(value = FIND_ID_NAME_SYMBOL,nativeQuery = true)
+    @Query(value = FIND_ID_NAME_SYMBOL, nativeQuery = true)
     List<Object[]> findCompanyIdNameSymbolQuery();
 
 

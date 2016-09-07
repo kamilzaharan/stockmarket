@@ -18,15 +18,15 @@ public class StockValueManagerImpl implements StockValueManager {
     private CompanyStockValueDAO companyStockValueDAO;
 
     @Override
-    public void addStockValue (CompanyStockValue stockValue){
+    public void addStockValue(CompanyStockValue stockValue) {
         companyStockValueDAO.save(stockValue);
         companyStockValueDAO.flush();
     }
 
     @Override
-    public void addListOfStockValue (Set<CompanyStockValue> stockValues){
+    public void addListOfStockValue(Set<CompanyStockValue> stockValues) {
 
-        for(CompanyStockValue stockValue: stockValues) {
+        for (CompanyStockValue stockValue : stockValues) {
             companyStockValueDAO.save(stockValue);
             companyStockValueDAO.flush();
         }
@@ -34,6 +34,6 @@ public class StockValueManagerImpl implements StockValueManager {
 
     @Override
     public List<Object[]> getStockValueById(int companyId) {
-        return  companyStockValueDAO.findStockValueById(companyId);
+        return companyStockValueDAO.findStockValueById(companyId);
     }
 }

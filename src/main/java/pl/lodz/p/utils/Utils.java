@@ -1,4 +1,5 @@
 package pl.lodz.p.utils;
+
 import com.opencsv.CSVReader;
 import pl.lodz.p.model.Company;
 import pl.lodz.p.model.CompanyStockValue;
@@ -17,14 +18,14 @@ public class Utils {
 
         List<Company> listOfCompanys = new ArrayList<>();
         CSVReader reader = null;
-        int i=1;
+        int i = 1;
 
         try {
             reader = new CSVReader(new FileReader(path));
             String[] line;
 
             while ((line = reader.readNext()) != null) {
-                Company company=new Company();
+                Company company = new Company();
                 company.setId(i);
                 company.setFullName(line[1]);
                 company.setSymbol(line[0]);
@@ -41,7 +42,7 @@ public class Utils {
         int day = 0;
         List<Point> points = new ArrayList<>();
 
-        if(company != null) {
+        if (company != null) {
 
             CompanyStockValue[] pointsArray = company.getCompanyStockValuesArray();
             pointsArray = bubbleSort(pointsArray);

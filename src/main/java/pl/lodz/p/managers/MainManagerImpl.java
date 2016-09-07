@@ -56,11 +56,10 @@ public class MainManagerImpl implements MainManager {
 
 
     public void createCompany(CreateCompanyDTO quote) {
-        Company company = new Company();
-        company.setSymbol(quote.getSymbol());
-        company.setFullName(quote.getFullName());
+        Company company = new Company.CompanyBuilder(quote.getSymbol())
+                .fullName(quote.getFullName())
+                .build();
         companyDAO.save(company);
-
         log.info("Stworzono obiekt Company w bazie danych");
     }
 
@@ -154,7 +153,7 @@ public class MainManagerImpl implements MainManager {
     public ArrayList<Company> sort(ArrayList<Company> companyList, Integer sortType) {
         return sortSymbolHandler.process(sortType, companyList);
     }
-    
+
     @Override
     public String getCurrentExchangeRateDate(){
         return currentExchangeRateDate;
@@ -164,7 +163,6 @@ public class MainManagerImpl implements MainManager {
     public List<Company> getAllCompanies() {
         return companyDAO.findAll();
     }
-
 
     @Override
     public List<Object[]> findCompanyIdNameSymbol() {

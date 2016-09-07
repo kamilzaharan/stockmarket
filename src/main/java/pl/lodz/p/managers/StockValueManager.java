@@ -10,7 +10,9 @@ import java.util.Set;
  */
 public interface StockValueManager {
 
-    void addStockValue (CompanyStockValue companyStockValue);
-    void addListOfStockValue (Set<CompanyStockValue> stockValues);
+    void addStockValue(CompanyStockValue companyStockValue);
+
+    void addListOfStockValue(Set<CompanyStockValue> stockValues);
+
     List<Object[]> getStockValueById(int companyId);
 }

@@ -18,7 +18,7 @@ public class Approximation {
     @Autowired
     private NeuronConfiguration neuronConf;
 
-    private Logger log = Logger.getLogger(Approximation.class);
+    private static final Logger log = Logger.getLogger(Approximation.class);
 
     public List<Point> doApproximation(double[][] train, double[][] test) throws ConfigurationException {
 
@@ -49,7 +49,7 @@ public class Approximation {
         for (double[] testInput : testInputs) {
             approximationNetwork.singleCompute(testInput);
 
-            if( variable != 0) {
+            if (variable != 0) {
                 approximationResults.add(new Point(testInput[0], approximationNetwork.returnSingleOutput()));
             }
             variable++;
