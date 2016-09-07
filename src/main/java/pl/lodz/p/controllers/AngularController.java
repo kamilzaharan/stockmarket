@@ -181,8 +181,6 @@ public class AngularController {
     public
     @ResponseBody
     String getStatistics(@PathVariable String id) {
-        Integer companyId = Integer.parseInt(id);
-
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("average", companyManager.getAverage());
         jsonObject.addProperty("variance", companyManager.getVariance());
@@ -304,12 +302,10 @@ public class AngularController {
             }
         }
 
-        allTestValues[allStockValues.length][0]=300;
-        allTestValues[allStockValues.length][1]=200.99283999999773;
-        allTestValues[allStockValues.length+1][0]=310;
-        allTestValues[allStockValues.length+1][1]=300.9997469999773;
-        allTestValues[allStockValues.length+2][0]=320;
-        allTestValues[allStockValues.length+2][1]=400.99912399999773;
+        for(int i=0;i<3;i++) {
+            allTestValues[allStockValues.length+i][0] = allStockValues.length + i*10+10;
+            allTestValues[allStockValues.length+i][1] = allStockValues.length + i*10+10;
+        }
 
         return allTestValues;
     }

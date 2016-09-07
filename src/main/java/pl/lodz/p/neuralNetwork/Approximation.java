@@ -22,14 +22,11 @@ public class Approximation {
 
     public List<Point> doApproximation(double[][] train, double[][] test) throws ConfigurationException {
 
-        test = Utils.arraySort(test);
-        Utils.saveArraysToFile("approximation_test_sorted.txt", test);
-        Utils.saveArraysToFile("approximation_train_sorted.txt", train);
+        test = NeuralNetworkUtils.arraySort(test);
+        double[][] trainInputs = NeuralNetworkUtils.getColumnArrayFromArray(0, train);
+        double[][] trainOutputs = NeuralNetworkUtils.getColumnArrayFromArray(1, train);
 
-        double[][] trainInputs = Utils.getColumnArrayFromArray(0, train);
-        double[][] trainOutputs = Utils.getColumnArrayFromArray(1, train);
-
-        double[][] testInputs = Utils.getColumnArrayFromArray(0, test);
+        double[][] testInputs = NeuralNetworkUtils.getColumnArrayFromArray(0, test);
 
         double alpha = 0.2, beta = 1, momentum = 0.2, epsilon = 0.7;
         int inputNeurons = 1, outputNeurons = 1, howManyEpoch = 10000;
@@ -54,7 +51,7 @@ public class Approximation {
         }
 
         Collections.sort(approximationResults);
-        Utils.savePoints("approximation" + 10, approximationResults);
+        NeuralNetworkUtils.savePoints("approximation" + 10, approximationResults);
         log.debug("Approximation result: " + approximationResults);
 
         return approximationResults;

@@ -34,7 +34,6 @@ public class Utils {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return listOfCompanys;
     }
 
@@ -53,7 +52,6 @@ public class Utils {
                 day += 1;
             }
         }
-
         return points;
     }
 
@@ -70,7 +68,6 @@ public class Utils {
                 }
             }
         }
-
         return a;
     }
 
@@ -87,7 +84,6 @@ public class Utils {
                 }
             }
         }
-
         return a;
     }
 }
