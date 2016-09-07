@@ -2,12 +2,9 @@ package pl.lodz.p.controllers;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-
 import pl.lodz.p.dto.CreateCompanyDTO;
 import pl.lodz.p.managers.CompanyManager;
 import pl.lodz.p.managers.MainManager;
@@ -23,7 +20,6 @@ import pl.lodz.p.neuralNetwork.Point;
 import pl.lodz.p.utils.Utils;
 
 import java.math.BigInteger;
-import java.security.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +47,7 @@ public class AngularController {
     @ResponseBody
     String showCompanies(@PathVariable String sortType) {
 
-        ArrayList<Company> allCompanies = new ArrayList<Company>();
+        ArrayList<Company> allCompanies = new ArrayList<>();
         for (Object[] obj : mainManager.findCompanyIdNameSymbol()) {
             Company c = new Company();
 
@@ -64,8 +60,7 @@ public class AngularController {
         Integer sortTypeInt = Integer.parseInt(sortType);
         allCompanies = mainManager.sort(allCompanies, sortTypeInt);
 
-        String json = new Gson().toJson(allCompanies);
-        return json;
+        return new Gson().toJson(allCompanies);
     }
 
     @RequestMapping(value = "/getCompaniesById/{id}", method = RequestMethod.GET, produces = "application/json")
@@ -75,17 +70,16 @@ public class AngularController {
 
         Integer companyId = Integer.parseInt(id);
         ArrayList<CompanyStockValue> allStockValues = createStockValueFromJSON(companyId);
-        String json = new Gson().toJson(allStockValues);
-        return json;
-    }
 
+        return new Gson().toJson(allStockValues);
+    }
 
     @RequestMapping(value = "/getAllCurrencies", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
     String showCurrenciesFromDB() {
 
-        ArrayList<Currency> allCurrencies = new ArrayList<Currency>();
+        ArrayList<Currency> allCurrencies = new ArrayList<>();
         for (Object[] obj : mainManager.findCurrencyIdCodeName()) {
             Currency c = new Currency();
             c.setId(((BigInteger) obj[0]).longValue());
@@ -94,9 +88,7 @@ public class AngularController {
             allCurrencies.add(c);
         }
 
-        String json = new Gson().toJson(allCurrencies);
-        return json;
-
+        return new Gson().toJson(allCurrencies);
     }
 
     @RequestMapping(value = "/getExchangeRate", method = RequestMethod.GET, produces = "application/json")
@@ -104,7 +96,7 @@ public class AngularController {
     @ResponseBody
     String showExchangeRate() {
 
-        ArrayList<JsonObject> allData = new ArrayList<JsonObject>();
+        ArrayList<JsonObject> allData = new ArrayList<>();
 
         for (Object[] obj : mainManager.findExchangeRate()) {
             JsonObject jsonObject = new JsonObject();
@@ -114,9 +106,7 @@ public class AngularController {
             allData.add(jsonObject);
         }
 
-        String json = new Gson().toJson(allData);
-        return json;
-
+        return new Gson().toJson(allData);
     }
 
     @RequestMapping(value = "/getCurrencyChartData/{id}", method = RequestMethod.GET, produces = "application/json")
@@ -135,10 +125,7 @@ public class AngularController {
                 data.add(jsonObject);
             }
         }
-
-        String json = new Gson().toJson(data);
-        return json;
-
+        return new Gson().toJson(data);
     }
 
     @RequestMapping(value = "/getExchangeRateDate", method = RequestMethod.GET, produces = "application/json")
@@ -152,9 +139,7 @@ public class AngularController {
             currencyValueLastDate = new CurrencyValue();
             currencyValueLastDate.setDate((String) lastDateList.get(0)[1]);
         }
-
-        String json = new Gson().toJson(currencyValueLastDate);
-        return json;
+        return new Gson().toJson(currencyValueLastDate);
     }
 
     @RequestMapping(value = "/addCompany", method = RequestMethod.POST, consumes = "application/json")
@@ -168,7 +153,6 @@ public class AngularController {
     public
     @ResponseBody
     String getApproximationByID(@PathVariable String id) {
-//        Approximation aprox = new Approximation();
 
         Integer companyId = Integer.parseInt(id);
         double[][] allTrainData = createTrainingToAproxFromJSON(companyId);
@@ -180,8 +164,7 @@ public class AngularController {
             e.printStackTrace();
         }
 
-        String json = new Gson().toJson(approxResult);
-        return json;
+        return new Gson().toJson(approxResult);
     }
 
     @RequestMapping(value = "/companyDetails/{id}", method = RequestMethod.GET, produces = "application/json")
@@ -200,32 +183,20 @@ public class AngularController {
     String getStatistics(@PathVariable String id) {
         Integer companyId = Integer.parseInt(id);
 
-//        String average = companyManager.getAverage(companyId);
-//        String variance = companyManager.getVariance(companyId);
-//        String standardDeviation = companyManager.getStandardDeviation(companyId);
-//        String median = companyManager.getMedian(companyId);
-
-//        log.info("Srednia wartosc akcji dla tej firmy wynosi " + average);
-//        log.info("Wariancja akcji dla tej firmy wynosi " + variance);
-//        log.info("Odchylenie standardowe akcji dla tej firmy wynosi " + standardDeviation);
-//        log.info("Mediana akcji dla tej firmy wynosi " + median);
-
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("average", companyManager.getAverage(companyId));
-        jsonObject.addProperty("variance", companyManager.getVariance(companyId));
-        jsonObject.addProperty("standardDeviation", companyManager.getStandardDeviation(companyId));
-        jsonObject.addProperty("median", companyManager.getMedian(companyId));
+        jsonObject.addProperty("average", companyManager.getAverage());
+        jsonObject.addProperty("variance", companyManager.getVariance());
+        jsonObject.addProperty("standardDeviation", companyManager.getStandardDeviation());
+        jsonObject.addProperty("median", companyManager.getMedian());
 
         return new Gson().toJson(jsonObject);
     }
-
-
 
     @RequestMapping(value = "/getApproximation", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
     String showApproximation() {
-//        Approximation aprox = new Approximation();
+
         List<Point> approxResult = null;
         try {
             approxResult = approx.doApproximation(null,null);
@@ -233,14 +204,15 @@ public class AngularController {
             e.printStackTrace();
         }
 
-        String json = new Gson().toJson(approxResult);
-        return json;
+        return new Gson().toJson(approxResult);
     }
 
     @RequestMapping(value = "/newcompany", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
     String newCompany() {
+
+        //TODO: żle podpięte do buttona
 
         ObjectMocks.CreateAllMocks();
         List<Company> companyList= Utils.readCompaniesFromCsv("companylist.csv");
@@ -284,7 +256,7 @@ public class AngularController {
     }
 
     public ArrayList<CompanyStockValue> createStockValueFromJSON(int companyId){
-        ArrayList<CompanyStockValue> allStockValues = new ArrayList();
+        ArrayList<CompanyStockValue> allStockValues = new ArrayList<>();
 
         for (Object[] obj : stockValueManager.getStockValueById(companyId)) {
             CompanyStockValue stockValue = new CompanyStockValue();

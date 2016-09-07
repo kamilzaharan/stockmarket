@@ -109,37 +109,6 @@ public class Utils {
         }
     }
 
-//    public static void saveNetworkToXML(String filePath, NeuralNetwork network) {
-//        XStream xStream = getXstreamObject();
-//        String xml = xStream.toXML(network);
-//        try (final PrintStream out = new PrintStream(new FileOutputStream(filePath))) {
-//            out.print(xml);
-//        } catch (FileNotFoundException ex) {
-//            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
-//
-//    public static NeuralNetwork loadNetworkFromXML(String filePath) {
-//
-//        XStream xStream = getXstreamObject();
-//        NeuralNetwork tempNetwork = null;
-//        try {
-//            tempNetwork = (NeuralNetwork) xStream.fromXML(new FileReader("network.xml"));
-//
-//        } catch (FileNotFoundException ex) {
-//            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return tempNetwork;
-//    }
-//
-//    private static XStream getXstreamObject() {
-//        XStream xstream = new XStream();
-//        xstream.alias("neuralNetwork", NeuralNetwork.class);
-//        xstream.alias("neuron", Neuron.class);
-//        xstream.alias("neuronLayer", NeuronLayer.class);
-//        return xstream;
-//    }
-
     public static double[][] getArraysFromFile(String filename) {
         double[][] temp = null;
         int countRows = 0;
@@ -212,5 +181,4 @@ public class Utils {
         }
         return result;
     }
-
 }

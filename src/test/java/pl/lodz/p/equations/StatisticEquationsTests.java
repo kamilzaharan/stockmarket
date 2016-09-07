@@ -1,4 +1,4 @@
-package p.lodz.p.equations;
+package pl.lodz.p.equations;
 
 import org.junit.Before;
 import org.junit.Test;

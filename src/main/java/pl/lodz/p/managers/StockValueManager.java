@@ -1,6 +1,5 @@
 package pl.lodz.p.managers;
 
-import pl.lodz.p.model.Company;
 import pl.lodz.p.model.CompanyStockValue;
 
 import java.util.List;
