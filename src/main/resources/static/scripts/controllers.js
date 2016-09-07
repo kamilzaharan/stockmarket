@@ -58,7 +58,6 @@ cont.controller('currenciesController', ['$scope', 'showCurrencies', 'showExchan
                                         })
                                 }
                               $scope.getLastDate();
-                              console.log($scope.getLastDate);
 
                               //calculate value
                               $scope.calculate = function() {
@@ -112,7 +111,8 @@ cont.controller('currenciesChartCtrl', ['$scope', 'showExchangeRate', 'showCurre
                         showCurrencyChartData.create({id: i}).$promise
                               .then(function (response) {
                                $scope.exchangeRateChart=response;
-
+                               $scope.exchangeRateChartForTable=response;
+                               
                               var data = $scope.exchangeRateChart.map(function(d) {
                                  d.y=(d.y).replace(/,/g, '.');
                                  d.x= d3.time.format("%Y-%m-%d").parse(d.x);
@@ -125,9 +125,11 @@ cont.controller('currenciesChartCtrl', ['$scope', 'showExchangeRate', 'showCurre
                              var chart = fc.chart.cartesian(
                                 fc.scale.dateTime().discontinuityProvider(fc.scale.discontinuity.skipWeekends()),
                                 d3.scale.linear())
-                                .margin({bottom: 30, right: 60})
+                                .margin({bottom: 50, right: 70})
                                 .xDomain(fc.util.extent().fields(['x'])(data))
-                                .yDomain(fc.util.extent().pad(0.3).fields(['y'])(data));
+                                .xLabel("Data")
+                                .yDomain(fc.util.extent().pad(0.3).fields(['y'])(data))
+                                .yLabel("Wartość waluty");
 
                             var series = fc.series.bar()
                                .xValue(function(d) { return d.x; })
