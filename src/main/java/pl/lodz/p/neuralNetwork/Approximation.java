@@ -44,14 +44,18 @@ public class Approximation {
         approximationNetwork.setNeuralNetwork(networkConf, neuronConf);
         approximationNetwork.learn(howManyEpoch, trainInputs, trainOutputs, errPoints);
 
+        int variable = 0;
+
         for (double[] testInput : testInputs) {
             approximationNetwork.singleCompute(testInput);
 
-            approximationResults.add(new Point(testInput[0], approximationNetwork.returnSingleOutput()));
+            if( variable != 0) {
+                approximationResults.add(new Point(testInput[0], approximationNetwork.returnSingleOutput()));
+            }
+            variable++;
         }
 
         Collections.sort(approximationResults);
-        NeuralNetworkUtils.savePoints("approximation" + 10, approximationResults);
         log.debug("Approximation result: " + approximationResults);
 
         return approximationResults;
