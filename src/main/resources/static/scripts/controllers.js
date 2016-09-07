@@ -348,3 +348,15 @@ cont.controller('minCtrl', ['$scope', 'maxDecrease',
 
         $scope.graphFun();
     }]);
+
+cont.controller('newCompanies', ['$scope', 'addCompanies',
+    function ($scope, addCompanies) {
+
+        $scope.addCompanies = function () {
+            addCompanies.create().$promise
+                .then(function (response) {
+                    $scope.companies=response;
+                })
+        };
+        $scope.addCompanies();
+    }]);

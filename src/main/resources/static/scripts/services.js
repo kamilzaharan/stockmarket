@@ -83,3 +83,10 @@ services.factory('maxDecrease', function ($resource) {
         create: {method: 'GET', isArray: true}
     })
 });
+
+services.factory('addCompanies', function ($resource) {
+    return $resource('http://localhost:8080/newCompany', {}, {
+        create: {method: 'GET', isArray: false}
+    })
+});
+
